@@ -14,7 +14,5 @@ You are free to organize the contents of the folder as you see fit. But remember
 >sudo apt install npm 
 >npm install handlebars
 
-# I already installed typescript so no one else needs to do it - Elias
-# Install typescript in project directory
->npm install typescript --save-dev
+
 
