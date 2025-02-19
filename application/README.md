@@ -8,12 +8,13 @@ You are free to organize the contents of the folder as you see fit. But remember
 ## Please use the rest of the README.md to store important information for your team's application.
 
 # Frontend Stack Install
-sudo apt update
-sudo apt upgrade
-sudo apt install nodejs
-sudo apt install npm 
+>sudo apt update
+>sudo apt upgrade
+>sudo apt install nodejs
+>sudo apt install npm 
+>npm install handlebars
 
 # I already installed typescript so no one else needs to do it - Elias
 # Install typescript in project directory
-npm install typescript --save-dev
+>npm install typescript --save-dev
 
