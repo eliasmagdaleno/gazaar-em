@@ -1,0 +1,14 @@
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# IDE-specific files
+.idea/        
+*.sublime-*
+*.swp         
+*.swo
+
+# Miscellaneous
+.env             

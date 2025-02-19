@@ -1,0 +1,23 @@
+#vscode
+.vscode
+
+#Mac
+.DS_store
+
+# Go
+bin/
+obj/
+*.exe
+*.out
+*.test
+*.log
+*.swp
+*.swo
+*.mod
+*.sum
+
+# Gin Framework (Go)
+vendor/
+
+# Miscellaneous
+.env   
