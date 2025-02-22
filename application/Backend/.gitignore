@@ -13,11 +13,12 @@ obj/
 *.log
 *.swp
 *.swo
-*.mod
-*.sum
 
 # Gin Framework (Go)
-vendor/
+vendor/*.com
+vendor/*.org
+vendor/*.in
+
 
 # Miscellaneous
-.env   
+.env
