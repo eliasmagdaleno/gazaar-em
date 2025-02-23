@@ -15,11 +15,34 @@
   
 </div>
 <body>
+    <nav class="topnav">
+        <ul> 
+            <li>
+                <a href="index.html">Home</a>
+            </li>
+        </ul>
+    </nav>
     <button id="btn"> Weiping Wu </button>
     <button id="btn"> Hemsari Bavisetty </button>
-    <button id="btn"> Elias Magdaleno </button>
+    <a href="member-pages/aboutme-elias.html">
+        <button id="btn"> Elias Magdaleno </button>
+    </a>
     <button id="btn"> Zachary Howe  </button>
     <button id="btn"> Jiarong Chen   </button>
+
+    <script>
+        async function fetchData() {
+            try {
+                const response = await fetch('http://0.0.0.0:8081/api/data');
+                const data = await response.json();
+                console.log(data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        fetchData();
+    </script>
     
 </body>
 </html>
