@@ -1,18 +1,23 @@
 TARGET_OS = linux
 TARGET_ARCH = amd64
 
+FRONTEND_DIR = ../Frontend/
+
+export FRONTEND_PATH=$(FRONTEND_DIR)
+
 #Mac bianary adjustment
 UNAME_S = $(shell uname -s)
 ifeq ($(UNAME_S), Darwin)
 	TARGET_ARCH = arm64
 endif
 
-OUTPUT_NAME = beckend-$(TARGET_OS)-$(TARGET_ARCH)
+OUTPUT_NAME = backend-$(TARGET_OS)-$(TARGET_ARCH)
 
 vendor:
+	go mod tidy 
 	GOWORK=off go mod vendor
 
-run:
+run: vendor
 	GOWORK=off go run main.go
 
 build:

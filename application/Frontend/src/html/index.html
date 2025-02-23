@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="frontend/src/css/style.css"> 
     <title>Home</title>
 </head>
 <div class="banner"> 
@@ -18,31 +19,28 @@
     <nav class="topnav">
         <ul> 
             <li>
-                <a href="index.html">Home</a>
+                <a href="/home">Home</a>
             </li>
         </ul>
     </nav>
-    <button id="btn"> Weiping Wu </button>
-    <button id="btn"> Hemsari Bavisetty </button>
-    <a href="member-pages/aboutme-elias.html">
-        <button id="btn"> Elias Magdaleno </button>
-    </a>
-    <button id="btn"> Zachary Howe  </button>
-    <button id="btn"> Jiarong Chen   </button>
+    <div class="buttonstack">
+        <button id="btn"> Weiping Wu </button>
+        <a href="/elias">
+            <button id="btn"> Elias Magdaleno </button>
+        </a>
+        <a href="/zachary">
+            <button id="btn"> Zachary Howe  </button>
+        </a>
+        <a href="/hemasri">
+            <button id="btn"> Hemasri Bavisetty </button>
+        </a>
+        <a href="/jiarong">
+        <button id="btn"> Jiarong Chen   </button>
+        </a>
+    </div>
 
-    <script>
-        async function fetchData() {
-            try {
-                const response = await fetch('http://0.0.0.0:8081/api/data');
-                const data = await response.json();
-                console.log(data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        }
 
-        fetchData();
-    </script>
+
     
 </body>
 </html>

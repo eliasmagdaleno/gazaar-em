@@ -1,0 +1,40 @@
+.banner-text {
+  text-align: center;
+}
+.buttonstack button{
+  padding-block: 20px 15px;
+  width: 30%;
+  margin: 10px;
+  display: block;
+  font-family:Arial, sans-serif;
+  text-align:center;
+  
+}
+
+.topnav ul{
+  list-style-type: none;
+  
+}
+
+.aboutme-title{
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+ 
+.profile-pic{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+ 
+}
+.name {
+  text-align: center;
+  
+  
+}
+.bio  {
+  text-align: center;
+}
