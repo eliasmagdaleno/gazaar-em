@@ -16,13 +16,44 @@
 7. Database name (basically the name that contains all your tables)
 8. Instructions on how to use the above information.
 
-## To run the system
->Download key
->enter into you downloads folder cd "Your download path here"
->run "ssh -i "CSC848.pem" ubuntu@ec2-54-151-68-50.us-west-1.compute.amazonaws.com"
->once in unbuntu you can run cd csc and then hit tab
->to stop server run systemctl --user stop GoApp.service
->to start server again run systemctl --user start GoApp.service
+## How to Access and Manage the System
+
+> **1. Download the Key**
+> - Obtain the SSH key file (`CSC848.pem`) from a secure source.
+
+> **2. Navigate to Your Downloads Folder**
+> - Open a terminal and run:
+>   ```bash
+>   cd "Your download path here"
+>   ```
+> - Replace `"Your download path here"` with the actual path where your SSH key is located.
+
+> **3. Connect to the Server**
+> - Use SSH to log into the AWS EC2 instance:
+>   ```bash
+>   ssh -i "CSC848.pem" ubuntu@ec2-54-151-68-50.us-west-1.compute.amazonaws.com
+>   ```
+> - Ensure that the `.pem` file has the correct permissions:
+>   ```bash
+>   chmod 400 CSC848.pem
+>   ```
+
+> **4. Navigate to the Application Directory**
+> - Once logged into the EC2 instance, run:
+>   ```bash
+>   cd csc<TAB>
+>   ```
+> - Press **Tab** to autocomplete the folder name if needed.
+
+> **5. Start and Stop the Server**
+> - **To stop the server:**
+>   ```bash
+>   systemctl --user stop GoApp.service
+>   ```
+> - **To start the server:**
+>   ```bash
+>   systemctl --user start GoApp.service
+>   
 
 # Most important things to Remember
 ## These values need to kept update to date throughout the semester. <br>
