@@ -7,9 +7,9 @@
 
 # Below is a list of items required. Missing items will causes points to be deducted from multiple milestone submissions.
 
-1. 54.151.68.50:8081 (This is also the link for website)
+1. 204.236.166.51:8081 (This is also the link for website)
 2. unbuntu
-3. Using key
+3. Using password
 4. Database URL or IP and port used.
 5. Database username
 6. Database password
@@ -20,6 +20,7 @@
 
 > **1. Download the Key**
 > - Obtain the SSH key file (`CSC848.pem`) from a secure source.
+> - We use the password "HorseMomDadHouseThing1!" instead of pem key.
 
 > **2. Navigate to Your Downloads Folder**
 > - Open a terminal and run:
@@ -31,7 +32,7 @@
 > **3. Connect to the Server**
 > - Use SSH to log into the AWS EC2 instance:
 >   ```bash
->   ssh -i "CSC848.pem" ubuntu@ec2-54-151-68-50.us-west-1.compute.amazonaws.com
+>   ssh -i CSC848.pem ubuntu@204.236.166.51
 >   ```
 > - Ensure that the `.pem` file has the correct permissions:
 >   ```bash
