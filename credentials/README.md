@@ -1,62 +1,80 @@
 # Credentials Folder
 
-## The purpose of this folder is to store all credentials needed to log into your server and databases. This is important for many reasons. But the two most important reasons is
-    1. Grading , servers and databases will be logged into to check code and functionality of application. Not changes will be unless directed and coordinated with the team.
-    2. Help. If a class TA or class CTO needs to help a team with an issue, this folder will help facilitate this giving the TA or CTO all needed info AND instructions for logging into your team's server. 
+This folder contains all credentials and access instructions required to log into your team’s **server** and **database**. Keeping this information accurate and up to date is essential for both **grading** and **technical support**.
 
+---
 
-# Below is a list of items required. Missing items will causes points to be deducted from multiple milestone submissions.
+## Purpose
 
-1. 204.236.166.51:8081 (This is also the link for website)
-2. unbuntu
-3. Using password
-4. Database URL or IP and port used.
-5. Database username
-6. Database password
-7. Database name (basically the name that contains all your tables)
-8. Instructions on how to use the above information.
+1. **Grading** – Instructors, TAs, and the CTO will use these credentials to verify your application’s deployment and functionality.  
+2. **Support** – If assistance is needed, this folder allows the TA or CTO to access your system using clear instructions.
 
-## How to Access and Manage the System
+---
 
-> **1. Download the Key**
-> - Obtain the SSH key file (`CSC848.pem`) from a secure source.
-> - We use the password "HorseMomDadHouseThing1!" instead of pem key.
+## Required Information
 
-> **2. Navigate to Your Downloads Folder**
-> - Open a terminal and run:
->   ```bash
->   cd "Your download path here"
->   ```
-> - Replace `"Your download path here"` with the actual path where your SSH key is located.
+| Item                           | Description                                                    |
+|--------------------------------|----------------------------------------------------------------|
+| **Website / Server URL**       | `http://204.236.166.51:9081`                                   |
+| **SSH Username**               | `ubuntu`                                                       |
+| **SSH Authentication**         | Password-based login or pem                                    |
+| **Database IP / URL**          | `<enter database IP or hostname>`                              |
+| **Database Port**              | `<8081>`                                                       |
+| **Database Username**          | `<enter database username>`                                    |
+| **Database Password**          | `HorseMomDadHouseThing1!`                                      |
+| **Database Name**              | `N\A`                                                          |
 
-> **3. Connect to the Server**
-> - Use SSH to log into the AWS EC2 instance:
->   ```bash
->   ssh -i CSC848.pem ubuntu@204.236.166.51
->   ```
-> - Ensure that the `.pem` file has the correct permissions:
->   ```bash
->   chmod 400 CSC848.pem
->   ```
+> 🔁 **Note:** These values must be kept up to date throughout the semester. Missing or incorrect information will result in point deductions during milestone evaluations.
 
-> **4. Navigate to the Application Directory**
-> - Once logged into the EC2 instance, run:
->   ```bash
->   cd csc<TAB>
->   ```
-> - Press **Tab** to autocomplete the folder name if needed.
+---
 
-> **5. Start and Stop the Server**
-> - **To stop the server:**
->   ```bash
->   systemctl --user stop GoApp.service
->   ```
-> - **To start the server:**
->   ```bash
->   systemctl --user start GoApp.service
->   
+## 🛠️ How to Access and Manage the System
 
-# Most important things to Remember
-## These values need to kept update to date throughout the semester. <br>
-## <strong>Failure to do so will result it points be deducted from milestone submissions.</strong><br>
-## You may store the most of the above in this README.md file. DO NOT Store the SSH key or any keys in this README.md file.
+### 1. **Log In to the Server**
+
+> This project uses **password authentication** — or the `Csc648.pem` key.
+
+```bash
+ssh ubuntu@204.236.166.51
+```
+
+When prompted, enter the team-provided password.
+
+---
+
+### 2. **Navigate to the Application Directory**
+
+Once logged in:
+
+```bash
+cd ~/csc648-fa25-0104-team03/application/Backend
+```
+
+---
+
+### 3. **Start or Stop the Go Server**
+
+To **start** the Go backend service:
+
+```bash
+sudo systemctl start GoApp.service
+```
+
+To **stop** the Go backend service:
+
+```bash
+sudo systemctl stop GoApp.service
+```
+
+To check its status:
+
+```bash
+sudo systemctl status GoApp.service
+```
+
+---
+
+## Important Reminders
+
+- Make sure this file always reflects the current setup.
+- Keep this folder organized — it will be checked during grading.
