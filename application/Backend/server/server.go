@@ -18,7 +18,7 @@ var frontendDir = os.Getenv("FRONTEND_PATH");
 func loadFrontendFile(filelocation string) (string, error) {
 
 	var sb strings.Builder
-	sb.WriteString(frontendDir)
+	sb.WriteString("../Frontend/")
 	sb.WriteString(filelocation)
 
 	abspath, err := filepath.Abs(sb.String())
@@ -49,7 +49,7 @@ func TestDependency() {
 func StartServer() {
 	router := gin.Default()
 
-	router.Static("/frontend", frontendDir)
+	router.Static("/frontend", "../Frontend")
 
 	router.SetTrustedProxies([]string{"192.168.0.0/24"})
 

@@ -14,12 +14,11 @@ endif
 OUTPUT_NAME = backend-$(TARGET_OS)-$(TARGET_ARCH)
 
 vendor:
-	go mod tidy 
 	GOWORK=off go mod vendor
 quit:
 	go mod tidy
 
-run: vendor
+run:
 	GOWORK=off go run main.go
 
 build:
