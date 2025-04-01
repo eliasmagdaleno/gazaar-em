@@ -3,17 +3,19 @@ package server
 import (
 	"log"
 
-	"backend/core"
 	"backend/routes"
 
 	"github.com/gin-gonic/gin"
 )
 
 func StartServer() {
-	// Initialize the database connection
-	if err := core.InitDB(); err != nil {
-		log.Fatalf("Failed to connect to DB: %v", err)
-	}
+	/*
+
+		// Initialize the database connection
+		if err := core.InitDB(); err != nil {
+			log.Fatalf("Failed to connect to DB: %v", err)
+		}
+	*/
 
 	router := gin.Default()
 

@@ -1,13 +1,6 @@
 package routes
 
 import (
-	"fmt"
-	"log"
-	"net/http"
-
-	"backend/core"
-
-	"github.com/aymerick/raymond"
 	"github.com/gin-gonic/gin"
 )
 
@@ -40,46 +33,53 @@ func searchHandler(c *gin.Context) {
 		args = append(args, "%"+q+"%")
 	}
 
-	rows, err := core.DB.Query(query, args...)
-	if err != nil {
-		log.Println("DB Query error:", err)
-		c.String(http.StatusInternalServerError, fmt.Sprintf("DB Query error: %v", err))
-		return
-	}
-	defer rows.Close()
+	/*
+			rows, err := core.DB.Query(query, args...)
+			if err != nil {
+				log.Println("DB Query error:", err)
+				c.String(http.StatusInternalServerError, fmt.Sprintf("DB Query error: %v", err))
+				return
+			}
+			defer rows.Close()
 
-	var items []Item
-	for rows.Next() {
-		var it Item
-		err := rows.Scan(&it.ID, &it.Category, &it.Title, &it.Description, &it.Price, &it.ImageFull, &it.ImageThumb)
-		if err != nil {
-			log.Println("Row scan error:", err)
-			continue
+
+		var items []Item
+		for rows.Next() {
+			var it Item
+			err := rows.Scan(&it.ID, &it.Category, &it.Title, &it.Description, &it.Price, &it.ImageFull, &it.ImageThumb)
+			if err != nil {
+				log.Println("Row scan error:", err)
+				continue
+			}
+			items = append(items, it)
 		}
-		items = append(items, it)
-	}
 
-	data := map[string]interface{}{
-		"category": category,
-		"q":        q,
-		"count":    len(items),
-		"items":    items,
-	}
 
-	tmpl, err := core.LoadFrontendFile("src/html/search_results.hbs")
-	if err != nil {
-		log.Println("Template load error:", err)
-		c.String(http.StatusInternalServerError, fmt.Sprintf("Template load error: %v", err))
-		return
-	}
+		data := map[string]interface{}{
+			"category": category,
+			"q":        q,
+			"count":    len(items),
+			"items":    items,
+		}
 
-	rendered, err := raymond.Render(tmpl, data)
-	if err != nil {
-		log.Println("Template render error:", err)
-		c.String(http.StatusInternalServerError, fmt.Sprintf("Template render error: %v", err))
-		return
-	}
 
-	c.Header("Content-Type", "text/html")
-	c.String(http.StatusOK, rendered)
+
+		tmpl, err := core.LoadFrontendFile("src/html/search_results.hbs")
+		if err != nil {
+			log.Println("Template load error:", err)
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Template load error: %v", err))
+			return
+		}
+
+		rendered, err := raymond.Render(tmpl, data)
+		if err != nil {
+			log.Println("Template render error:", err)
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Template render error: %v", err))
+			return
+		}
+
+
+		c.Header("Content-Type", "text/html")
+		c.String(http.StatusOK, rendered)
+	*/
 }

@@ -3,7 +3,8 @@ package routes
 import (
 	"fmt"
 	"net/http"
-	
+
+	"backend/core"
 
 	"github.com/gin-gonic/gin"
 )
@@ -21,11 +22,10 @@ func RegisterMemberRoutes(router *gin.Engine) {
 	}
 
 	for _, m := range memberRoutes {
-		// Create local copies to capture the current values.
 		route := m.route
 		file := m.file
 		router.GET(route, func(c *gin.Context) {
-			htmlData, err := server.LoadFrontendFile(file)
+			htmlData, err := core.LoadFrontendFile(file)
 			if err != nil {
 				c.String(http.StatusInternalServerError, fmt.Sprintf("Error: %v", err))
 				return

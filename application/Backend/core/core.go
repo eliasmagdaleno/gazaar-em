@@ -1,16 +1,15 @@
 package core
 
 import (
-	"database/sql"
-	"fmt"
 	"os"
 	"path/filepath"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var DB *sql.DB
+// var DB *sql.DB
 
+/*
 // InitDB sets up a MySQL connection pool using environment variable DB_DSN.
 func InitDB() error {
 	dsn := os.Getenv("DB_DSN")
@@ -24,6 +23,7 @@ func InitDB() error {
 	}
 	return DB.Ping()
 }
+*/
 
 // LoadFrontendFile reads HTML or static file from the frontend directory.
 func LoadFrontendFile(filelocation string) (string, error) {

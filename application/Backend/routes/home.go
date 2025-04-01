@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
+	"backend/core"
 
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterHomeRoutes(router *gin.Engine) {
 	router.GET("/", func(c *gin.Context) {
-		htmlData, err := server.LoadFrontendFile("src/html/index.html")
+		htmlData, err := core.LoadFrontendFile("src/html/index.html")
 		if err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("Error: %v", err))
 			return
