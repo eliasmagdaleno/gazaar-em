@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	
-	"backend/server"
+
+	"backend/core"
 
 	"github.com/aymerick/raymond"
 	"github.com/gin-gonic/gin"
@@ -26,11 +26,9 @@ func RegisterSearchRoutes(router *gin.Engine) {
 }
 
 func searchHandler(c *gin.Context) {
-	// Retrieve query parameters.
 	category := c.Query("category")
 	q := c.Query("q")
 
-	// Build the SQL query.
 	query := "SELECT id, category, title, description, price, image_full, image_thumb FROM items WHERE 1=1"
 	var args []interface{}
 	if category != "" && category != "all" {
@@ -39,11 +37,10 @@ func searchHandler(c *gin.Context) {
 	}
 	if q != "" {
 		query += " AND CONCAT(title, ' ', description) LIKE ?"
-		args = append(args, "%" + q + "%")
+		args = append(args, "%"+q+"%")
 	}
 
-	// Execute the query.
-	rows, err := server.DB.Query(query, args...)
+	rows, err := core.DB.Query(query, args...)
 	if err != nil {
 		log.Println("DB Query error:", err)
 		c.String(http.StatusInternalServerError, fmt.Sprintf("DB Query error: %v", err))
@@ -51,7 +48,6 @@ func searchHandler(c *gin.Context) {
 	}
 	defer rows.Close()
 
-	// Collect items.
 	var items []Item
 	for rows.Next() {
 		var it Item
@@ -63,7 +59,6 @@ func searchHandler(c *gin.Context) {
 		items = append(items, it)
 	}
 
-	// Prepare data for the template.
 	data := map[string]interface{}{
 		"category": category,
 		"q":        q,
@@ -71,15 +66,13 @@ func searchHandler(c *gin.Context) {
 		"items":    items,
 	}
 
-	// Load the search results template.
-	tmpl, err := server.LoadFrontendFile("src/html/search_results.hbs")
+	tmpl, err := core.LoadFrontendFile("src/html/search_results.hbs")
 	if err != nil {
 		log.Println("Template load error:", err)
 		c.String(http.StatusInternalServerError, fmt.Sprintf("Template load error: %v", err))
 		return
 	}
 
-	// Render the template with the data.
 	rendered, err := raymond.Render(tmpl, data)
 	if err != nil {
 		log.Println("Template render error:", err)

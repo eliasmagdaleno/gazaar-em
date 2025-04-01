@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"backend/server"
 
 	"github.com/gin-gonic/gin"
 )
