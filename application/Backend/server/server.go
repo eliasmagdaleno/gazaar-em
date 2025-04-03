@@ -32,5 +32,5 @@ func StartServer() {
 	routes.RegisterSearchRoutes(router)
 
 	log.Println("🚀 Server running on http://0.0.0.0:8081")
-	router.Run("0.0.0.0:8081")
+	router.Run("0.0.0.0:9081")
 }
