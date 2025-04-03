@@ -1,22 +1,16 @@
 package server
 
 import (
-	"log"
+    "fmt"
+    "log"
+    "net/http"
+    "os"
+    "path/filepath"
 
-	"backend/routes"
-
-	"github.com/gin-gonic/gin"
+    "backend/routes"
+    "github.com/aymerick/raymond"
+    "github.com/gin-gonic/gin"
 )
-
-func StartServer() {
-	/*
-
-		// Initialize the database connection
-		if err := core.InitDB(); err != nil {
-			log.Fatalf("Failed to connect to DB: %v", err)
-		}
-	*/
-
 
 func loadTemplate(filePath string) (string, error) {
 	absPath, err := filepath.Abs(filePath)
@@ -80,53 +74,6 @@ func StartServer() {
     raymond.RegisterPartial("productcard", productCardPartial)
 	raymond.RegisterPartial("filter", filterPartial)
 	raymond.RegisterPartial("header", headerPartial)
-
-
-	router.GET("/", func(c *gin.Context) {
-		layoutTemplate, err := loadTemplate("../Frontend/src/views/layouts/layout.hbs")
-        if err != nil {
-            c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading layout: %v", err))
-            return
-        }
-		indexTemplate, err := loadTemplate("../Frontend/src/views/index.hbs")
-        if err != nil {
-            c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading template: %v", err))
-            return
-        }
-
-	
-
-        // Render the template with data
-		content, err := raymond.Render(indexTemplate, map[string]interface{}{
-            "title": "Home",
-            "events": []map[string]string{
-                {"thumbnail": "/frontend/Assets/event1.jpg", "date": "April 1, 2025", "title": "Event 1", "host": "Host A"},
-                {"thumbnail": "/frontend/Assets/event2.jpg", "date": "April 2, 2025", "title": "Event 2", "host": "Host B"},
-            },
-            "products": []map[string]string{
-                {"thumbnail": "/frontend/Assets/product1.jpg", "title": "Product 1", "host": "$10", "condition": "New"},
-                {"thumbnail": "/frontend/Assets/product2.jpg", "title": "Product 2", "host": "$20", "condition": "Used"},
-            },
-        })
-        if err != nil {
-            c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering index content: %v", err))
-            return
-        }
-
-
-		output, err := raymond.Render(layoutTemplate, map[string]interface{}{
-            "title": "Home",
-            "content": raymond.SafeString(content),
-        })
-        if err != nil {
-            c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))
-            return
-        }
-
-        c.Header("Content-Type", "text/html")
-        c.String(http.StatusOK, output)
-	})
-
 
 	router.GET("/searchresults", func(c *gin.Context) {
 		// Load the layout template
