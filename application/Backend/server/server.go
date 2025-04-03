@@ -145,6 +145,15 @@ func StartServer() {
     if err != nil {
         log.Fatalf("Error loading productcard partial: %v", err)
     }
+	filterPartial, err := loadTemplate("../Frontend/src/views/partials/filter.hbs")
+    if err != nil {
+        log.Fatalf("Error loading filter partial: %v", err)
+    }
+	headerPartial, err := loadTemplate("../Frontend/src/views/partials/header.hbs")
+    if err != nil {
+        log.Fatalf("Error loading header partial: %v", err)
+    }
+	
 
 
 
@@ -153,6 +162,8 @@ func StartServer() {
 	raymond.RegisterPartial("navbar", navbarPartial)
     raymond.RegisterPartial("eventcard", eventCardPartial)
     raymond.RegisterPartial("productcard", productCardPartial)
+	raymond.RegisterPartial("filter", filterPartial)
+	raymond.RegisterPartial("header", headerPartial)
 
 
 	router.GET("/", func(c *gin.Context) {

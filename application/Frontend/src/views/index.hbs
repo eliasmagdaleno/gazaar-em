@@ -8,17 +8,20 @@
     <title>{{title}}</title>
 </head>
 <body>
+
     <div class="container">
 
-        <h2>Upcoming Events</h2>
+        
         <div class="event-section">
+            <h2>Upcoming Events</h2>
             {{#each events}}
                 {{> eventcard}}
             {{/each}}
         </div>
 
-        <h2>Featured Products</h2>
+        
         <div class="product-section">
+            <h2>Featured Products</h2>
             {{#each products}}
                 {{> productcard}}
             {{/each}}
