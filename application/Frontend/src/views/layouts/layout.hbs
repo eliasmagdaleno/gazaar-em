@@ -1,0 +1,23 @@
+{{!-- filepath: /home/student/Documents/CSC_648/csc648-fa25-0104-team03/application/Frontend/views/layouts/layout.hbs --}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {{#each css}}
+        <link rel="stylesheet" type="text/css" href="/frontend/src/css/{{this}}">
+    {{/each}}
+    {{#each js}}
+        <script defer src="/frontend/src/js/{{this}}" type="text/javascript"></script>
+    {{/each}}
+
+
+    <title>{{title}}</title>
+</head>
+<body>
+    {{> header}}
+    {{> navbar}}
+    {{{content}}}
+</body>
+</html>

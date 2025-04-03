@@ -1,0 +1,29 @@
+{{!-- filepath: /home/student/Documents/CSC_648/csc648-fa25-0104-team03/application/Frontend/src/views/searchresults.hbs --}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/frontend/src/css/style.css">
+    <title>{{title}}</title>
+</head>
+<body>
+    <div class="container">
+
+        <h1>Results</h1>
+        
+        <h2>Events</h2>
+        <div class="event-section">
+            {{#each events}}
+                {{> eventcard}}
+            {{/each}}
+        </div>
+
+        <h2>Products</h2>
+        <div class="product-section">
+            {{#each products}}
+                {{> productcard}}
+            {{/each}}
+        </div>
+    </div>
+</body>
