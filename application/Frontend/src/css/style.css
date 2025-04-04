@@ -43,7 +43,7 @@ body{
   list-style-type: none;
   display: flex;
   text-decoration: none;
-  gap: 75px;
+  gap: 10px;
   margin: 0;
   padding: 0;
   justify-content: space-evenly;
