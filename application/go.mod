@@ -1,4 +1,4 @@
-module backend
+module application
 
 go 1.23.6
 
