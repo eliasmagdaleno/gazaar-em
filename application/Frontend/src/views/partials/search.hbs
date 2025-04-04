@@ -1,4 +1,4 @@
-{{!-- filepath: /home/student/Documents/CSC_648/csc648-fa25-0104-team03/application/Frontend/src/views/searchresults.hbs --}}
+{{!-- filepath: /home/student/Documents/CSC_648/csc648-fa25-0104-team03/application/Frontend/src/views/search.hbs --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,17 +10,23 @@
 <body>
     <div class="container">
 
-        <h1>Results</h1>
+        <div class="Results-Section">
+            <h1>Results</h1>
+            <h2>{{totalresults}} Results found</h2>
+        </div>
         
-        <h2>Events</h2>
-        <div class="event-section">
+        
+       
+        {{!-- <div class="event-section">
+            <h2>Events</h2>
             {{#each events}}
                 {{> eventcard}}
             {{/each}}
-        </div>
+        </div> --}}
 
-        <h2>Products</h2>
+        
         <div class="product-section">
+            <h2>Products</h2>
             {{#each products}}
                 {{> productcard}}
             {{/each}}

@@ -15,6 +15,13 @@ body{
   text-align: center;
 }
 
+.banner{
+  padding: 20px;
+  
+  position: relative;
+    
+}
+
 .buttonstack button{
   padding-block: 20px 15px;
   width: 30%;
@@ -88,6 +95,10 @@ a:active{
 }
 .product-section{
   display: flex;
+}
+.product-section h2{
+  padding-left: 50px;
+  padding-bottom: 50px;
 }
 .product-card{
   padding: 50px;

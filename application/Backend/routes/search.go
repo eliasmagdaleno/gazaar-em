@@ -16,6 +16,7 @@ type Item struct {
 
 func RegisterSearchRoutes(router *gin.Engine) {
 	router.GET("/search", searchHandler)
+	
 }
 
 func searchHandler(c *gin.Context) {
@@ -32,6 +33,14 @@ func searchHandler(c *gin.Context) {
 		query += " AND CONCAT(title, ' ', description) LIKE ?"
 		args = append(args, "%"+q+"%")
 	}
+
+	
+
+	
+
+	
+
+	
 
 	/*
 			rows, err := core.DB.Query(query, args...)
@@ -83,3 +92,4 @@ func searchHandler(c *gin.Context) {
 		c.String(http.StatusOK, rendered)
 	*/
 }
+
