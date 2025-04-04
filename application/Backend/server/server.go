@@ -83,8 +83,8 @@ func StartServer() {
 	}
 
 	// Register partials
-	raymond.RegisterPartial("filter", filterPartial)
-	raymond.RegisterPartial("header", headerPartial)
+	//raymond.RegisterPartial("filter", filterPartial)
+	//raymond.RegisterPartial("header", headerPartial)
 
 	// Example route to fetch search results from the database
 	router.GET("/searchresults", func(c *gin.Context) {
