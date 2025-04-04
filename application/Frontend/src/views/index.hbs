@@ -1,30 +1,23 @@
 {{!-- filepath: /home/student/Documents/CSC_648/csc648-fa25-0104-team03/application/Frontend/src/views/index.hbs --}}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/frontend/src/css/style.css">
-    <title>{{title}}</title>
-</head>
-<body>
 
-    <div class="container">
+
+
+
+<div class="container">
 
         
-        <div class="event-section">
-            <h2>Upcoming Events</h2>
-            {{#each events}}
-                {{> eventcard}}
-            {{/each}}
-        </div>
-
-        
-        <div class="product-section">
-            <h2>Featured Products</h2>
-            {{#each products}}
-                {{> productcard}}
-            {{/each}}
-        </div>
+    <div class="event-section">
+        <h2>Upcoming Events</h2>
+        {{#each events}}
+            {{> eventcard}}
+        {{/each}}
     </div>
-</body>
+
+        
+    <div class="product-section">
+        <h2>Featured Products</h2>
+        {{#each products}}
+            {{> productcard}}
+        {{/each}}
+    </div>
+</div>

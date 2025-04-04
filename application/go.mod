@@ -1,13 +1,15 @@
-module backend
+module application
 
 go 1.23.6
 
 require (
 	github.com/aymerick/raymond v2.0.2+incompatible
 	github.com/gin-gonic/gin v1.10.0
+	github.com/go-sql-driver/mysql v1.9.1
 )
 
 require (
+	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/bytedance/sonic v1.11.6 // indirect
 	github.com/bytedance/sonic/loader v0.1.1 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
