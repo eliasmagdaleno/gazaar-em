@@ -3,11 +3,11 @@
 
 
 
-<div class="container">
+<div class="homepage-container">
 
         
     <div class="event-section">
-        <h2>Upcoming Events</h2>
+        <h2 class="upcoming-header">Upcoming Events</h2>
         {{#each events}}
             {{> eventcard}}
         {{/each}}
@@ -15,7 +15,7 @@
 
         
     <div class="product-section">
-        <h2>Featured Products</h2>
+        <h2 class="featured-header">Featured Products</h2>
         {{#each products}}
             {{> productcard}}
         {{/each}}

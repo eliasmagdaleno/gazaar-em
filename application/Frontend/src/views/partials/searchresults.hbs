@@ -1,29 +1,34 @@
 {{!-- filepath: /home/student/Documents/CSC_648/csc648-fa25-0104-team03/application/Frontend/src/views/searchresults.hbs --}}
 <!DOCTYPE html>
 <html lang="en">
-<head>
+{{!-- <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/Frontend/src/css/style.css">
     <title>{{title}}</title>
-</head>
-<body>
-    <div class="container">
+</head> --}}
 
-        <h1>Results</h1>
+    <div class="results-container">
+
+        <div class="results-section">
+            <h1 class="results-header">Results</h1>
+            <p class="results-count">{{count}} Results found</p>
+        </div>
         
-        <h2>Events</h2>
-        <div class="event-section">
+        
+       
+        {{!-- <div class="event-section">
+            <h2>Events</h2>
             {{#each events}}
                 {{> eventcard}}
             {{/each}}
-        </div>
+        </div> --}}
 
-        <h2>Products</h2>
+        
         <div class="product-section">
+            <h2 class="product-header">Products</h2>
             {{#each products}}
                 {{> productcard}}
             {{/each}}
         </div>
     </div>
-</body>

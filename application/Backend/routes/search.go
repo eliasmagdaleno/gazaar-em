@@ -1,6 +1,13 @@
 package routes
 
 import (
+	"application/Backend/core"
+	database "application/Database"
+	"fmt"
+	"log"
+	"net/http"
+
+	"github.com/aymerick/raymond"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,13 +23,14 @@ type Item struct {
 
 func RegisterSearchRoutes(router *gin.Engine) {
 	router.GET("/search", searchHandler)
+	
 }
 
 func searchHandler(c *gin.Context) {
 	category := c.Query("category")
 	q := c.Query("q")
 
-	query := "SELECT id, category, title, description, price, image_full, image_thumb FROM items WHERE 1=1"
+	query := "SELECT item_id, category, title, description, price, image_url FROM items WHERE 1=1"
 	var args []interface{}
 	if category != "" && category != "all" {
 		query += " AND category = ?"
@@ -33,53 +41,79 @@ func searchHandler(c *gin.Context) {
 		args = append(args, "%"+q+"%")
 	}
 
-	/*
-			rows, err := core.DB.Query(query, args...)
-			if err != nil {
-				log.Println("DB Query error:", err)
-				c.String(http.StatusInternalServerError, fmt.Sprintf("DB Query error: %v", err))
-				return
-			}
-			defer rows.Close()
+	rows, err := database.DB.Query(query, args...)
+    if err != nil {
+        log.Println("DB Query error:", err)
+        c.String(http.StatusInternalServerError, fmt.Sprintf("DB Query error: %v", err))
+        return
+    }
+	defer rows.Close()
+	
+	var products []map[string]interface{}
+    for rows.Next() {
+        var id, category, title, description, imageURL /*condition*/ string 
+		var price float64
+        err := rows.Scan(&id, &category, &title, &description, &price, &imageURL /*, &condition*/)
+        if err != nil {
+            log.Println("Row scan error:", err)
+            continue
+        }
+
+        products = append(products, map[string]interface{}{
+			"id":          id,
+			"category":    category,
+			"title":       title,
+			"description": description,
+			"price":       price,
+			"thumbnail":  imageURL,
+			//"condition":   condition,
+		})
+    }
+	
+	data := map[string]interface{}{
+        "category": category,
+        "q":        q,
+        "count":    len(products),
+        "products":    products,
+    }
+
+	searchResultsContent, err := core.LoadFrontendFile("src/views/partials/searchresults.hbs")
+    if err != nil {
+        log.Println("Template load error:", err)
+        c.String(http.StatusInternalServerError, fmt.Sprintf("Template load error: %v", err))
+        return
+    }
+
+    renderedSearchResults, err := raymond.Render(searchResultsContent, data)
+    if err != nil {
+        log.Println("Template render error:", err)
+        c.String(http.StatusInternalServerError, fmt.Sprintf("Template render error: %v", err))
+        return
+    }
+
+	layoutTemplate, err := core.LoadFrontendFile("src/views/layouts/layout.hbs")
+    if err != nil {
+        log.Println("Layout load error:", err)
+        c.String(http.StatusInternalServerError, fmt.Sprintf("Layout load error: %v", err))
+        return
+    }
+
+	renderedLayout, err := raymond.Render(layoutTemplate, map[string]interface{}{
+        "title":   "Search Results",
+        "content": raymond.SafeString(renderedSearchResults),
+		"q": q,
+    })
+	if err != nil {
+		log.Println("Layout render error:", err)
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Layout render error: %v", err))
+		return
+	}
 
 
-		var items []Item
-		for rows.Next() {
-			var it Item
-			err := rows.Scan(&it.ID, &it.Category, &it.Title, &it.Description, &it.Price, &it.ImageFull, &it.ImageThumb)
-			if err != nil {
-				log.Println("Row scan error:", err)
-				continue
-			}
-			items = append(items, it)
-		}
 
-
-		data := map[string]interface{}{
-			"category": category,
-			"q":        q,
-			"count":    len(items),
-			"items":    items,
-		}
-
-
-
-		tmpl, err := core.LoadFrontendFile("src/html/search_results.hbs")
-		if err != nil {
-			log.Println("Template load error:", err)
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Template load error: %v", err))
-			return
-		}
-
-		rendered, err := raymond.Render(tmpl, data)
-		if err != nil {
-			log.Println("Template render error:", err)
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Template render error: %v", err))
-			return
-		}
-
-
-		c.Header("Content-Type", "text/html")
-		c.String(http.StatusOK, rendered)
-	*/
+    // Send the rendered HTML as the response
+    c.Header("Content-Type", "text/html")
+    c.String(http.StatusOK, renderedLayout)
+	
 }
+

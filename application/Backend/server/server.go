@@ -1,14 +1,15 @@
 package server
 
 import (
-	database "application/Database"
-	"fmt"
+	//"database/sql"
+	//"fmt"
 	"log"
-	"net/http"
+	//"net/http"
 	"os"
 	"path/filepath"
 
 	"application/Backend/routes"
+	//database "application/Database"
 
 	"github.com/aymerick/raymond"
 	"github.com/gin-gonic/gin"
@@ -82,92 +83,90 @@ func StartServer() {
 		raymond.RegisterPartial("header", headerPartial)
 	}
 
-	// Register partials
-	//raymond.RegisterPartial("filter", filterPartial)
-	//raymond.RegisterPartial("header", headerPartial)
+	// router.GET("/searchresults", func(c *gin.Context) {
+	// 	// Get query parameters
+	// 	category := c.DefaultQuery("category", "All")
+	// 	searchValue := c.DefaultQuery("searchValue", "")
 
-	// Example route to fetch search results from the database
-	router.GET("/searchresults", func(c *gin.Context) {
-		// Get the search string from the query parameters
-		searchString := c.Query("q")
-		if searchString == "" {
-			c.String(http.StatusBadRequest, "Search query is required")
-			return
-		}
+	// 	// Build the SQL query
+	// 	var rows *sql.Rows
+	// 	var err error
+	// 	if category == "All" && searchValue == "" {
+	// 		// No filters, show all items
+	// 		rows, err = database.DB.Query("SELECT * FROM items")
+	// 	} else if category == "All" {
+	// 		// Only free text search
+	// 		rows, err = database.DB.Query("SELECT * FROM items WHERE CONCAT(title, ' ', description) LIKE ?", "%"+searchValue+"%")
+	// 	} else if searchValue == "" {
+	// 		// Only category filter
+	// 		rows, err = database.DB.Query("SELECT * FROM items WHERE category = ?", category)
+	// 	} else {
+	// 		// Both category and free text search
+	// 		rows, err = database.DB.Query("SELECT * FROM items WHERE category = ? AND CONCAT(title, ' ', description) LIKE ?", category, "%"+searchValue+"%")
+	// 	}
 
-		// Execute the stored procedure
-		rows, err := database.DB.Query("CALL search_items(?)", searchString)
-		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Error executing search query: %v", err))
-			return
-		}
-		defer rows.Close()
+	// 	if err != nil {
+	// 		c.String(http.StatusInternalServerError, fmt.Sprintf("Error executing search query: %v", err))
+	// 		return
+	// 	}
+	// 	defer rows.Close()
 
-		// Parse the results into events and products
-		var events []map[string]string
-		var products []map[string]string
-		for rows.Next() {
-			var itemType, thumbnail, title, host, conditionOrDate string
-			if err := rows.Scan(&itemType, &thumbnail, &title, &host, &conditionOrDate); err != nil {
-				c.String(http.StatusInternalServerError, fmt.Sprintf("Error scanning row: %v", err))
-				return
-			}
+	// 	// Parse the results
+	// 	var items []map[string]string
+	// 	for rows.Next() {
+	// 		var id, title, description, category, thumbnail string
+	// 		if err := rows.Scan(&id, &title, &description, &category, &thumbnail); err != nil {
+	// 			c.String(http.StatusInternalServerError, fmt.Sprintf("Error scanning row: %v", err))
+	// 			return
+	// 		}
 
-			if itemType == "event" {
-				events = append(events, map[string]string{
-					"thumbnail": thumbnail,
-					"date":      conditionOrDate,
-					"title":     title,
-					"host":      host,
-				})
-			} else if itemType == "product" {
-				products = append(products, map[string]string{
-					"thumbnail": thumbnail,
-					"title":     title,
-					"host":      host,
-					"condition": conditionOrDate,
-				})
-			}
-		}
+	// 		items = append(items, map[string]string{
+	// 			"id":          id,
+	// 			"title":       title,
+	// 			"description": description,
+	// 			"category":    category,
+	// 			"thumbnail":   thumbnail,
+	// 		})
+	// 	}
 
-		// Load the layout template
-		layoutTemplate, err := loadTemplate("../Frontend/src/views/layouts/layout.hbs")
-		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading layout: %v", err))
-			return
-		}
+	// 	// Load the layout and searchresults templates
+	// 	layoutTemplate, err := loadTemplate("../Frontend/src/views/layouts/layout.hbs")
+	// 	if err != nil {
+	// 		c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading layout: %v", err))
+	// 		return
+	// 	}
 
-		// Load the searchresults template
-		searchResultsTemplate, err := loadTemplate("../Frontend/src/views/partials/searchresults.hbs")
-		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading searchresults template: %v", err))
-			return
-		}
+	// 	searchResultsTemplate, err := loadTemplate("../Frontend/src/views/partials/searchresults.hbs")
+	// 	if err != nil {
+	// 		c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading searchresults template: %v", err))
+	// 		return
+	// 	}
 
-		// Render the searchresults content with data
-		content, err := raymond.Render(searchResultsTemplate, map[string]interface{}{
-			"title":    "Search Results",
-			"events":   events,
-			"products": products,
-		})
-		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering searchresults content: %v", err))
-			return
-		}
+	// 	// Render the searchresults content
+	// 	content, err := raymond.Render(searchResultsTemplate, map[string]interface{}{
+	// 		"items":       items,
+	// 		"category":    category,
+	// 		"searchValue": searchValue,
+	// 		"totalCount":  len(items),
+	// 	})
+	// 	if err != nil {
+	// 		c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering searchresults content: %v", err))
+	// 		return
+	// 	}
 
-		// Render the final layout with the content
-		output, err := raymond.Render(layoutTemplate, map[string]interface{}{
-			"title":   "Search Results",
-			"content": raymond.SafeString(content),
-		})
-		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))
-			return
-		}
+	// 	// Render the final layout
+	// 	output, err := raymond.Render(layoutTemplate, map[string]interface{}{
+	// 		"title":   "Search Results",
+	// 		"content": raymond.SafeString(content),
+	// 	})
+	// 	if err != nil {
+	// 		c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))
+	// 		return
+	// 	}
 
-		c.Header("Content-Type", "text/html")
-		c.String(http.StatusOK, output)
-	})
+	// 	c.Header("Content-Type", "text/html")
+	// 	c.String(http.StatusOK, output)
+	// })
 
 	log.Println("🚀 Server running on http://0.0.0.0:9081")
 	router.Run("0.0.0.0:9081")
