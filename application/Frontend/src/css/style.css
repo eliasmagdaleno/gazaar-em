@@ -1,13 +1,13 @@
-:root{
+:root {
   --site-bg: #0b1622;
 }
 
-:after, 
-:before{
+:after,
+:before {
   box-sizing: border-box;
 }
 
-body{
+body {
   height: 100%;
   margin: 0%;
 }
@@ -15,31 +15,29 @@ body{
   text-align: center;
 }
 
-.banner{
+.banner {
   padding: 20px;
-  
+
   position: relative;
-    
 }
 
-.buttonstack button{
+.buttonstack button {
   padding-block: 20px 15px;
   width: 30%;
   margin: 10px;
   display: block;
-  font-family:Arial, sans-serif;
-  text-align:center;
-  
+  font-family: Arial, sans-serif;
+  text-align: center;
 }
 
-.topnav{
+.topnav {
   height: 100%;
   width: 100%;
   position: relative;
   margin-bottom: 10px;
 }
 
-.topnav ul{
+.topnav ul {
   list-style-type: none;
   display: flex;
   text-decoration: none;
@@ -49,108 +47,187 @@ body{
   justify-content: space-evenly;
   flex-flow: row wrap;
   position: relative;
-  
 }
 
-.topnav .active{
+.topnav .active {
   padding-left: 0px;
-  padding-right: 100px; 
+  padding-right: 100px;
   cursor: pointer;
   text-decoration: none;
-  
 }
-.topnav a{
+.topnav a {
   text-decoration: none;
   color: black;
   font-size: 20px;
 }
-.topnav a.active:visited{
+.topnav a.active:visited {
   text-decoration: none;
 }
-a:active{
+a:active {
   text-decoration: none;
 }
-.topnav a:link{
+.topnav a:link {
   text-decoration: none;
 }
-.topnav a:visited{
+.topnav a:visited {
   text-decoration: none;
 }
 
-.event-section{
+
+.homepage-container .event-section {
   display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  margin-bottom: 30px;
 }
-.event-section h2{
-  padding-left: 50px;
-  padding-bottom: 50px;
+.upcoming-header {
+  margin-left: 50px;
+  margin-bottom: 0px;
 }
-.event-card{
-  padding-top: 100px;
-  padding: 50px;
+.homepage-container .event-card {
+  background-color: grey;
+  margin-top: 100px;
+  margin-inline: 15px;
+  height: 200px;
+  width: 175px;
+  padding: 10px;
+  border-radius: 8px;
   text-align: center;
 }
-.event-title{
-  font-size: 30px;
+.homepage-container .event-title {
+  font-size: 25px;
   margin: 0px;
 }
-.product-section{
+
+.homepage-container .event-info {
+  margin-top: 55px;
+  text-align: left;
+  color: white;
+}
+
+.homepage-container .event-date {
+  margin: 0px;
+}
+.homepage-container .event-host {
+  margin: 0px;
+}
+.homepage-container .product-section {
   display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
 }
-.product-section h2{
-  padding-left: 50px;
-  padding-bottom: 50px;
+.featured-header {
+  margin-left: 50px;
+  margin-bottom: 0px;
 }
-.product-card{
-  padding: 50px;
+
+.homepage-container .product-card {
+  background-color: grey;
+  margin-top: 100px;
+  margin-inline: 15px;
+
+  height: 200px;
+  width: 175px;
+
+  padding: 10px;
+  border-radius: 8px;
   text-align: center;
 }
-.save-button{
+.homepage-container .product-info {
+  margin-top: 55px;
+  text-align: left;
+  color: white;
+}
+
+.homepage-container .product-name {
+  font-size: 25px;
+  margin: 0px;
+}
+.homepage-container .product-price {
+  margin: 0px;
+}
+.homepage-container .product-condition {
+  margin: 0px;
+}
+.save-button {
   background: grey;
 }
 
-.search{
+.search {
   display: flex;
   align-items: center;
 }
-.search-bar{
+.search-bar {
   align-self: center;
 }
-.search-filter{
+.search-filter {
   /*! height: 40px; */
 }
+.results-section {
+  display: flex;
+  flex-direction: row;
+  padding-left: 100px;
+  gap: 20px;
+  text-align: center;
+}
 
+.results-count {
+  padding-top: 22px;
+  font-size: 15px;
+}
 
+.results-container .product-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.results-container .product-section {
+  text-align: center;
+}
 
-.search-text{
+.results-container .product-card {
+  background-color: grey;
+  width: 300px;
+  height: 150px;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.results-container .product-info {
+  padding-top: 30px;
+}
+
+.search-text {
   width: 300px;
   height: 20px;
   padding: 6px;
 }
-.search-button{
+.search-button {
   height: 35px;
   width: 70px;
 }
 
-
-.aboutme-title{
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    text-align: center;
+.aboutme-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
 }
- 
-.profile-pic{
+
+.profile-pic {
   display: block;
   margin-left: auto;
   margin-right: auto;
- 
 }
 .name {
   text-align: center;
-  
-  
 }
-.bio  {
+.bio {
   text-align: center;
 }

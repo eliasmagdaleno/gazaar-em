@@ -8,11 +8,11 @@
     <title>{{title}}</title>
 </head> --}}
 
-    <div class="container">
+    <div class="results-container">
 
-        <div class="Results-Section">
-            <h1>Results</h1>
-            <h2>{{totalresults}} Results found</h2>
+        <div class="results-section">
+            <h1 class="results-header">Results</h1>
+            <p class="results-count">{{count}} Results found</p>
         </div>
         
         
@@ -26,7 +26,7 @@
 
         
         <div class="product-section">
-            <h2>Products</h2>
+            <h2 class="product-header">Products</h2>
             {{#each products}}
                 {{> productcard}}
             {{/each}}

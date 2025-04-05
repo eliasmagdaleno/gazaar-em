@@ -1,13 +1,13 @@
 package routes
 
 import (
-	"os"
 	"fmt"
 	"net/http"
+	"os"
 	"path/filepath"
 
-	"github.com/gin-gonic/gin"
 	"github.com/aymerick/raymond"
+	"github.com/gin-gonic/gin"
 )
 
 var (
@@ -57,10 +57,14 @@ func homeHandler(c *gin.Context) {
 		"events": []map[string]string{
 			{"thumbnail": "/frontend/Assets/event1.jpg", "date": "April 1, 2025", "title": "Event 1", "host": "Host A"},
 			{"thumbnail": "/frontend/Assets/event2.jpg", "date": "April 2, 2025", "title": "Event 2", "host": "Host B"},
+			{"thumbnail": "/frontend/Assets/event2.jpg", "date": "April 2, 2025", "title": "Event 3", "host": "Host C"},
+			{"thumbnail": "/frontend/Assets/event2.jpg", "date": "April 2, 2025", "title": "Event 4", "host": "Host D"},
 		},
 		"products": []map[string]string{
 			{"thumbnail": "/frontend/Assets/product1.jpg", "title": "Product 1", "host": "$10", "condition": "New"},
 			{"thumbnail": "/frontend/Assets/product2.jpg", "title": "Product 2", "host": "$20", "condition": "Used"},
+			{"thumbnail": "/frontend/Assets/product2.jpg", "title": "Product 3", "host": "$15", "condition": "Used"},
+			{"thumbnail": "/frontend/Assets/product2.jpg", "title": "Product 4", "host": "$25", "condition": "Used"},
 		},
 	})
 	if err != nil {

@@ -49,22 +49,32 @@ func searchHandler(c *gin.Context) {
     }
 	defer rows.Close()
 	
-	var items []Item
+	var products []map[string]interface{}
     for rows.Next() {
-        var it Item
-        err := rows.Scan(&it.ID, &it.Category, &it.Title, &it.Description, &it.Price, &it.ImageFull, &it.ImageThumb)
+        var id, category, title, description, imageURL /*condition*/ string 
+		var price float64
+        err := rows.Scan(&id, &category, &title, &description, &price, &imageURL /*, &condition*/)
         if err != nil {
             log.Println("Row scan error:", err)
             continue
         }
-        items = append(items, it)
+
+        products = append(products, map[string]interface{}{
+			"id":          id,
+			"category":    category,
+			"title":       title,
+			"description": description,
+			"price":       price,
+			"thumbnail":  imageURL,
+			//"condition":   condition,
+		})
     }
 	
 	data := map[string]interface{}{
         "category": category,
         "q":        q,
-        "count":    len(items),
-        "items":    items,
+        "count":    len(products),
+        "products":    products,
     }
 
 	searchResultsContent, err := core.LoadFrontendFile("src/views/partials/searchresults.hbs")
@@ -87,9 +97,11 @@ func searchHandler(c *gin.Context) {
         c.String(http.StatusInternalServerError, fmt.Sprintf("Layout load error: %v", err))
         return
     }
+
 	renderedLayout, err := raymond.Render(layoutTemplate, map[string]interface{}{
         "title":   "Search Results",
         "content": raymond.SafeString(renderedSearchResults),
+		"q": q,
     })
 	if err != nil {
 		log.Println("Layout render error:", err)
@@ -102,55 +114,6 @@ func searchHandler(c *gin.Context) {
     // Send the rendered HTML as the response
     c.Header("Content-Type", "text/html")
     c.String(http.StatusOK, renderedLayout)
-
-	/*
-			rows, err := core.DB.Query(query, args...)
-			if err != nil {
-				log.Println("DB Query error:", err)
-				c.String(http.StatusInternalServerError, fmt.Sprintf("DB Query error: %v", err))
-				return
-			}
-			defer rows.Close()
-
-
-		var items []Item
-		for rows.Next() {
-			var it Item
-			err := rows.Scan(&it.ID, &it.Category, &it.Title, &it.Description, &it.Price, &it.ImageFull, &it.ImageThumb)
-			if err != nil {
-				log.Println("Row scan error:", err)
-				continue
-			}
-			items = append(items, it)
-		}
-
-
-		data := map[string]interface{}{
-			"category": category,
-			"q":        q,
-			"count":    len(items),
-			"items":    items,
-		}
-
-
-
-		tmpl, err := core.LoadFrontendFile("src/html/search_results.hbs")
-		if err != nil {
-			log.Println("Template load error:", err)
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Template load error: %v", err))
-			return
-		}
-
-		rendered, err := raymond.Render(tmpl, data)
-		if err != nil {
-			log.Println("Template render error:", err)
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Template render error: %v", err))
-			return
-		}
-
-
-		c.Header("Content-Type", "text/html")
-		c.String(http.StatusOK, rendered)
-	*/
+	
 }
 
