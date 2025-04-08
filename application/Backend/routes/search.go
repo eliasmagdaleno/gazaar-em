@@ -11,31 +11,28 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Item struct {
-	ID          int
-	Category    string
-	Title       string
-	Description string
-	Price       float64
-	ImageFull   string
-	ImageThumb  string
-}
 
 func RegisterSearchRoutes(router *gin.Engine) {
 	router.GET("/search", searchHandler)
 	
+	
 }
 
 func searchHandler(c *gin.Context) {
-	category := c.Query("category")
 	q := c.Query("q")
+	category := c.Query("category")
+	log.Println("Full Raw URL:", c.Request.URL.String())
+	log.Println("Search query (q):", c.Query("q"))
+	log.Println("Search category:", c.Query("category"))
 
 	query := "SELECT item_id, category, title, description, price, image_url FROM items WHERE 1=1"
 	var args []interface{}
-	if category != "" && category != "all" {
+
+	if category != "" && category != "All" {
 		query += " AND category = ?"
 		args = append(args, category)
 	}
+
 	if q != "" {
 		query += " AND CONCAT(title, ' ', description) LIKE ?"
 		args = append(args, "%"+q+"%")
@@ -76,6 +73,7 @@ func searchHandler(c *gin.Context) {
         "count":    len(products),
         "products":    products,
     }
+	
 
 	searchResultsContent, err := core.LoadFrontendFile("src/views/partials/searchresults.hbs")
     if err != nil {
@@ -102,6 +100,7 @@ func searchHandler(c *gin.Context) {
         "title":   "Search Results",
         "content": raymond.SafeString(renderedSearchResults),
 		"q": q,
+		"category": category,
     })
 	if err != nil {
 		log.Println("Layout render error:", err)

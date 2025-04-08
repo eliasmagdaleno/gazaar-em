@@ -17,18 +17,21 @@
         
         
        
-        {{!-- <div class="event-section">
-            <h2>Events</h2>
+        <div class="event-section">
+            {{!-- <h2>Events</h2> --}}
             {{#each events}}
                 {{> eventcard}}
             {{/each}}
-        </div> --}}
+        </div>
 
-        
+    {{#if products}}
         <div class="product-section">
-            <h2 class="product-header">Products</h2>
+            {{!-- <h2 class="product-header">Products</h2> --}}
             {{#each products}}
                 {{> productcard}}
             {{/each}}
         </div>
+    {{else}}
+        <p>No products found.</p>
+    {{/if}}
     </div>
