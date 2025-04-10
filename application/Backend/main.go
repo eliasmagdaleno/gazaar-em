@@ -1,8 +1,8 @@
 package main
 
 import (
+	"application/Backend/database"
 	"application/Backend/server"
-	database "application/Database"
 	"log"
 )
 

@@ -83,8 +83,6 @@ func StartServer() {
 		raymond.RegisterPartial("header", headerPartial)
 	}
 
-	
-
 	log.Println("🚀 Server running on http://0.0.0.0:9081")
 	router.Run("0.0.0.0:9081")
 }
