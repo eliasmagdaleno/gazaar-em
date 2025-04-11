@@ -151,32 +151,62 @@ a:active {
   justify-content: center;
   padding: 20px;
 }
-.results-container .product-section {
-  text-align: center;
-}
 
 .results-container .product-card {
   background-color: grey;
   width: 300px;
-  height: 150px;
+  height: 200px;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 20px;
   text-align: center;
 }
 
+.results-container .product-img{
+  width: 50%;
+  height: 50%;
+  
+}
+.results-container .product-card #save-button{
+  position: relative;
+  
+  
+}
 .results-container .product-info {
-  padding-top: 30px;
+  padding-top: 5px;
+  color: white;
+  text-align: left;
+}
+.results-container .product-name, .results-container .product-price{
+  font-weight: bold;
+  margin: 0px;
+  font-size: 20px;
+}
+
+.search-bar{
+  display: flex;  
+  position: static;
+}
+.search-filter{
+  display: flex;
+  position: static;
+  height: 35px;
 }
 
 .search-text {
+  display: flex;
   width: 300px;
   height: 20px;
   padding: 6px;
 }
 .search-button {
+  display: flex;
+  position: static;
   height: 35px;
-  width: 70px;
+  width: 50px;
+}
+.search-button-text{
+  text-align: center;
 }
 
 .aboutme-title {
