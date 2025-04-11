@@ -1,4 +1,5 @@
 {{! filepath: /home/student/Documents/CSC_648/csc648-fa25-0104-team03/application/Frontend/views/partials/navbar.hbs }}
+
 <nav class="topnav">
   <ul>
     <li>
@@ -17,11 +18,10 @@
         {{log this}}
         <div class="search-filter">
           <select class="filter-dropdown" name="category" type="text">
-            {{! <option selected="selected" value="All">All Categories</option> }}
-            <option value="All">All</option>
-            <option value="Books">Books</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Furniture">Furniture</option>
+            <option value="All" {{#if isAll}}selected{{/if}}>All</option>
+            <option value="Books" {{#if isBooks}}selected{{/if}}>Books</option>
+            <option value="Electronics" {{#if isElectronics}}selected{{/if}}>Electronics</option>
+            <option value="Furniture" {{#if isFurniture}}selected{{/if}}>Furniture</option>
           </select>
         </div>
         <input
@@ -52,3 +52,5 @@
 
   </ul>
 </nav>
+
+      
