@@ -70,6 +70,10 @@ func searchHandler(c *gin.Context) {
 		"q":        q,
 		"count":    len(products),
 		"products": products,
+		"isAll":        category == "All" || category == "",
+		"isBooks":      category == "Books",
+		"isElectronics": category == "Electronics",
+		"isFurniture":  category == "Furniture",
 	}
 
 	searchResultsContent, err := core.LoadFrontendFile("src/views/partials/searchresults.hbs")
@@ -97,7 +101,11 @@ func searchHandler(c *gin.Context) {
 		"title":    "Search Results",
 		"content":  raymond.SafeString(renderedSearchResults),
 		"q":        q,
-		"category": category,
+		"category": category,	
+		"isAll":         category == "All" || category == "",
+		"isBooks":       category == "Books",
+		"isElectronics": category == "Electronics",
+		"isFurniture":   category == "Furniture",
 	})
 	if err != nil {
 		log.Println("Layout render error:", err)

@@ -42,10 +42,6 @@ func RegisterHomeRoutes(r *gin.Engine) error {
 		return fmt.Errorf("error loading index: %w", err)
 	}
 
-
-
-
-	
 	r.GET("/", homeHandler)
 
 	return nil
