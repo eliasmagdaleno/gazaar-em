@@ -21,9 +21,9 @@ func RegisterSearchRoutes(router *gin.Engine) {
 func searchHandler(c *gin.Context) {
 	q := c.Query("q")
 	category := c.Query("category")
-	log.Println("Full Raw URL:", c.Request.URL.String())
-	log.Println("Search query (q):", c.Query("q"))
-	log.Println("Search category:", c.Query("category"))
+	// log.Println("Full Raw URL:", c.Request.URL.String())
+	// log.Println("Search query (q):", c.Query("q"))
+	// log.Println("Search category:", c.Query("category"))
 
 	query := "SELECT item_id, category, title, description, price, image_url FROM items WHERE 1=1"
 	var args []interface{}
