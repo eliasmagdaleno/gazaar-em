@@ -73,8 +73,8 @@ a:active {
   text-decoration: none;
 }
 
-
-.homepage-container .event-section, .homepage-container .product-section{
+.homepage-container .event-section,
+.homepage-container .product-section {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -82,7 +82,8 @@ a:active {
   margin-bottom: 30px;
 }
 
-.homepage-container .event-card, .homepage-container .product-card {
+.homepage-container .event-card,
+.homepage-container .product-card {
   background-color: grey;
   margin-top: 100px;
   margin-inline: 15px;
@@ -92,15 +93,42 @@ a:active {
   border-radius: 8px;
   text-align: center;
 }
-.homepage-container .event-title, .homepage-container .product-name {
-  font-size: 25px;
-  margin: 0px;
+.homepage-container .event-img-section,
+.homepage-container .product-img-section{
+  margin: 0;
+  padding: 0;
+}
+.homepage-container .event-collection, .homepage-container .product-collection{
+  
 }
 
-.homepage-container .event-info, .homepage-container .product-info {
-  margin-top: 55px;
+.homepage-container .event-img, .homepage-container .product-img{
+  height: 75%;
+  width: 75%;
+}
+.homepage-container .save-button-span{
+  position: relative;
+  bottom: 145px;
+  left: 115px;
+}
+.homepage-container .save-button{
+  display: block;
+  top: 8px;
+  right: 10px;
+}
+
+
+
+.homepage-container .event-info,
+.homepage-container .product-info {
+  margin-top: 0px;
   text-align: left;
   color: white;
+}
+.homepage-container .event-title,
+.homepage-container .product-name {
+  font-size: 15px;
+  margin: 0px;
 }
 
 .homepage-container .event-date {
@@ -110,15 +138,11 @@ a:active {
   margin: 0px;
 }
 
-
 .homepage-container .product-price {
   margin: 0px;
 }
 .homepage-container .product-condition {
   margin: 0px;
-}
-.save-button {
-  background: grey;
 }
 
 .search {
@@ -162,32 +186,28 @@ a:active {
   text-align: center;
 }
 
-.results-container .product-img{
+.results-container .product-img {
   width: 50%;
   height: 50%;
-  
 }
-.results-container .product-card #save-button{
-  position: relative;
-  
-  
-}
+
 .results-container .product-info {
   padding-top: 5px;
   color: white;
   text-align: left;
 }
-.results-container .product-name, .results-container .product-price{
+.results-container .product-name,
+.results-container .product-price {
   font-weight: bold;
   margin: 0px;
   font-size: 20px;
 }
 
-.search-bar{
-  display: flex;  
+.search-bar {
+  display: flex;
   position: static;
 }
-.search-filter{
+.search-filter {
   display: flex;
   position: static;
   height: 35px;
@@ -205,7 +225,7 @@ a:active {
   height: 35px;
   width: 50px;
 }
-.search-button-text{
+.search-button-text {
   text-align: center;
 }
 

@@ -7,8 +7,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"application/Backend/utils"
+
 	"github.com/aymerick/raymond"
-	"github.com/disintegration/imaging"
 	"github.com/gin-gonic/gin"
 )
 
@@ -29,25 +30,6 @@ func loadTemplate(filePath string) (string, error) {
 	}
 
 	return string(data), nil
-}
-
-func generateThumbnail(inputPath, outputPath string, width, height int) error {
-	// Open the source image
-	src, err := imaging.Open(inputPath)
-	if err != nil {
-		return fmt.Errorf("failed to open image: %w", err)
-	}
-
-	// Resize the image to the specified dimensions
-	thumbnail := imaging.Resize(src, width, height, imaging.Lanczos)
-
-	// Save the thumbnail to the output path
-	err = imaging.Save(thumbnail, outputPath)
-	if err != nil {
-		return fmt.Errorf("failed to save thumbnail: %w", err)
-	}
-
-	return nil
 }
 
 func RegisterHomeRoutes(r *gin.Engine) error {
@@ -72,7 +54,7 @@ func RegisterHomeRoutes(r *gin.Engine) error {
 	}
 
 	for _, t := range thumbnails {
-		err = generateThumbnail(t.inputPath, t.outputPath, 150, 150)
+		err = utils.GenerateThumbnail(t.inputPath, t.outputPath, 150, 150)
 		if err != nil {
 			log.Printf("Error generating thumbnail for %s: %v", t.inputPath, err)
 		}
