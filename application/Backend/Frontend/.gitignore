@@ -1,0 +1,26 @@
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Node.js / npm
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# TypeScript
+*.tsbuildinfo
+
+# JavaScript / TypeScript
+dist/
+build/
+*.log
+
+# HandleBars (if compiled templates exist)
+#*.hbs~
+
+# Tailwind CSS (cache and build artifacts)
+*.css.map
+*.tailwind-cache
+tailwind-out/

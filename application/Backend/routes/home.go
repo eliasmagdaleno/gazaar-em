@@ -36,21 +36,21 @@ func RegisterHomeRoutes(r *gin.Engine) error {
 	var err error
 
 	// Serve static files from the Frontend/Assets folder
-	r.Static("/assets", "../Frontend/Assets")
+	r.Static("/assets", "Frontend/Assets")
 
 	// Ensure thumbnails are generated
 	thumbnails := []struct {
 		inputPath  string
 		outputPath string
 	}{
-		{"../Frontend/Assets/event1.jpg", "../Frontend/Assets/thumbnails/event1.jpg"},
-		{"../Frontend/Assets/event2.jpg", "../Frontend/Assets/thumbnails/event2.jpg"},
-		{"../Frontend/Assets/event3.jpg", "../Frontend/Assets/thumbnails/event3.jpg"},
-		{"../Frontend/Assets/event4.jpg", "../Frontend/Assets/thumbnails/event4.jpg"},
-		{"../Frontend/Assets/product1.jpg", "../Frontend/Assets/thumbnails/product1.jpg"},
-		{"../Frontend/Assets/product2.jpg", "../Frontend/Assets/thumbnails/product2.jpg"},
-		{"../Frontend/Assets/product3.jpg", "../Frontend/Assets/thumbnails/product3.jpg"},
-		{"../Frontend/Assets/product4.jpg", "../Frontend/Assets/thumbnails/product4.jpg"},
+		{"Frontend/Assets/event1.jpg", "Frontend/Assets/thumbnails/event1.jpg"},
+		{"Frontend/Assets/event2.jpg", "Frontend/Assets/thumbnails/event2.jpg"},
+		{"Frontend/Assets/event3.jpg", "Frontend/Assets/thumbnails/event3.jpg"},
+		{"Frontend/Assets/event4.jpg", "Frontend/Assets/thumbnails/event4.jpg"},
+		{"Frontend/Assets/product1.jpg", "Frontend/Assets/thumbnails/product1.jpg"},
+		{"Frontend/Assets/product2.jpg", "Frontend/Assets/thumbnails/product2.jpg"},
+		{"Frontend/Assets/product3.jpg", "Frontend/Assets/thumbnails/product3.jpg"},
+		{"Frontend/Assets/product4.jpg", "Frontend/Assets/thumbnails/product4.jpg"},
 	}
 
 	for _, t := range thumbnails {
@@ -61,12 +61,12 @@ func RegisterHomeRoutes(r *gin.Engine) error {
 	}
 
 	// Load templates
-	layoutTemplate, err = loadTemplate("../Frontend/src/views/layouts/layout.hbs")
+	layoutTemplate, err = loadTemplate("Frontend/src/views/layouts/layout.hbs")
 	if err != nil {
 		return fmt.Errorf("error loading layout: %w", err)
 	}
 
-	indexTemplate, err = loadTemplate("../Frontend/src/views/index.hbs")
+	indexTemplate, err = loadTemplate("Frontend/src/views/index.hbs")
 	if err != nil {
 		return fmt.Errorf("error loading index: %w", err)
 	}

@@ -1,7 +1,7 @@
 TARGET_OS = linux
 TARGET_ARCH = amd64
 
-FRONTEND_DIR = ../Frontend/
+FRONTEND_DIR = Frontend
 
 export FRONTEND_PATH=$(FRONTEND_DIR)
 
