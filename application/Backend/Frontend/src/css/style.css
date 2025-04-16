@@ -1,0 +1,250 @@
+:root {
+  --site-bg: #0b1622;
+}
+
+:after,
+:before {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+  margin: 0%;
+}
+.banner-text {
+  text-align: center;
+}
+
+.banner {
+  padding: 20px;
+
+  position: relative;
+}
+
+.buttonstack button {
+  padding-block: 20px 15px;
+  width: 30%;
+  margin: 10px;
+  display: block;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.topnav {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.topnav ul {
+  list-style-type: none;
+  display: flex;
+  text-decoration: none;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  justify-content: space-evenly;
+  flex-flow: row wrap;
+  position: relative;
+}
+
+.topnav .active {
+  padding-left: 0px;
+  padding-right: 100px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.topnav a {
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+}
+.topnav a.active:visited {
+  text-decoration: none;
+}
+a:active {
+  text-decoration: none;
+}
+.topnav a:link {
+  text-decoration: none;
+}
+.topnav a:visited {
+  text-decoration: none;
+}
+
+.homepage-container .event-section,
+.homepage-container .product-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  margin-bottom: 30px;
+}
+
+.homepage-container .event-card,
+.homepage-container .product-card {
+  background-color: grey;
+  margin-top: 100px;
+  margin-inline: 15px;
+  height: 200px;
+  width: 175px;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+.homepage-container .event-img-section,
+.homepage-container .product-img-section{
+  margin: 0;
+  padding: 0;
+}
+.homepage-container .event-collection, .homepage-container .product-collection{
+  
+}
+
+.homepage-container .event-img, .homepage-container .product-img{
+  height: 75%;
+  width: 75%;
+}
+.homepage-container .save-button-span{
+  position: relative;
+  bottom: 145px;
+  left: 115px;
+}
+.homepage-container .save-button{
+  display: block;
+  top: 8px;
+  right: 10px;
+}
+
+
+
+.homepage-container .event-info,
+.homepage-container .product-info {
+  margin-top: 0px;
+  text-align: left;
+  color: white;
+}
+.homepage-container .event-title,
+.homepage-container .product-name {
+  font-size: 15px;
+  margin: 0px;
+}
+
+.homepage-container .event-date {
+  margin: 0px;
+}
+.homepage-container .event-host {
+  margin: 0px;
+}
+
+.homepage-container .product-price {
+  margin: 0px;
+}
+.homepage-container .product-condition {
+  margin: 0px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
+.search-bar {
+  align-self: center;
+}
+.search-filter {
+  /*! height: 40px; */
+}
+.results-section {
+  display: flex;
+  flex-direction: row;
+  padding-left: 100px;
+  gap: 20px;
+  text-align: center;
+}
+
+.results-count {
+  padding-top: 22px;
+  font-size: 15px;
+}
+
+.results-container .product-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.results-container .product-card {
+  background-color: grey;
+  width: 300px;
+  height: 200px;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.results-container .product-img {
+  width: 50%;
+  height: 50%;
+}
+
+.results-container .product-info {
+  padding-top: 5px;
+  color: white;
+  text-align: left;
+}
+.results-container .product-name,
+.results-container .product-price {
+  font-weight: bold;
+  margin: 0px;
+  font-size: 20px;
+}
+
+.search-bar {
+  display: flex;
+  position: static;
+}
+.search-filter {
+  display: flex;
+  position: static;
+  height: 35px;
+}
+
+.search-text {
+  display: flex;
+  width: 300px;
+  height: 20px;
+  padding: 6px;
+}
+.search-button {
+  display: flex;
+  position: static;
+  height: 35px;
+  width: 50px;
+}
+.search-button-text {
+  text-align: center;
+}
+
+.aboutme-title {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.profile-pic {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.name {
+  text-align: center;
+}
+.bio {
+  text-align: center;
+}

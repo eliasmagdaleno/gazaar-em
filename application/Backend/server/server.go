@@ -36,7 +36,7 @@ func StartServer() {
 	router := gin.Default()
 
 	// Serve static files (e.g., images, CSS, JS)
-	router.Static("/frontend", "../Frontend")
+	router.Static("/frontend", "Frontend")
 
 	// Trusted proxy configuration
 	router.SetTrustedProxies([]string{"192.168.0.0/24"})
@@ -48,35 +48,35 @@ func StartServer() {
 
 	log.Println("🚀 Server running on http://0.0.0.0:8081")
 
-	navbarPartial, err := loadTemplate("../Frontend/src/views/partials/navbar.hbs")
+	navbarPartial, err := loadTemplate("Frontend/src/views/partials/navbar.hbs")
 	if err != nil {
 		log.Printf("Warning: Could not load navbar partial: %v", err)
 	} else {
 		raymond.RegisterPartial("navbar", navbarPartial)
 	}
 
-	eventCardPartial, err := loadTemplate("../Frontend/src/views/partials/eventcard.hbs")
+	eventCardPartial, err := loadTemplate("Frontend/src/views/partials/eventcard.hbs")
 	if err != nil {
 		log.Printf("Warning: Could not load eventcard partial: %v", err)
 	} else {
 		raymond.RegisterPartial("eventcard", eventCardPartial)
 	}
 
-	productCardPartial, err := loadTemplate("../Frontend/src/views/partials/productcard.hbs")
+	productCardPartial, err := loadTemplate("Frontend/src/views/partials/productcard.hbs")
 	if err != nil {
 		log.Printf("Warning: Could not load productcard partial: %v", err)
 	} else {
 		raymond.RegisterPartial("productcard", productCardPartial)
 	}
 
-	filterPartial, err := loadTemplate("../Frontend/src/views/partials/filter.hbs")
+	filterPartial, err := loadTemplate("Frontend/src/views/partials/filter.hbs")
 	if err != nil {
 		log.Printf("Warning: Could not load filter partial: %v", err)
 	} else {
 		raymond.RegisterPartial("filter", filterPartial)
 	}
 
-	headerPartial, err := loadTemplate("../Frontend/src/views/partials/header.hbs")
+	headerPartial, err := loadTemplate("Frontend/src/views/partials/header.hbs")
 	if err != nil {
 		log.Printf("Warning: Could not load header partial: %v", err)
 	} else {

@@ -27,7 +27,7 @@ import (
 
 // LoadFrontendFile reads HTML or static file from the frontend directory.
 func LoadFrontendFile(filelocation string) (string, error) {
-	path := filepath.Join("../Frontend", filepath.Clean(filelocation))
+	path := filepath.Join("Frontend", filepath.Clean(filelocation))
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return "", err
