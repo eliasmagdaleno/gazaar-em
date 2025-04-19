@@ -1,3 +1,4 @@
+@import "tailwindcss";
 :root {
   --site-bg: #0b1622;
 }
@@ -94,30 +95,29 @@ a:active {
   text-align: center;
 }
 .homepage-container .event-img-section,
-.homepage-container .product-img-section{
+.homepage-container .product-img-section {
   margin: 0;
   padding: 0;
 }
-.homepage-container .event-collection, .homepage-container .product-collection{
-  
+.homepage-container .event-collection,
+.homepage-container .product-collection {
 }
 
-.homepage-container .event-img, .homepage-container .product-img{
+.homepage-container .event-img,
+.homepage-container .product-img {
   height: 75%;
   width: 75%;
 }
-.homepage-container .save-button-span{
+.homepage-container .save-button-span {
   position: relative;
   bottom: 145px;
   left: 115px;
 }
-.homepage-container .save-button{
+.homepage-container .save-button {
   display: block;
   top: 8px;
   right: 10px;
 }
-
-
 
 .homepage-container .event-info,
 .homepage-container .product-info {

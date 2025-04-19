@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "handlebars": "^4.7.8"
+    "@tailwindcss/cli": "^4.1.4",
+    "handlebars": "^4.7.8",
+    "tailwindcss": "^4.1.4"
   }
 }
