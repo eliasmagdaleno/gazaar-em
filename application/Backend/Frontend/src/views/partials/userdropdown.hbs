@@ -1,0 +1,18 @@
+<div class="dropdown">
+  <button class="dropbtn">
+    Username
+    {{user.username}}
+    <img class="size-12 shrink-0" src="/frontend/Assets/icons/user.svg" alt="User" />
+  </button>
+  <div class="dropdown-content">
+    <a href="/profile">Profile</a>
+    <a href="/messages">Messages</a>
+    <a href="/purchases">Purchases</a>
+    <a href="wishlist">Wishlist</a>
+    <a href="/settings">Settings</a>
+    <form action="/users/logout" method="POST" >
+        <input type="hidden" value="{{csrf}}" />
+        <button type="submit">Logout</button>
+    </form>
+  </div>
+</div>

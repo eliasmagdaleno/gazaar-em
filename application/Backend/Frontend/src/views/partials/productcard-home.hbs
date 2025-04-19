@@ -1,0 +1,20 @@
+<div class="product-collection">
+  <div class="product-card  bg-light-mode-bg border border-gray-300 rounded-lg p-4 shadow-md 
+                    flex flex-row gap-4">
+    <div class="product-img-section">
+      <img class="product-img max-w-md" src="{{thumbnail}}" />
+      <span class="save-button-span">
+        <button class="save-button" id="save-button"><img class="bookmark-icon" src="/application/Backend/Frontend/Assets/icons/bookmark.svg" alt="Bookmark"></button>
+      </span>
+    </div>
+    <div class="product-info flex-col w-full">
+      <p class="product-name">{{title}}</p>
+      <p class="product-price">${{price}}</p>
+      <p class="product-condition">{{condition}}</p>
+      {{!-- <p class="product-seller">{{seller}}</p>
+            <p class="product-location">{{location}}</p>
+            <p class="product-description">{{description}}</p> --}}
+    </div>
+
+  </div>
+</div>

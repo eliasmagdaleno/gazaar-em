@@ -1,23 +1,25 @@
-{{!-- filepath: /home/student/Documents/CSC_648/csc648-fa25-0104-team03/application/Frontend/views/layouts/layout.hbs --}}
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="/Frontend/src/css/output.css?version=3" />
+        <link rel="stylesheet" type="text/css" href="/frontend/src/css/output.css?version=3" />
         {{#each css}}
-            <link rel="stylesheet" type="text/css" href="/Frontend/src/css/{{this}}"/> 
+            <link rel="stylesheet" type="text/css" href="/frontend/src/css/{{this}}"/> 
         {{/each}}
         {{#each js}}
             <script defer src="/Frontend/src/js/{{this}}" type="text/javascript"></script>
         {{/each}}
 
 
-        <title>{{title}}</title>
+        {{!-- <title>{{title}}</title> --}}
     </head>
-    <body>
-        {{> header}}
-        {{> navbar}}
+    <body class="bg-white">
+        {{!-- {{> header}} --}}
+        <div class="banner bg-blood-orange-500"> 
+            {{> navbar}}
+        </div>
+            
         {{{content}}}
     </body>
 </html>

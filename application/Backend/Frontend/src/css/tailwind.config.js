@@ -5,7 +5,12 @@ module.exports = {
     "./application/Backend/Frontend/src/views/**/*.hbs",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'light-mode-bg': '#fffd98',
+        'light-mode-header': '#BDE4A7',
+      },
+    },
   },
   plugins: [],
 }

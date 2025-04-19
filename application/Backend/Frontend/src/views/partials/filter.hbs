@@ -1,36 +1,57 @@
-<div class="flex-col bg-gray-100">
-  <ul class="style-none">
-    <h2>Filters</h2>
-    <li>
-      <h3>Price</h3>
-      <input type="number" name="minPrice" placeholder="Min" />
-      <p>To</p>
-      <input type="number" name="maxPrice" placeholder="Max" />
-    </li>
-    <li class="flex-col">
-      <h3>Condition</h3>
-      <input type="checkbox" name="condition" value="new" />
-      New
-      <input type="checkbox" name="condition" value="used" />
-      Used
-      <input type="checkbox" name="condition" value="refurbished" />
-      Refurbished
-      <input type="checkbox" name="condition" value="open-box" />
-      Open Box
-      <input type="checkbox" name="condition" value="damaged" />
-      Damaged
+<div class="flex flex-col bg-light-gray-500 w-sm pr-10 overflow-hidden">
+  <ul class="flex flex-col gap-4 p-4 pl-6">
+    <h2 class="text-lg font-bold">Filters</h2>
 
+    <li class="flex flex-row items-center gap-2">
+      <h3 class="text-md font-semibold">Price</h3>
+      <input class="w-20 border border-dark-gray-500 rounded px-2 py-1" type="number" name="minPrice" placeholder="Min" />
+      <p>To</p>
+      <input class="w-20 border border-dark-gray-500 rounded px-2 py-1" type="number" name="maxPrice" placeholder="Max" />
     </li>
-    <li>
-      <h3>Date Listed</h3>
-      <input type="checkbox" name="dateListed" value="last24h" />
-      Last 24 hours
-      <input type="checkbox" name="dateListed" value="last7d" />
-      Last 7 days
-      <input type="checkbox" name="dateListed" value="last30d" />
-      Last 30 days
-      <input type="checkbox" name="dateListed" value="last90d" />
-      Last 90 days
+
+  <li class="flex flex-col gap-2">
+      <h3 class="text-md font-semibold">Condition</h3>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" name="condition" value="new" />
+        <label>New</label>
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" name="condition" value="used" />
+        <label>Used</label>
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" name="condition" value="refurbished" />
+        <label>Refurbished</label>
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" name="condition" value="open-box" />
+        <label>Open Box</label>
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" name="condition" value="damaged" />
+        <label>Damaged</label>
+      </div>
+    </li>
+
+
+    <li class="flex flex-col gap-2">
+      <h3 class="text-md font-semibold">Date Listed</h3>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" name="dateListed" value="last24h" />
+        <label>Last 24 hours</label>
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" name="dateListed" value="last7d" />
+        <label>Last 7 days</label>
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" name="dateListed" value="last30d" />
+        <label>Last 30 days</label>
+      </div>
+      <div class="flex items-center gap-2">
+        <input type="checkbox" name="dateListed" value="last90d" />
+        <label>Last 90 days</label>
+      </div>
     </li>
   </ul>
 </div>

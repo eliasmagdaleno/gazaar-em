@@ -62,11 +62,17 @@ func StartServer() {
 		raymond.RegisterPartial("eventcard", eventCardPartial)
 	}
 
-	productCardPartial, err := loadTemplate("Frontend/src/views/partials/productcard.hbs")
+	productCardHomePartial, err := loadTemplate("Frontend/src/views/partials/productcard-home.hbs")
 	if err != nil {
-		log.Printf("Warning: Could not load productcard partial: %v", err)
+		log.Printf("Warning: Could not load productcard-home partial: %v", err)
 	} else {
-		raymond.RegisterPartial("productcard", productCardPartial)
+		raymond.RegisterPartial("productcard-home", productCardHomePartial)
+	}
+	productCardSrPartial, err := loadTemplate("Frontend/src/views/partials/productcard-search.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load productcard-search partial: %v", err)
+	} else {
+		raymond.RegisterPartial("productcard-search", productCardSrPartial)
 	}
 
 	filterPartial, err := loadTemplate("Frontend/src/views/partials/filter.hbs")

@@ -1,21 +1,23 @@
-<nav class="topnav">
-  <ul>
+<nav class="navbar bg-blood-orange-500 text-light-black-500">
+  <ul class="flex flex-wrap relative justify-evenly items-center gap-4 list-none p-4 text-2xl text-center">
     <li>
 
-      <a class="active" href="/">Logo Placeholder</a>
+      <a href="/">
+        <img class="size-8 shrink-0" src="/frontend/Assets/icons/home.svg" alt="Home" />
+      </a>
     </li>
 
-    <li class="search">
+    <li class="flex items-center bg-white rounded-md">
 
       <form
-        class="search-bar"
+        class="flex items-center gap-2"
         action="/search"
         method="GET"
         enctype="application/x-www-form-urlencoded"
       >
-        {{log this}}
-        <div class="search-filter">
-          <select class="Item 1filter-dropdown" name="category" type="text">
+        {{!-- {{log this}} --}}
+        <div class="search-filter text-right">
+          <select class="filter-dropdown" name="category" type="text">
             <option value="All" {{#if isAll}}selected{{/if}}>All</option>
             <option value="Books" {{#if isBooks}}selected{{/if}}>Books</option>
             <option value="Electronics" {{#if isElectronics}}selected{{/if}}>Electronics</option>
@@ -24,28 +26,30 @@
         </div>
         <input
           id="search-text"
-          class="search-text"
+          class="bg-white"
           name="q"
           type="text"
           value="{{q}}"
           placeholder="Search..."
         />
-        <button type="submit" class="search-button">
-          <p class="search-button-text">Search</p>
+        <button type="submit" class="search-button bg-white rounded-md">
+          <img class="size-8 shrink-0" src="/frontend/Assets/icons/search.svg" alt="Search" />
         </button>
       </form>
     </li>
     <li>
-      <a class="market-link" href="market">Market</a>
+      <a class="market-link" href="/market">Market</a>
     </li>
     <li>
-      <a class="events-link" href="events">Events</a>
+      <a class="events-link" href="/events">Events</a>
     </li>
     <li>
-      <a class="map-link" href="map">Map</a>
+      <a class="map-link" href="/map">Map</a>
     </li>
     <li>
-      <a href="profile">Profile</a>
+      <a href="profile">
+        <img class="size-8 shrink-0" src="/frontend/Assets/icons/user.svg" alt="Home" />
+      </a>
     </li>
 
   </ul>
