@@ -1,5 +1,5 @@
 <nav class="navbar bg-blood-orange-500 text-light-black-500">
-  <ul class="flex flex-wrap relative justify-evenly items-center gap-4 list-none p-4 text-2xl font-semibold text-center">
+  <ul class="flex flex-wrap relative justify-around items-center gap-4 list-none first:pl-2 last:pr-2 p-4 text-2xl font-semibold text-center">
     <li >
 
       <a href="/" class="group">
@@ -7,6 +7,11 @@
         <img class="size-8 shrink-0 hidden group-hover:block" src="/frontend/Assets/icons/feather-light-gray/home.svg" alt="Home Hover" />
       </a>
     </li>
+
+    <li class="font-bold">
+      Gazaar
+    </li>
+
 
     <li class="flex items-center bg-light-gray-500 rounded-lg">
 
@@ -17,8 +22,8 @@
         enctype="application/x-www-form-urlencoded"
       >
         {{!-- {{log this}} --}}
-        <div class="search-filter text-right">
-          <select class="filter-dropdown" name="category" type="text">
+        <div class="search-filter text-center">
+          <select class="filter-dropdown text-center" name="category" type="text">
             <option value="All" {{#if isAll}}selected{{/if}}>All</option>
             <option value="Books" {{#if isBooks}}selected{{/if}}>Books</option>
             <option value="Electronics" {{#if isElectronics}}selected{{/if}}>Electronics</option>
@@ -34,7 +39,7 @@
           placeholder="Search..."
         />
         <button type="submit" class="search-button bg-light-gray-500 rounded-md">
-          <img class="size-8 shrink-0" src="/frontend/Assets/icons/feather-light-black/search.svg" alt="Search" />
+          <img class="size-6 shrink-0" src="/frontend/Assets/icons/feather-light-black/search.svg" alt="Search" />
         </button>
       </form>
     </li>
