@@ -1,13 +1,10 @@
 
-<div class="results-container flex flex-row justify-start gap-25">
-
-  
-        
+<div class="results-container flex flex-row justify-start gap-25 bg-light-gray-500">
     {{> filter}}    
     <div class="results-section  text-center w-lg ">
         <h1 class="results-header font-bold text-3xl text-left">Results</h1>
         <p class="results-count text-base text-left">{{count}} Results found</p>
-         <div class="event-section flex flex-col mt-6">
+        <div class="event-section flex flex-col mt-6">
             {{#each events}}
                 {{> eventcard}}
             {{/each}}
@@ -15,16 +12,15 @@
 
         {{#if products}}
             <div class="product-section">
-                {{#each products}}
-                         
-                    {{> productcard-search}}
-                    
-                {{/each}}
+                <div class="product-list flex flex-col mt-6 gap-2">
+                    {{#each products}}   
+                        {{> productcard-search}}
+                    {{/each}}
+                </div>
+                
             </div>
         {{else}}
             <p>No products found.</p>
         {{/if}}
-    </div>
-    
-   
+    </div>  
 </div>

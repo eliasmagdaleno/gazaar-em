@@ -1,16 +1,16 @@
 <nav class="navbar bg-blood-orange-500 text-light-black-500">
-  <ul class="flex flex-wrap relative justify-evenly items-center gap-4 list-none p-4 text-2xl text-center">
-    <li>
+  <ul class="flex flex-wrap relative justify-evenly items-center gap-4 list-none p-4 text-2xl font-semibold text-center">
+    <li >
 
       <a href="/">
-        <img class="size-8 shrink-0" src="/frontend/Assets/icons/home.svg" alt="Home" />
+        <img class="size-8 shrink-0 hover:bg-light-gray-500" src="/frontend/Assets/icons/feather-light-black/home.svg" alt="Home" />
       </a>
     </li>
 
-    <li class="flex items-center bg-white rounded-md">
+    <li class="flex items-center bg-light-gray-500 rounded-lg">
 
       <form
-        class="flex items-center gap-2"
+        class="flex items-center gap-2 shadow-md"
         action="/search"
         method="GET"
         enctype="application/x-www-form-urlencoded"
@@ -26,30 +26,41 @@
         </div>
         <input
           id="search-text"
-          class="bg-white"
+          class="bg-light-gray-500"
           name="q"
           type="text"
           value="{{q}}"
           placeholder="Search..."
         />
-        <button type="submit" class="search-button bg-white rounded-md">
-          <img class="size-8 shrink-0" src="/frontend/Assets/icons/search.svg" alt="Search" />
+        <button type="submit" class="search-button bg-light-gray-500 rounded-md">
+          <img class="size-8 shrink-0" src="/frontend/Assets/icons/feather-light-black/search.svg" alt="Search" />
         </button>
       </form>
     </li>
     <li>
-      <a class="market-link" href="/market">Market</a>
+      <a class="market-link text-shadow-md hover:bg-light-gray-500" href="/market">Market</a>
     </li>
     <li>
-      <a class="events-link" href="/events">Events</a>
+      <a class="events-link text-shadow-md hover:bg-light-gray-500" href="/events">Events</a>
     </li>
     <li>
-      <a class="map-link" href="/map">Map</a>
+      <a class="map-link text-shadow-md hover:bg-light-gray-500" href="/map">Map</a>
     </li>
-    <li>
-      <a href="profile">
-        <img class="size-8 shrink-0" src="/frontend/Assets/icons/user.svg" alt="Home" />
-      </a>
+    <li class="relative">
+      <button id="profile-button" class="flex items-center gap-2">
+        <img class="size-8 shrink-0" src="/frontend/Assets/icons/feather-light-black/user.svg" alt="Profile" />
+      </button>
+      <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-light-orange-500 rounded-md shadow-md">
+        <a href="/profile" class="block px-4 py-2 hover:bg-light-gray-500">Profile</a>
+        <a href="/messages" class="block px-4 py-2 hover:bg-light-gray-500">Messages</a>
+        <a href="/purchases" class="block px-4 py-2 hover:bg-light-gray-500">Purchases</a>
+        <a href="/wishlist" class="block px-4 py-2 hover:bg-light-gray-500">Wishlist</a>
+        <a href="/settings" class="block px-4 py-2 hover:bg-light-gray-500">Settings</a>
+        <form action="/users/logout" method="POST" >
+          <input type="hidden" value="{{csrf}}" />
+          <button type="submit" class="w-full  hover:bg-light-gray-500">Logout</button>
+        </form>
+      </div>
     </li>
 
   </ul>

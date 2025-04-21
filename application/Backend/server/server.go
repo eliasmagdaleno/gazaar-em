@@ -70,11 +70,33 @@ func StartServer() {
 	} else {
 		raymond.RegisterPartial("productcard-home", productCardHomePartial)
 	}
+
 	productCardSrPartial, err := loadTemplate("Frontend/src/views/partials/productcard-search.hbs")
 	if err != nil {
 		log.Printf("Warning: Could not load productcard-search partial: %v", err)
 	} else {
 		raymond.RegisterPartial("productcard-search", productCardSrPartial)
+	}
+
+	senderCardPartial, err := loadTemplate("Frontend/src/views/partials/sendercard.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load sendercard partial: %v", err)
+	} else {
+		raymond.RegisterPartial("sendercard", senderCardPartial)
+	}
+
+	senderMessagePartial, err := loadTemplate("Frontend/src/views/partials/sendermessage.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load sendermessage partial: %v", err)
+	} else {
+		raymond.RegisterPartial("sendermessage", senderMessagePartial)
+	}
+
+	recipientMessagePartial, err := loadTemplate("Frontend/src/views/partials/recipientmessage.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load recipientmessage partial: %v", err)
+	} else {
+		raymond.RegisterPartial("recipientmessage", recipientMessagePartial)
 	}
 
 	filterPartial, err := loadTemplate("Frontend/src/views/partials/filter.hbs")

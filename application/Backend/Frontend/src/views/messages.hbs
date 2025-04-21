@@ -1,0 +1,47 @@
+<div class="messages-container grid grid-cols-12">
+    <div class="senders-section col-span-4 h-screen bg-light-orange-500">
+        <h2 class="messages-title text-3xl font-bold ml-5 shadow-md">Messages</h2>
+        <div class="senders-list flex flex-col mt-2 gap-0.5">
+            {{> sendercard}}
+            {{> sendercard}}
+            {{> sendercard}}
+            {{> sendercard}}
+            {{> sendercard}}
+            {{> sendercard}}
+        </div>
+    </div>
+
+    <div class="chat-section col-span-8 bg-light-gray-500 flex flex-col justify-between h-screen">
+        <div class="message-header flex flex-row justify-between items-center bg-dark-gray-500 p-4">
+            <div class="sender-info flex flex-row gap-2">
+                <img class="sender-pfp h-16 w-16 rounded-full" src="/frontend/Assets/icons/feather-light-black/user.svg" />
+                <div class="sender-details flex flex-col">
+                    <p class="sender-name font-bold text-lg">Sender Name</p>
+                </div>
+            </div>
+        </div>
+        <div class="message-section flex flex-col gap-4 mt-4 overflow-y-auto">
+            {{> sendermessage}}
+            {{> sendermessage}}
+            {{> sendermessage}}
+
+            {{> recipientmessage}}
+            {{> recipientmessage}}
+            
+
+        </div>
+        <div class="message-form mt-4 bg-dark-gray-500 text-light-black-500">
+            <form class="message-input flex items-center p-4 border border-dark-gray-500 bg-dark-gray-500 rounded-md">
+                <textarea class="flex-grow p-2 border border-light-gray-500 bg-light-gray-500 rounded-md" rows="1" placeholder="Type your message here...">
+                </textarea>
+                <button type="submit" class="send-button  bg-light-orange-500 text-light-gray-500 rounded-md px-4 py-2">
+                    <img class="send-icon" src="/frontend/Assets/icons/feather-light-black/send.svg" alt="Send" />
+                </button>
+            </form>
+        </div>
+    </div>
+
+   
+
+    
+</div>
