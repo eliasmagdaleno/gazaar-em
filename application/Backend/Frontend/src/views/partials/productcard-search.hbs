@@ -3,26 +3,30 @@
 >
   <div class="product-img-section size-auto">
     <img class="product-img h-48 w-80" src="{{thumbnail}}" />
-    <span class="save-button-span absolute top-2.5 right-4">
-      <button class="save-button block" id="save-button">
-          <img
-            class="bookmark-icon"
-            src="/frontend/Assets/icons/feather-blood-orange/bookmark.svg"
-            alt="Bookmark"
-          />
-      </button>
-    </span>
   </div>
-  <div class="product-info flex-col w-full text-left gap-2">
-    <button class="product-link" id="product-link" onclick="window.location.href='/listing'">
-        <h2 class="product-title text-lg font-bold text-gray-800">{{title}}</h2>
+  <div class="product-info flex-col self-center w-full text-left gap-2">
+    <button
+      class="product-link"
+      id="product-link"
+      onclick="window.location.href='/listing'"
+    >
+      <h2 class="product-title text-2xl sm:text-md md:text-3xl font-bold text-light-black-500 hover:text-light-gray-500 cursor-pointer">{{title}}</h2>
     </button>
-    <p class="product-price mt-2">${{price}}</p>
+    <p class="product-price mt-2 font-semibold">${{price}}</p>
     <p class="product-condition mt-2">{{condition}}</p>
     <p class="product-description">{{description}}</p>
     <!-- <p class="product-seller">{{seller}}</p> -->
     <!-- <p class="product-location">{{location}}</p> -->
     <!-- <p class="product-description">{{description}}</p> -->
   </div>
+  <span class="save-button-span absolute ">
+    <button class="save-button bg-blood-orange-500 p-2 rounded-full ml-1 mt-1 cursor-pointer" id="save-button">
+      <img
+        class="bookmark-icon"
+        src="/frontend/Assets/icons/feather-light-black/bookmark.svg"
+        alt="Bookmark"
+      />
+    </button>
+  </span>
 
 </div>
