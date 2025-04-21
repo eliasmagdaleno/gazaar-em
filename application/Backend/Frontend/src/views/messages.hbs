@@ -1,6 +1,6 @@
 <div class="messages-container grid grid-cols-12">
     <div class="senders-section col-span-4 h-screen bg-light-orange-500">
-        <h2 class="messages-title text-3xl font-bold ml-5 shadow-md">Messages</h2>
+        <h2 class="messages-title text-3xl font-bold ml-5 text-shadow-md">Messages</h2>
         <div class="senders-list flex flex-col mt-2 gap-0.5">
             {{> sendercard}}
             {{> sendercard}}
@@ -30,9 +30,9 @@
             
 
         </div>
-        <div class="message-form mt-4 bg-dark-gray-500 text-light-black-500">
-            <form class="message-input flex items-center p-4 border border-dark-gray-500 bg-dark-gray-500 rounded-md">
-                <textarea class="flex-grow p-2 border border-light-gray-500 bg-light-gray-500 rounded-md" rows="1" placeholder="Type your message here...">
+        <div class="message-form mt-4 bg-dark-gray-500 text-light-black-500 pt-4">
+            <form action="/send-message" method="POST" class="message-input flex items-center p-4 border border-dark-gray-500 bg-dark-gray-500 rounded-md">
+                <textarea class="flex-grow p-2 text-light-black-500 bg-light-gray-500 rounded-md" rows="1" placeholder="Type your message here...">
                 </textarea>
                 <button type="submit" class="send-button  bg-light-orange-500 text-light-gray-500 rounded-md px-4 py-2">
                     <img class="send-icon" src="/frontend/Assets/icons/feather-light-black/send.svg" alt="Send" />

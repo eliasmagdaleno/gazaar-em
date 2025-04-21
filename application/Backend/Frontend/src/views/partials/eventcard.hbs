@@ -14,12 +14,12 @@
         id="event-link"
         onclick="window.location.href='/listing'"
       >
-        <h2 class="event-title font-bold text-2xl">{{title}}</h2>
+        <h2 class="event-title font-bold text-2xl sm:text-md md:text-3xl hover:text-light-gray-500 cursor-pointer">{{title}}</h2>
       </button>
       <p class="event-host">{{host}}</p>
     </div>
     <span class="save-button-span absolute">
-      <button class="save-button bg-blood-orange-500 rounded-md ml-1 mt-1 cursor-pointer" id="save-button">
+      <button class="save-button bg-blood-orange-500 rounded-full ml-1 mt-1 cursor-pointer" id="save-button">
         <img
           class="bookmark-icon size-6"
           src="/frontend/Assets/icons/feather-dark-gray/bookmark.svg"
