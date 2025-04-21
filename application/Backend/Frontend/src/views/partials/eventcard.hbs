@@ -1,18 +1,32 @@
 {{! filepath: /home/student/Documents/CSC_648/csc648-fa25-0104-team03/application/Frontend/src/views/partials/eventcard.hbs }}
 <div class="event-collection">
-  <div class="event-card">
-    <div class = "event-img-section">
-        <img class="event-img" src="{{thumbnail}}" />
-        <span class="save-button-span">
-            <button class="save-button" id="save-button">Save</button>
-        </span>
+  <div
+    class="event-card bg-light-orange-500 rounded-lg p-2 shadow-md flex flow-row gap-4"
+  >
+    <div class="event-img-section shadow-md">
+      <img class="event-img max-w-md" src="{{thumbnail}}" />
     </div>
-    
-    <div class="event-info">
-      <p class="event-date">{{date}}</p>
-      <p class="event-title">{{title}}</p>
+
+    <div class="event-info self-center flex-col w-full pt-2">
+      <p class="event-date font-semibold text-base">{{date}}</p>
+      <button
+        class="event-link hover:text-light-gray-500"
+        id="event-link"
+        onclick="window.location.href='/listing'"
+      >
+        <h2 class="event-title font-bold text-2xl">{{title}}</h2>
+      </button>
       <p class="event-host">{{host}}</p>
     </div>
+    <span class="save-button-span absolute">
+      <button class="save-button bg-blood-orange-500 rounded-md ml-1 mt-1 cursor-pointer" id="save-button">
+        <img
+          class="bookmark-icon size-6"
+          src="/frontend/Assets/icons/feather-dark-gray/bookmark.svg"
+          alt="Bookmark"
+        />
+      </button>
+    </span>
 
   </div>
 </div>

@@ -2,15 +2,16 @@
   <ul class="flex flex-wrap relative justify-evenly items-center gap-4 list-none p-4 text-2xl font-semibold text-center">
     <li >
 
-      <a href="/">
-        <img class="size-8 shrink-0 hover:bg-light-gray-500" src="/frontend/Assets/icons/feather-light-black/home.svg" alt="Home" />
+      <a href="/" class="group">
+        <img class="size-8 shrink-0 group-hover:hidden" src="/frontend/Assets/icons/feather-light-black/home.svg" alt="Home" />
+        <img class="size-8 shrink-0 hidden group-hover:block" src="/frontend/Assets/icons/feather-light-gray/home.svg" alt="Home Hover" />
       </a>
     </li>
 
     <li class="flex items-center bg-light-gray-500 rounded-lg">
 
       <form
-        class="flex items-center gap-2 shadow-md"
+        class="flex items-center gap-2 shadow-sm"
         action="/search"
         method="GET"
         enctype="application/x-www-form-urlencoded"
@@ -38,17 +39,18 @@
       </form>
     </li>
     <li>
-      <a class="market-link text-shadow-md hover:bg-light-gray-500" href="/market">Market</a>
+      <a class="market-link  hover:text-light-gray-500" href="/market">Market</a>
     </li>
     <li>
-      <a class="events-link text-shadow-md hover:bg-light-gray-500" href="/events">Events</a>
+      <a class="events-link text-shadow-md hover:text-light-gray-500" href="/events">Events</a>
     </li>
     <li>
-      <a class="map-link text-shadow-md hover:bg-light-gray-500" href="/map">Map</a>
+      <a class="map-link text-shadow-md hover:text-light-gray-500" href="/map">Map</a>
     </li>
     <li class="relative">
-      <button id="profile-button" class="flex items-center gap-2">
-        <img class="size-8 shrink-0" src="/frontend/Assets/icons/feather-light-black/user.svg" alt="Profile" />
+      <button id="profile-button" class="flex items-center gap-2 cursor-pointer group">
+        <img class="size-8 shrink-0 group-hover:hidden" src="/frontend/Assets/icons/feather-light-black/user.svg" alt="Profile" />
+        <img class="size-8 shrink-0 hidden group-hover:block" src="/frontend/Assets/icons/feather-light-gray/user.svg" alt="Profile Hover" />
       </button>
       <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-light-orange-500 rounded-md shadow-md">
         <a href="/profile" class="block px-4 py-2 hover:bg-light-gray-500">Profile</a>

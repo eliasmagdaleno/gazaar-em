@@ -14,7 +14,9 @@
     </span>
   </div>
   <div class="product-info flex-col w-full text-left gap-2">
-    <p class="product-name font-bold text-2xl mt-2">{{title}}</p>
+    <button class="product-link" id="product-link" onclick="window.location.href='/listing'">
+        <h2 class="product-title text-lg font-bold text-gray-800">{{title}}</h2>
+    </button>
     <p class="product-price mt-2">${{price}}</p>
     <p class="product-condition mt-2">{{condition}}</p>
     <p class="product-description">{{description}}</p>
