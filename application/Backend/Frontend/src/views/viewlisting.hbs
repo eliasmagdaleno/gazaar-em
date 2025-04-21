@@ -1,0 +1,113 @@
+<div class="listing-page-container">
+  <div class="listing-content grid grid-cols-12 mt-6 ml-10 mr-4">
+    <!-- Left Section: Image Gallery -->
+    <div class="img-gallery-section col-span-2 h-full mr-4 self-center">
+      <div class="img-gallery flex flex-col self-center m-3 gap-4">
+        <button class="col-item self-center">
+          <img
+            class="gallery-thumbnail w-30 h-24 object-cover rounded-mg"
+            src="{{thumbnail}}" 
+            alt="Picture 1 of 5"
+          />
+          
+        </button>
+        <button class="col-item">
+          <img
+            class="gallery-thumbnail w-30 h-24 object-cover rounded-mg"
+            src="{{thumbnail}}" 
+            alt="Picture 2 of 5"
+          />
+          
+        </button>
+        <button class="col-item">
+          <img
+            class="gallery-thumbnail w-30 h-24 object-cover rounded-mg"
+            src="{{thumbnail}}" 
+            alt="Picture 3 of 5"
+          />
+          
+        </button>
+        <button class="col-item">
+          <img
+            class="gallery-thumbnail w-30 h-24 object-cover rounded-mg"
+            src="{{thumbnail}}" 
+            alt="Picture 4 of 5"
+          />
+          
+        </button>
+        <button class="col-item" >
+          <img
+            class="gallery-thumbnail w-30 h-24 object-cover rounded-mg"
+            src="{{thumbnail}}" 
+            alt="Picture 5 of 5"
+          />
+          
+        </button>
+
+      
+      </div>
+
+      <button class="gallery-button bg-gray-300 rounded-md px-4 py-2"></button>
+    </div>
+
+    <!-- Center Section: Main Image -->
+    <div class="main-img col-span-7 relative mr-4">
+      <img
+        class="w-full h-96 object-cover rounded-md"
+        src="{{fullImage}}"
+        alt="Main Image"
+      />
+      <button
+        class="bookmark-button absolute top-4 right-4 bg-white rounded-full p-2"
+      >
+        <img
+          class="bookmark-icon"
+          src="/frontend/Assets/icons/bookmark.svg"
+          alt="Bookmark"
+        />
+      </button>
+      <!-- Message Form -->
+      <div class="message-form">
+        <h2 class="text-lg font-semibold mb-2">Send a Message to the Seller:</h2>
+        <form action="/send-message" method="POST" class="flex flex-col gap-4">
+          <textarea
+            class="message-input w-full h-24 p-4 border border-gray-300 rounded-md"
+            rows="4"
+            placeholder="Type your message here..."
+          ></textarea>
+          <button
+            type="submit"
+            class="send-button bg-blue-500 text-white rounded-md px-4 py-2"
+          >Send Message</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right Section: Item Details -->
+    <div class="item-details col-span-3">
+      <h1 class="item-name text-2xl font-bold mb-2">ITEM NAME</h1>
+      <p class="item-price text-lg font-semibold">Price: $100</p>
+      <p class="item-condition text-sm text-gray-600">Condition: New</p>
+      <div class="product-description mt-4">
+        <h2 class="text-lg font-semibold">Product Description:</h2>
+        <p class="text-sm text-gray-700">This is a detailed description of the
+          product.</p>
+      </div>
+      <!-- Seller Information and Message Form -->
+      <div class="seller-and-message gap-6 mt-6">
+        <!-- Seller Information -->
+        <div class="seller-info col-span-3 flex flex-col items-center">
+          <img
+            class="seller-pfp w-24 h-24 rounded-full object-cover"
+            src="/frontend/Assets/icons/user.svg"
+            alt="Seller Profile"
+          />
+          <p class="seller-name text-lg font-bold mt-2">ACCOUNT NAME</p>
+          <p class="seller-rating text-sm text-gray-600">ACCOUNT RATING</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
