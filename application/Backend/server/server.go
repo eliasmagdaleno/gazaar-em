@@ -47,6 +47,7 @@ func StartServer() {
 	routes.RegisterSearchRoutes(router)
 	routes.RegisterViewListingsRoutes(router)
 	routes.RegisterMessagesRoutes(router)
+	routes.RegisterAuthRoutes(router)
 
 	log.Println("🚀 Server running on http://0.0.0.0:8081")
 

@@ -63,7 +63,7 @@
         <a href="/purchases" class="block px-4 py-2 hover:bg-light-gray-500">Purchases</a>
         <a href="/wishlist" class="block px-4 py-2 hover:bg-light-gray-500">Wishlist</a>
         <a href="/settings" class="block px-4 py-2 hover:bg-light-gray-500">Settings</a>
-        <form action="/users/logout" method="POST" >
+        <form action="/logout" method="POST" >
           <input type="hidden" value="{{csrf}}" />
           <button type="submit" class="w-full  hover:bg-light-gray-500">Logout</button>
         </form>
