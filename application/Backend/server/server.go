@@ -49,6 +49,8 @@ func StartServer() {
 	routes.RegisterMessagesRoutes(router)
 	routes.RegisterAuthRoutes(router)
 	routes.RegisterProfileRoutes(router)
+	routes.RegisterMarketRoutes(router)
+	routes.RegisterEventsRoutes(router)
 
 	log.Println("🚀 Server running on http://0.0.0.0:8081")
 
@@ -78,6 +80,20 @@ func StartServer() {
 		log.Printf("Warning: Could not load productcard-search partial: %v", err)
 	} else {
 		raymond.RegisterPartial("productcard-search", productCardSrPartial)
+	}
+
+	productCardMarketplacePartial, err := loadTemplate("Frontend/src/views/partials/productcard-marketplace.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load productcard-marketplace partial: %v", err)
+	} else {
+		raymond.RegisterPartial("productcard-marketplace", productCardMarketplacePartial)
+	}
+
+	eventCardMarketplacePartial, err := loadTemplate("Frontend/src/views/partials/eventcard-marketplace.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load eventcard-marketplace partial: %v", err)
+	} else {
+		raymond.RegisterPartial("eventcard-marketplace", eventCardMarketplacePartial)
 	}
 
 	senderCardPartial, err := loadTemplate("Frontend/src/views/partials/sendercard.hbs")

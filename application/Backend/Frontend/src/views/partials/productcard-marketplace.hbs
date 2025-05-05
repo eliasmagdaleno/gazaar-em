@@ -1,0 +1,20 @@
+<div
+  class="product-card-marketplace bg-white rounded-lg shadow-md overflow-hidden"
+>
+  <img
+    class="product-image w-full h-48 object-cover cursor-pointer"
+    src="{{thumbnail}}"
+    alt="{{title}}"
+  />
+  <div class="product-info p-4">
+    <button
+      class="product-link"
+      id="product-link"
+      onclick="window.location.href='/listing'">
+      <h3 class="product-title text-lg font-bold cursor-pointer">{{title}}</h3>
+    </button>
+
+    <p class="product-price text-sm text-gray-600">${{price}}</p>
+    <p class="product-location text-sm text-gray-500">{{location}}</p>
+  </div>
+</div>

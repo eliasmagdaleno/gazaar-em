@@ -3,51 +3,49 @@
     <!-- Left Section: Image Gallery -->
     <div class="img-gallery-section col-span-2 h-full mr-4 self-center">
       <div class="img-gallery flex flex-col self-center items-center m-3 gap-4">
-        <button class="col-item">
+        <button class="col-item cursor-pointer " onclick="setMainImage('{{this}}')">
           <img
-            class="gallery-thumbnail w-30 h-24 object-cover rounded-mg"
-            src="{{thumbnail}}" 
+            class="gallery-thumbnail w-30 h-24 object-cover rounded-md shadow-md"
+            src="{{thumbnail}}"
             alt="Picture 1 of 5"
           />
-          
+
         </button>
-        <button class="col-item">
+        <button class="col-item cursor-pointer" onclick="setMainImage('{{this}}')">
           <img
-            class="gallery-thumbnail w-30 h-24 object-cover rounded-mg"
-            src="{{thumbnail}}" 
+              class="gallery-thumbnail w-30 h-24 object-cover rounded-md shadow-md"
+              src="{{thumbnail}}"
             alt="Picture 2 of 5"
           />
-          
+
         </button>
-        <button class="col-item">
+        <button class="col-item cursor-pointer" onclick="setMainImage('{{this}}')">
           <img
-            class="gallery-thumbnail w-30 h-24 object-cover rounded-mg"
-            src="{{thumbnail}}" 
+            class="gallery-thumbnail w-30 h-24 object-cover rounded-md shadow-md"
+            src="{{thumbnail}}"
             alt="Picture 3 of 5"
           />
-          
+
         </button>
-        <button class="col-item">
+        <button class="col-item cursor-pointer" onclick="setMainImage('{{this}}')">
           <img
-            class="gallery-thumbnail w-30 h-24 object-cover rounded-mg"
-            src="{{thumbnail}}" 
+            class="gallery-thumbnail w-30 h-24 object-cover rounded-md shadow-md"
+            src="{{thumbnail}}"
             alt="Picture 4 of 5"
           />
-          
+
         </button>
-        <button class="col-item" >
+        <button class="col-item cursor-pointer" onclick="setMainImage('{{this}}')">
           <img
-            class="gallery-thumbnail w-30 h-24 object-cover rounded-mg"
-            src="{{thumbnail}}" 
+            class="gallery-thumbnail w-30 h-24 object-cover rounded-md shadow-md"
+            src="{{thumbnail}}"
             alt="Picture 5 of 5"
           />
-          
+
         </button>
 
-      
       </div>
 
-    
     </div>
 
     <!-- Center Section: Main Image -->
@@ -56,9 +54,10 @@
         class="w-full h-96 object-cover rounded-md"
         src="{{fullImage}}"
         alt="Main Image"
+        id="mainImage"
       />
       <button
-        class="bookmark-button absolute top-4 right-4 bg-blood-orange-500 rounded-full p-2"
+        class="bookmark-button absolute top-4 right-4 bg-blood-orange-500 rounded-full p-2 cursor-pointer"
       >
         <img
           class="bookmark-icon"
@@ -67,17 +66,18 @@
         />
       </button>
       <!-- Message Form -->
-      <div class="message-form">
-        <h2 class="text-lg font-semibold mb-2 text-light-black-500">Send a Message to the Seller:</h2>
-        <form action="/send-message" method="POST" class="flex flex-col gap-4">
+      <div class="message-form mt-4">
+        <h2 class="text-lg font-semibold mb-2 text-light-black-500">Send a
+          Message to the Seller:</h2>
+        <form action="/send-message" method="POST" class="flex flex-col gap-4 ">
           <textarea
-            class="message-input w-full h-24 p-4 border border-light-gray-500 bg-light-gray-500 rounded-md"
+            class="message-input w-full h-24 p-4 border border-light-gray-500 bg-light-gray-500 rounded-md shadow-md"
             rows="4"
             placeholder="Type your message here..."
           ></textarea>
           <button
             type="submit"
-            class="send-button bg-light-orange-500 text-light-gray-500 rounded-md px-4 py-2"
+            class="send-button bg-light-orange-500 text-light-gray-500 rounded-md px-4 py-2 cursor-pointer shadow-md"
           >Send Message</button>
         </form>
       </div>
@@ -90,13 +90,15 @@
       <p class="item-condition text-sm">Condition: New</p>
       <div class="product-description mt-4">
         <h2 class="text-lg font-semibold">Product Description:</h2>
-        <p class="text-sm text-light-black-500">This is a detailed description of the
-          product.</p>
+        <p class="text-sm text-light-black-500">This is a detailed description
+          of the product.</p>
       </div>
       <!-- Seller Information and Message Form -->
       <div class="seller-and-message gap-6 mt-6">
         <!-- Seller Information -->
-        <div class="seller-info col-span-3 flex flex-row items-center text-light-black-500">
+        <div
+          class="seller-info col-span-3 flex flex-row items-center text-light-black-500"
+        >
           <img
             class="seller-pfp w-16 h-16 rounded-full object-cover"
             src="/frontend/Assets/icons/feather-light-black/user.svg"
@@ -105,14 +107,18 @@
           <div class="seller-details flex flex-col ml-4">
             <p class="seller-name text-lg font-bold">ACCOUNT NAME</p>
             <div class="seller-rating-section flex flex-row gap-2">
-                  <img class="star-icon w-6 h-6" src="/frontend/Assets/icons/feather-blood-orange/star.svg" alt="Star" />
-                  <p class="seller-rating text-base">
-                    4.4/5
-                  </p>
+              <img
+                class="star-icon w-6 h-6"
+                src="/frontend/Assets/icons/feather-blood-orange/star.svg"
+                alt="Star"
+              />
+              <p class="seller-rating text-base">
+                4.4/5
+              </p>
             </div>
-            
+
           </div>
-        
+
         </div>
       </div>
     </div>
@@ -120,3 +126,8 @@
   </div>
 
 </div>
+
+<script>
+  function setMainImage(imageSrc) { const mainImage =
+  document.getElementById('mainImage'); mainImage.src = imageSrc; }
+</script>

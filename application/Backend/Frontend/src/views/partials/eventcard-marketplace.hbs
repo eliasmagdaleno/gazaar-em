@@ -1,0 +1,20 @@
+<div
+  class="event-card-marketplace bg-white rounded-lg shadow-md overflow-hidden"
+>
+  <img
+    class="event-image w-full h-48 object-cover cursor-pointer"
+    src="{{thumbnail}}"
+    alt="{{title}}"
+  />
+  <div class="event-info p-4">
+    <p class="event-date font-semibold text-base">{{date}}</p>
+    <button
+      class="event-link"
+      id="event-link"
+      onclick="window.location.href='/listing'">
+      <h3 class="event-title text-lg font-bold cursor-pointer">{{title}}</h3>
+    </button>
+    <p class="event-host">{{host}}</p>
+    <p class="event-location text-sm text-gray-500">{{location}}</p>
+  </div>
+</div>

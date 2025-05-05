@@ -4,7 +4,13 @@
     class="event-card bg-light-orange-500 rounded-lg p-2 shadow-md flex flow-row gap-4"
   >
     <div class="event-img-section shadow-md">
-      <img class="event-img max-w-md" src="{{thumbnail}}" />
+       <button
+        class="event-link cursor-pointer" 
+        id="event-link"
+        onclick="window.location.href='/listing'"
+      >
+        <img class="event-img max-w-md" src="{{thumbnail}}" />
+      </button>
     </div>
 
     <div class="event-info self-center flex-col w-full pt-2">

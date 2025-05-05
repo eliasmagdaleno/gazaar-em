@@ -1,74 +1,121 @@
 <div
   id="filterContainer"
-  class="flex flex-col bg-light-orange-500 overflow-hidden transition-all duration-500 ease-in-out w-[300px]"
+  class="flex flex-col bg-light-orange-500 overflow-hidden transition-all duration-500 ease-in-out w-[300px] h-auto"
 >
   <!-- Header with toggle button -->
-  <div class="flex justify-between items-center p-4">
-    <h2 id="filterTitle" class="text-2xl font-bold text-light-black-500">Filters</h2>
+  <div class="flex justify-between items-center p-4 overflow-visible">
+    <h2
+      id="filterTitle"
+      class="text-2xl font-bold text-light-black-500"
+    >Filters</h2>
     <button
       id="toggleFilter"
-      class="text-md font-semibold bg-light-gray-500 border border-dark-gray-500 rounded px-2 py-1"
+      class="text-md shadow-md font-semibold bg-light-gray-500 border border-dark-gray-500 rounded px-2 py-1 cursor-pointer overflow-visible"
     >
-      <span id="toggleIcon">◀</span>
+      <span id="toggleIcon">
+        <img
+          src="/frontend/Assets/icons/feather-light-black/chevron-left.svg"
+          alt="Toggle Icon"
+          class="overflow-visible"
+        />
+
+      </span>
     </button>
   </div>
 
   <!-- Content that will hide when collapsed -->
-  <div id="filterContent" class="p-4 pt-0">
+  <div id="filterContent" class="mt-6 p-4 pt-0">
     <ul class="flex flex-col gap-10">
       <li class="flex flex-row items-center gap-2">
         <h3 class="text-md font-semibold">Price</h3>
-        <input class="w-20 border border-dark-gray-500 bg-light-gray-500 rounded px-2 py-1" type="number" placeholder="Min" />
+        <input
+          class="w-20 border border-dark-gray-500 bg-light-gray-500 rounded px-2 py-1"
+          type="number"
+          placeholder="Min"
+        />
         <p>To</p>
-        <input class="w-20 border border-dark-gray-500 bg-light-gray-500 rounded px-2 py-1" type="number" placeholder="Max" />
+        <input
+          class="w-20 border border-dark-gray-500 bg-light-gray-500 rounded px-2 py-1"
+          type="number"
+          placeholder="Max"
+        />
       </li>
 
       <li class="flex flex-col gap-2">
         <h3 class="text-md font-semibold">Condition</h3>
-        <div class="flex items-center gap-2"><input type="checkbox" value="new" /><label>New</label></div>
-        <div class="flex items-center gap-2"><input type="checkbox" value="used" /><label>Used</label></div>
-        <div class="flex items-center gap-2"><input type="checkbox" value="refurbished" /><label>Refurbished</label></div>
-        <div class="flex items-center gap-2"><input type="checkbox" value="open-box" /><label>Open Box</label></div>
-        <div class="flex items-center gap-2"><input type="checkbox" value="damaged" /><label>Damaged</label></div>
+        <div class="flex items-center gap-2"><input
+            type="checkbox"
+            value="new"
+          /><label>New</label></div>
+        <div class="flex items-center gap-2"><input
+            type="checkbox"
+            value="used"
+          /><label>Used</label></div>
+        <div class="flex items-center gap-2"><input
+            type="checkbox"
+            value="refurbished"
+          /><label>Refurbished</label></div>
+        <div class="flex items-center gap-2"><input
+            type="checkbox"
+            value="open-box"
+          /><label>Open Box</label></div>
+        <div class="flex items-center gap-2"><input
+            type="checkbox"
+            value="damaged"
+          /><label>Damaged</label></div>
       </li>
 
       <li class="flex flex-col gap-2">
         <h3 class="text-md font-semibold">Date Listed</h3>
-        <div class="flex items-center gap-2"><input type="checkbox" value="last24h" /><label>Last 24 hours</label></div>
-        <div class="flex items-center gap-2"><input type="checkbox" value="last7d" /><label>Last 7 days</label></div>
-        <div class="flex items-center gap-2"><input type="checkbox" value="last30d" /><label>Last 30 days</label></div>
-        <div class="flex items-center gap-2"><input type="checkbox" value="last90d" /><label>Last 90 days</label></div>
+        <div class="flex items-center gap-2"><input
+            type="checkbox"
+            value="last24h"
+          /><label>Last 24 hours</label></div>
+        <div class="flex items-center gap-2"><input
+            type="checkbox"
+            value="last7d"
+          /><label>Last 7 days</label></div>
+        <div class="flex items-center gap-2"><input
+            type="checkbox"
+            value="last30d"
+          /><label>Last 30 days</label></div>
+        <div class="flex items-center gap-2"><input
+            type="checkbox"
+            value="last90d"
+          /><label>Last 90 days</label></div>
       </li>
     </ul>
   </div>
 </div>
 
+<style>
+  #toggleIcon img { width: 24px; height: 24px; display: block; }
+</style>
+
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const filterContainer = document.getElementById('filterContainer');
-    const toggleIcon = document.getElementById('toggleIcon');
-    const filterTitle = document.getElementById('filterTitle');
-    const filterContent = document.getElementById('filterContent');
-    const toggleButton = document.getElementById('toggleFilter');
-
-    let isCollapsed = false;
-
-    toggleButton.addEventListener('click', () => {
-      isCollapsed = !isCollapsed;
-
-      if (isCollapsed) {
-        filterContainer.classList.remove('w-[300px]');
-        filterContainer.classList.add('w-[50px]');
-        toggleIcon.textContent = '▶';
-        filterTitle.classList.add('hidden');
-        filterContent.classList.add('hidden');
-      } else {
-        filterContainer.classList.remove('w-[50px]');
-        filterContainer.classList.add('w-[300px]');
-        toggleIcon.textContent = '◀';
-        filterTitle.classList.remove('hidden');
-        filterContent.classList.remove('hidden');
-      }
-    });
-  });
+  document.addEventListener('DOMContentLoaded', () => { const filterContainer =
+  document.getElementById('filterContainer'); const toggleIcon =
+  document.getElementById('toggleIcon').querySelector('img'); const filterTitle
+  = document.getElementById('filterTitle'); const filterContent =
+  document.getElementById('filterContent'); const toggleButton =
+  document.getElementById('toggleFilter'); const productCardsGrid =
+  document.querySelector('.product-cards-grid'); let isCollapsed = false;
+  toggleButton.addEventListener('click', () => { isCollapsed = !isCollapsed; if
+  (isCollapsed) { filterContainer.classList.remove('w-[300px]');
+  filterContainer.classList.add('w-[75px]'); toggleIcon.src =
+  '/frontend/Assets/icons/feather-light-black/chevron-right.svg';
+  toggleIcon.style.display = 'block'; toggleIcon.classList.add('overflow-visible');
+  filterTitle.classList.add('hidden');
+  filterContent.classList.add('hidden');
+  productCardsGrid.classList.remove('grid-cols-4');
+  productCardsGrid.classList.add('grid-cols-5'); } 
+  else  
+  {
+  filterContainer.classList.remove('w-[75px]');
+  filterContainer.classList.add('w-[300px]'); toggleIcon.src =
+  '/frontend/Assets/icons/feather-light-black/chevron-left.svg';
+  toggleIcon.style.display = 'block'; filterTitle.classList.remove('hidden');
+  filterContent.classList.remove('hidden');
+  productCardsGrid.classList.remove('grid-cols-5');
+  productCardsGrid.classList.add('grid-cols-4'); } }); });
 </script>
