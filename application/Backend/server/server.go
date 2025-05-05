@@ -131,6 +131,13 @@ func StartServer() {
 		raymond.RegisterPartial("header", headerPartial)
 	}
 
+	registerPartial, err := loadTemplate("Frontend/src/views/registration.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load registration partial: %v", err)
+	} else {
+		raymond.RegisterPartial("registration", registerPartial)
+	}
+
 	log.Println("🚀 Server running on http://0.0.0.0:9081")
 	router.Run("0.0.0.0:9081")
 }
