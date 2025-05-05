@@ -139,6 +139,13 @@ func StartServer() {
 		raymond.RegisterPartial("registration", registerPartial)
 	}
 
+	errorCardPartial, err := loadTemplate("Frontend/src/views/partials/errorcard.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load errorcard partial: %v", err)
+	} else {
+		raymond.RegisterPartial("errorcard", errorCardPartial)
+	}
+
 	log.Println("🚀 Server running on http://0.0.0.0:9081")
 	router.Run("0.0.0.0:9081")
 }
