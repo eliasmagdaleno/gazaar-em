@@ -1,9 +1,9 @@
 <div
-  class="product-card bg-dark-gray-500 rounded-lg p-4 shadow-md flex flex-row gap-4 text-light-black-500"
+  class="product-card bg-dark-gray-500 rounded-lg p-2 shadow-md flex flex-row gap-4 relative"
 >
-  <div class="product-img-section size-auto">
+  <div class="product-img-section">
     <img
-      class="product-img object-cover h-48 w-full rounded-md"
+      class="product-img object-cover h-48 w-full rounded-md cursor-pointer"
       src="{{thumbnail}}"
     />
   </div>
@@ -24,7 +24,7 @@
     <!-- <p class="product-location">{{location}}</p> -->
     <!-- <p class="product-description">{{description}}</p> -->
   </div>
-  <span class="save-button-span absolute">
+  <span class="save-button-span absolute top-1 right-1">
     <button
       class="save-button bg-blood-orange-500 p-2 rounded-full ml-1 mt-1 cursor-pointer"
       id="save-button"

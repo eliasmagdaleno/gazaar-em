@@ -1,7 +1,14 @@
-<div class="messages-container grid grid-cols-12">
-    <div class="senders-section col-span-4 h-screen bg-light-orange-500">
-        <h2 class="messages-title text-3xl font-bold ml-5 text-shadow-md">Messages</h2>
-        <div class="senders-list flex flex-col mt-2 gap-0.5">
+<div class="messages-container flex h-screen">
+    <div class="senders-section flex-none w-1/4 md:w-1/5 lg:w-1/4 bg-light-orange-500 transition-all duration-500" id="sendersSection">
+        <div class="flex justify-between items-center p-4">
+            <h2 class="messages-title text-3xl font-bold ml-5 text-shadow-md" id="messagesTitle">Messages</h2>
+            <button id="toggleSenders" class="text-md shadow-md font-semibold bg-light-gray-500 border border-dark-gray-500 rounded px-2 py-1 cursor-pointer">
+                <span id="toggleSendersIcon">
+                    <img src="/frontend/Assets/icons/feather-light-black/chevron-left.svg" alt="Toggle Icon" />
+                </span>
+            </button>
+        </div>
+        <div id="sendersContent" class="senders-list flex flex-col mt-2 gap-0.5">
             {{> sendercard}}
             {{> sendercard}}
             {{> sendercard}}
@@ -11,7 +18,7 @@
         </div>
     </div>
 
-    <div class="chat-section col-span-8 bg-light-gray-500 flex flex-col justify-between h-screen">
+    <div id="chatSection" class="flex-grow bg-light-gray-500 flex flex-col justify-between h-screen">
         <div class="message-header flex flex-row justify-between items-center bg-dark-gray-500 p-4">
             <div class="sender-info flex flex-row gap-2">
                 <img class="sender-pfp h-16 w-16 rounded-full" src="/frontend/Assets/icons/feather-light-black/user.svg" />
@@ -20,28 +27,51 @@
                 </div>
             </div>
         </div>
-        <div class="message-section flex flex-col gap-4 mt-4 overflow-y-auto">
-            {{> sendermessage}}
-            {{> sendermessage}}
-            {{> sendermessage}}
-
-            {{> recipientmessage}}
-            {{> recipientmessage}}
-            
-
+        <div class="message-section flex flex-col gap-4 mt-4 overflow-y-auto pr-2 h-full" style="max-height: calc(100vh - 200px);">
+            {{#each messages}}
+                {{#if isSender}}
+                    {{> sendermessage message=this.message timestamp=this.timestamp }}
+                {{else}}
+                    {{> recipientmessage message=this.message timestamp=this.timestamp }}
+                {{/if}}
+            {{/each}}
         </div>
-        <div class="message-form mt-4 bg-dark-gray-500 text-light-black-500 pt-4">
+        <div class="message-form mt-4 bg-dark-gray-500 text-light-black-500 pt-4 pb-6">
             <form action="/send-message" method="POST" class="message-input flex items-center p-4 border border-dark-gray-500 bg-dark-gray-500 rounded-md">
-                <textarea class="flex-grow p-2 text-light-black-500 bg-light-gray-500 rounded-md" rows="1" placeholder="Type your message here...">
+                <textarea class="flex-grow p-2 text-light-black-500 bg-light-gray-500 border border-blood-orange-500 rounded-md" rows="1" placeholder="Type your message here...">
                 </textarea>
-                <button type="submit" class="send-button  bg-light-orange-500 text-light-gray-500 rounded-md px-4 py-2">
+                <button type="submit" class="send-button bg-light-orange-500 text-light-gray-500 rounded-md px-4 py-2 cursor-pointer">
                     <img class="send-icon" src="/frontend/Assets/icons/feather-light-black/send.svg" alt="Send" />
                 </button>
             </form>
         </div>
     </div>
 
-   
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sendersSection = document.querySelector('.senders-section');
+            const toggleSendersIcon = document.getElementById('toggleSendersIcon').querySelector('img');
+            const sendersContent = document.getElementById('sendersContent');
+            const toggleSendersButton = document.getElementById('toggleSenders');
+            const chatSection = document.getElementById('chatSection');
+            let isCollapsed = false;
 
-    
+            toggleSendersButton.addEventListener('click', () => {
+                isCollapsed = !isCollapsed;
+                if (isCollapsed) {
+                    sendersSection.style.width = '75px';
+                    messagesTitle.classList.add('hidden');
+                    toggleSendersIcon.src = '/frontend/Assets/icons/feather-light-black/chevron-right.svg';
+                    sendersContent.style.display = 'none';
+                    chatSection.style.flexGrow = '1';
+                } else {
+                    sendersSection.style.width = '25%';
+                    messagesTitle.classList.remove('hidden');
+                    toggleSendersIcon.src = '/frontend/Assets/icons/feather-light-black/chevron-left.svg';
+                    sendersContent.style.display = 'flex';
+                    chatSection.style.flexGrow = '1';
+                }
+            });
+        });
+    </script>
 </div>

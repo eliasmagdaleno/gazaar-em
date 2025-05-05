@@ -1,8 +1,8 @@
 <div class="product-collection">
   <div
-    class="product-card bg-light-orange-500 rounded-lg p-2 shadow-md flex flex-row gap-4"
+    class="product-card bg-dark-gray-500 rounded-lg p-2 shadow-md flex flex-row gap-4"
   >
-    <div class="product-img-section shadow-md">
+    <div class="product-img-section rounded-md">
        <button
         class="event-link cursor-pointer"
         id="event-link"
@@ -18,7 +18,7 @@
         onclick="window.location.href='/listing'"
       >
         <h2
-          class="product-title text-2xl sm:text-md md:text-3xl font-bold hover:text-light-gray-500 cursor-pointer"
+          class="product-title text-2xl sm:text-md md:text-3xl font-bold cursor-pointer"
         >{{title}}</h2>
       </button>
       <p class="product-price font-semibold text-base">${{price}}</p>
@@ -29,7 +29,7 @@
     </div>
     <span class="save-button-span absolute">
       <button
-        class="save-button bg-blood-orange-500 rounded-full ml-1 mt-1 cursor-pointer"
+        class="save-button bg-blood-orange-500 ml-1 mt-1 cursor-pointer rounded-full"
         id="save-button"
       >
         <img
