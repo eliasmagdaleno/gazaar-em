@@ -1,11 +1,14 @@
 package routes
 
 import (
-	"fmt"
-	"net/http"
-
 	"application/Backend/core"
 	"application/Backend/database"
+	"application/Backend/utils"
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"path/filepath"
 
 	"github.com/aymerick/raymond"
 	"github.com/gin-gonic/gin"
@@ -15,7 +18,7 @@ func RegisterMarketRoutes(router *gin.Engine) {
 	router.GET("/market", marketHandler)
 }
 
-func fetchRandomMarketProducts(limit int) ([]map[string]string, error) {
+func fetchRandomMarketProducts(limit int) ([]map[string]interface{}, error) {
 	query := fmt.Sprintf("SELECT image_url, title, price FROM items ORDER BY RAND() LIMIT %d", limit)
 	rows, err := database.DB.Query(query)
 	if err != nil {
@@ -23,17 +26,32 @@ func fetchRandomMarketProducts(limit int) ([]map[string]string, error) {
 	}
 	defer rows.Close()
 
-	var products []map[string]string
+	var products []map[string]interface{}
 	for rows.Next() {
-		var thumbnail, title, price string
-		err := rows.Scan(&thumbnail, &title, &price)
+		var title, imageURL string
+		var price float64
+		err := rows.Scan(&imageURL, &title, &price)
 		if err != nil {
-			return nil, err
+			log.Println("Row scan error:", err)
+			continue
 		}
-		products = append(products, map[string]string{
-			"thumbnail": thumbnail,
+
+		thumbnailPath := "/assets/thumbnails/" + imageURL
+		thumbnailFullPath := filepath.Join("assets/thumbnails", imageURL)
+		originalImagePath := filepath.Join("assets/", imageURL)
+
+		// Check if the thumbnail exists, if not, generate it
+		if _, err := os.Stat(thumbnailFullPath); os.IsNotExist(err) {
+			err := utils.GenerateThumbnail(originalImagePath, thumbnailFullPath, 150, 150) // Example size: 150x150
+			if err != nil {
+				log.Println("Thumbnail generation error:", err)
+			}
+		}
+
+		products = append(products, map[string]interface{}{
 			"title":     title,
 			"price":     price,
+			"thumbnail": thumbnailPath,
 		})
 	}
 	return products, nil

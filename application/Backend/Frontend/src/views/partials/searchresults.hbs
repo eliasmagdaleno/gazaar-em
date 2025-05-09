@@ -1,25 +1,29 @@
 <div class="results-container flex flex-row justify-start gap-25 bg-light-gray-500 min-h-screen">
     {{> filter}}    
-    <div class="results-section  text-center w-lg ">
+    <main class="results-section  text-center w-3/4 p-4">
         <h1 class="results-header font-bold text-3xl text-left mt-2">Results</h1>
         <p class="results-count text-base text-left">{{count}} Results found</p>
-        <div class="event-section flex flex-col mt-6">
+        {{!-- <div class="event-section flex flex-col mt-6">
             {{#each events}}
                 {{> eventcard}}
             {{/each}}
-        </div>
+        </div> --}}
 
         {{#if products}}
-            <div class="product-section">
-                <div class="product-list flex flex-col mt-6 gap-2">
+            <div class="product-section mr-4 mt-4">
+                <div class="product-cards-grid grid grid-cols-4 gap-4">
                     {{#each products}}   
-                        {{> productcard-search}}
+                        {{> productcard-marketplace}}
                     {{/each}}
+                    {{#each events}}
+                        {{> eventcard}}
+                    {{/each}}
+                    
                 </div>
                 
             </div>
         {{else}}
             <p>No products found.</p>
         {{/if}}
-    </div>  
+    </>  
 </div>

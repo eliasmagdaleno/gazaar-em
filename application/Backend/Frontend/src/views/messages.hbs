@@ -9,12 +9,12 @@
             </button>
         </div>
         <div id="sendersContent" class="senders-list flex flex-col mt-2 gap-0.5">
-            {{> sendercard name="Alice" lastMessage="Hey, how are you?" timestamp="10:30 AM"}}
-            {{> sendercard name="Bob" lastMessage="Can you send me the details?" timestamp="11:15 AM"}}
-            {{> sendercard name="Charlie" lastMessage="Thanks for the update!" timestamp="12:45 PM"}}
-            {{> sendercard name="Diana" lastMessage="Let me know when you're free." timestamp="1:30 PM"}}
-            {{> sendercard name="Eve" lastMessage="Looking forward to our meeting." timestamp="2:00 PM"}}
-            {{> sendercard name="Frank" lastMessage="I'll get back to you soon." timestamp="3:15 PM"}}
+            {{> sendercard }}
+            {{> sendercard }}
+            {{> sendercard }}
+            {{> sendercard }}
+            {{> sendercard }}
+            {{> sendercard }}
         </div>
     </div>
 
@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="message-section flex flex-col gap-4 mt-4 overflow-y-auto pr-2 h-full" style="max-height: calc(100vh - 200px);">
+        <div class="message-section flex flex-col gap-4 mt-4 overflow-y-scroll pr-2 h-full">
             {{#each messages}}
                 {{#if isSender}}
                     {{> sendermessage message=this.message timestamp=this.timestamp }}
@@ -62,8 +62,8 @@
                 isCollapsed = !isCollapsed;
                 if (isCollapsed) {
                     sendersSection.style.width = '75px';
-                    messagesTitle.classList.add('hidden');
                     toggleSendersIcon.src = '/frontend/Assets/icons/feather-light-black/chevron-right.svg';
+                    messagesTitle.classList.add('hidden');
                     sendersContent.style.display = 'none';
                     chatSection.style.flexGrow = '1';
                 } else {
