@@ -15,7 +15,8 @@ import (
 )
 
 func RegisterMarketRoutes(router *gin.Engine) {
-	router.GET("/market", marketHandler)
+	// Apply the ProductCardMiddleware to the /market route
+	router.GET("/market", RandomProductMiddleware(), marketHandler)
 }
 
 func fetchRandomMarketProducts(limit int) ([]map[string]interface{}, error) {

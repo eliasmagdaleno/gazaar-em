@@ -27,7 +27,7 @@ func RegisterMemberRoutes(router *gin.Engine) {
 		router.GET(route, func(c *gin.Context) {
 			htmlData, err := core.LoadFrontendFile(file)
 			if err != nil {
-				c.String(http.StatusInternalServerError, fmt.Sprintf("Error: %v", err))
+				renderErrorPage(c, http.StatusInternalServerError, fmt.Sprintf("Error: %v", err))
 				return
 			}
 			c.Header("Content-Type", "text/html")

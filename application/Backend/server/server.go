@@ -41,6 +41,13 @@ func StartServer() {
 	// Trusted proxy configuration
 	router.SetTrustedProxies([]string{"192.168.0.0/24"})
 
+	// Register middleware globally if needed
+	// router.Use(routes.ProductMiddleware())
+	// router.Use(routes.RandomEventMiddleware())
+	// router.Use(routes.RandomProductMiddleware())
+
+
+
 	routes.RegisterHomeRoutes(router)
 	routes.RegisterMemberRoutes(router)
 	routes.RegisterVPRoutes(router)
@@ -104,6 +111,7 @@ func StartServer() {
 		raymond.RegisterPartial("sendercard", senderCardPartial)
 	}
 
+	// Correcting the variable name for senderMessagePartial
 	senderMessagePartial, err := loadTemplate("Frontend/src/views/partials/sendermessage.hbs")
 	if err != nil {
 		log.Printf("Warning: Could not load sendermessage partial: %v", err)

@@ -1,13 +1,12 @@
 <div
   id="filterContainer"
-  class="flex flex-col bg-light-orange-500 shadow-lg overflow-hidden transition-all duration-500 ease-in-out w-[300px] h-auto"
+  class="flex flex-col bg-light-orange-500 shadow-lg transition-all duration-500 ease-in-out w-[300px] min-h-screen"
 >
   <!-- Header with toggle button -->
   <div class="flex justify-between items-center p-4 overflow-visible">
-    <h2
-      id="filterTitle"
-      class="text-2xl font-bold text-light-black-500"
-    >Filters</h2>
+    <h2 id="filterTitle" class="text-2xl font-bold text-light-black-500">
+      Filters
+    </h2>
     <button
       id="toggleFilter"
       class="text-md shadow-md font-semibold bg-light-gray-500 border border-dark-gray-500 rounded px-2 py-1 cursor-pointer overflow-visible"
@@ -18,13 +17,12 @@
           alt="Toggle Icon"
           class="overflow-visible"
         />
-
       </span>
     </button>
   </div>
 
   <!-- Content that will hide when collapsed -->
-  <div id="filterContent" class="mt-6 p-4 pt-0">
+  <div id="filterContent" class="mt-6 p-4 pt-0 overflow-y-auto h-screen">
     <ul class="flex flex-col gap-6">
       <li class="flex flex-row items-center gap-4">
         <h3 class="text-md font-semibold">Price</h3>
@@ -43,55 +41,46 @@
 
       <li class="flex flex-col gap-2">
         <h3 class="text-md font-semibold">Condition</h3>
-        <div class="flex items-center gap-2 cursor-pointerrounded-md"><input
-            type="checkbox"
-            value="new"
-            class="cursor-pointer"
-          /><label>New</label></div>
-        <div class="flex items-center gap-2 cursor-pointer"><input
-            type="checkbox"
-            value="used"
-            class="cursor-pointer"
-          /><label>Used</label></div>
-        <div class="flex items-center gap-2 cursor-pointer"><input
-            type="checkbox"
-            value="refurbished"
-            class="cursor-pointer"
-          /><label>Refurbished</label></div>
-        <div class="flex items-center gap-2 cursor-pointer"><input
-            type="checkbox"
-            value="open-box"
-            class="cursor-pointer"
-          /><label>Open Box</label></div>
-        <div class="flex items-center gap-2 cursor-pointer"><input
-            type="checkbox"
-            value="damaged"
-            class="cursor-pointer"
-          /><label>Damaged</label></div>
+        <div class="flex items-center gap-2 cursor-pointerrounded-md">
+          <input type="checkbox" value="new" class="cursor-pointer" />
+          <label>New</label>
+        </div>
+        <div class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" value="used" class="cursor-pointer" />
+          <label>Used</label>
+        </div>
+        <div class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" value="refurbished" class="cursor-pointer" />
+          <label>Refurbished</label>
+        </div>
+        <div class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" value="open-box" class="cursor-pointer" />
+          <label>Open Box</label>
+        </div>
+        <div class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" value="damaged" class="cursor-pointer" />
+          <label>Damaged</label>
+        </div>
       </li>
 
       <li class="flex flex-col gap-2">
         <h3 class="text-md font-semibold">Date Listed</h3>
-        <div class="flex items-center gap-2 cursor-pointer"><input
-            type="checkbox"
-            value="last24h"
-            class="cursor-pointer"
-          /><label>Last 24 hours</label></div>
-        <div class="flex items-center gap-2 cursor-pointer"><input
-            type="checkbox"
-            value="last7d"
-            class="cursor-pointer"
-          /><label>Last 7 days</label></div>
-        <div class="flex items-center gap-2 cursor-pointer"><input
-            type="checkbox"
-            value="last30d"
-            class="cursor-pointer"
-          /><label>Last 30 days</label></div>
-        <div class="flex items-center gap-2 cursor-pointer"><input
-            type="checkbox"
-            value="last90d"
-            class="cursor-pointer"
-          /><label>Last 90 days</label></div>
+        <div class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" value="last24h" class="cursor-pointer" />
+          <label>Last 24 hours</label>
+        </div>
+        <div class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" value="last7d" class="cursor-pointer" />
+          <label>Last 7 days</label>
+        </div>
+        <div class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" value="last30d" class="cursor-pointer" />
+          <label>Last 30 days</label>
+        </div>
+        <div class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" value="last90d" class="cursor-pointer" />
+          <label>Last 90 days</label>
+        </div>
       </li>
     </ul>
     <div class="flex justify-between mt-4">
@@ -107,37 +96,53 @@
       >
         Apply Filters
       </button>
-
     </div>
   </div>
 </div>
 
 <style>
-  #toggleIcon img { width: 24px; height: 24px; display: block; }
+  #toggleIcon img {
+    width: 24px;
+    height: 24px;
+    display: block;
+  }
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => { const filterContainer =
-  document.getElementById('filterContainer'); const toggleIcon =
-  document.getElementById('toggleIcon').querySelector('img'); const filterTitle
-  = document.getElementById('filterTitle'); const filterContent =
-  document.getElementById('filterContent'); const toggleButton =
-  document.getElementById('toggleFilter'); const productCardsGrid =
-  document.querySelector('.product-cards-grid'); let isCollapsed = false;
-  toggleButton.addEventListener('click', () => { isCollapsed = !isCollapsed; if
-  (isCollapsed) { filterContainer.classList.remove('w-[300px]');
-  filterContainer.classList.add('w-[75px]'); toggleIcon.src =
-  '/frontend/Assets/icons/feather-light-black/chevron-right.svg';
-  toggleIcon.style.display = 'block';
-  toggleIcon.classList.add('overflow-visible');
-  filterTitle.classList.add('hidden'); filterContent.classList.add('hidden');
-  productCardsGrid.classList.remove('grid-cols-4');
-  productCardsGrid.classList.add('grid-cols-5'); } else {
-  filterContainer.classList.remove('w-[75px]');
-  filterContainer.classList.add('w-[300px]'); toggleIcon.src =
-  '/frontend/Assets/icons/feather-light-black/chevron-left.svg';
-  toggleIcon.style.display = 'block'; filterTitle.classList.remove('hidden');
-  filterContent.classList.remove('hidden');
-  productCardsGrid.classList.remove('grid-cols-5');
-  productCardsGrid.classList.add('grid-cols-4'); } }); });
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterContainer = document.getElementById('filterContainer');
+    const toggleIcon = document
+      .getElementById('toggleIcon')
+      .querySelector('img');
+    const filterTitle = document.getElementById('filterTitle');
+    const filterContent = document.getElementById('filterContent');
+    const toggleButton = document.getElementById('toggleFilter');
+    const productCardsGrid = document.querySelector('.product-cards-grid');
+    let isCollapsed = false;
+    toggleButton.addEventListener('click', () => {
+      isCollapsed = !isCollapsed;
+      if (isCollapsed) {
+        filterContainer.classList.remove('w-[300px]');
+        filterContainer.classList.add('w-[75px]');
+        toggleIcon.src =
+          '/frontend/Assets/icons/feather-light-black/chevron-right.svg';
+        toggleIcon.style.display = 'block';
+        toggleIcon.classList.add('overflow-visible');
+        filterTitle.classList.add('hidden');
+        filterContent.classList.add('hidden');
+        productCardsGrid.classList.remove('grid-cols-4');
+        productCardsGrid.classList.add('grid-cols-5');
+      } else {
+        filterContainer.classList.remove('w-[75px]');
+        filterContainer.classList.add('w-[300px]');
+        toggleIcon.src =
+          '/frontend/Assets/icons/feather-light-black/chevron-left.svg';
+        toggleIcon.style.display = 'block';
+        filterTitle.classList.remove('hidden');
+        filterContent.classList.remove('hidden');
+        productCardsGrid.classList.remove('grid-cols-5');
+        productCardsGrid.classList.add('grid-cols-4');
+      }
+    });
+  });
 </script>
