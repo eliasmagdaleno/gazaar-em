@@ -19,8 +19,8 @@ func RegisterEventsRoutes(router *gin.Engine) {
 func eventsHandler(c *gin.Context) {
 	// Temporarily replace the eventCards data with a simplified hardcoded structure for testing
 	hardcodedEvents := []map[string]interface{}{
-		{"thumbnail": "/assets/thumbnails/test1.jpg", "title": "Test Event 1", "postDate": "2025-05-01"},
-		{"thumbnail": "/assets/thumbnails/test2.jpg", "title": "Test Event 2", "postDate": "2025-05-02"},
+		{"thumbnail": "frontend/assets/thumbnails/test1.jpg", "title": "Test Event 1", "postDate": "2025-05-01"},
+		{"thumbnail": "frontend/assets/thumbnails/test2.jpg", "title": "Test Event 2", "postDate": "2025-05-02"},
 	}
 	log.Printf("[DEBUG] Using hardcoded events for testing: %+v", hardcodedEvents)
 

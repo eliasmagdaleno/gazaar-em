@@ -3,9 +3,12 @@ package routes
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"net/http"
 	"regexp"
 	"strings"
+	"math/rand"
+    "time"
 
 	"application/Backend/core"
 	"application/Backend/database"
@@ -100,6 +103,74 @@ func RegisterAuthRoutes(router *gin.Engine) {
 			"results": results,
 		})
 	})
+
+	/**
+	* User registration makes sure each post is 
+	* valid then attempts to store in data base.
+	*/
+	router.GET("/register", func(c *gin.Context) {
+		showRegisterPage(c, "", "")
+	})
+
+	router.POST("/register", func(c *gin.Context) {
+		name := strings.TrimSpace(c.PostForm("name"))
+		email := strings.TrimSpace(c.PostForm("email"))
+		password := c.PostForm("password")
+		confirmPassword := c.PostForm("confirm-password")
+	
+		if name == "" {
+			showRegisterPage(c, "Full name is required.", email)
+			return
+		}
+		if !isValidEmail(email) {
+			showRegisterPage(c, "A valid SFSU email is required.", email)
+			return
+		}
+		if len(password) < 8 {
+			showRegisterPage(c, "Password must be at least 8 characters.", email)
+			return
+		}
+		if password != confirmPassword {
+			showRegisterPage(c, "Passwords do not match.", email)
+			return
+		}
+	
+		var exists int
+		err := database.DB.QueryRow("SELECT COUNT(*) FROM Account WHERE email_id = ?", email).Scan(&exists)
+		if err != nil {
+			showRegisterPage(c, "Database error. Please try again.", email)
+			return
+		}
+		if exists > 0 {
+			showRegisterPage(c, "Email already registered.", email)
+			return
+		}
+	
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+		if err != nil {
+			showRegisterPage(c, "Internal error. Please try again.", email)
+			return
+		}
+		rand.Seed(time.Now().UnixNano())
+		userID := rand.Intn(1000000000)
+	
+		// Insert new user
+		_, err = database.DB.Exec(`
+			INSERT INTO Account (user_id, user_name, email_id, password, registration_date)
+			VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
+		`, userID, name, email, hashedPassword,)
+	
+		if err != nil {
+			log.Println("Register DB error:", err)
+			showRegisterPage(c, "Registration failed. Please try again.", email)
+			return
+		}
+	
+		c.SetCookie("session", "authenticated", 3600, "/", "", true, true)
+		c.Redirect(http.StatusFound, "/")
+	})
+	
+
 }
 
 /**
@@ -107,6 +178,7 @@ func RegisterAuthRoutes(router *gin.Engine) {
  */
 func showLoginPage(c *gin.Context, errorMessage string) {
 	loginTpl, err := core.LoadFrontendFile("src/views/login.hbs")
+	
 	if err != nil {
 		c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading login template: %v", err))
 		return
@@ -149,4 +221,43 @@ func isValidEmail(email string) bool {
 		return false
 	}
 	return strings.HasSuffix(email, "@sfsu.edu")
+}
+
+/**
+ * showRegisterPage renders the register page with optional error and pre-filled email
+ */
+ func showRegisterPage(c *gin.Context, errorMessage string, email string) {
+    registerTpl, err := core.LoadFrontendFile("src/views/register.hbs")
+    if err != nil {
+        c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading register template: %v", err))
+        return
+    }
+
+    content, err := raymond.Render(registerTpl, map[string]interface{}{
+        "csrf":  c.GetString("csrf_token"),
+        "error": errorMessage,
+        "email": email,
+    })
+    if err != nil {
+        c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering register template: %v", err))
+        return
+    }
+
+    layoutTpl, err := core.LoadFrontendFile("src/views/layouts/layout.hbs")
+    if err != nil {
+        c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading layout: %v", err))
+        return
+    }
+
+    page, err := raymond.Render(layoutTpl, map[string]interface{}{
+        "title":   "Register",
+        "content": raymond.SafeString(content),
+    })
+    if err != nil {
+        c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))
+        return
+    }
+
+    c.Header("Content-Type", "text/html")
+    c.String(http.StatusOK, page)
 }

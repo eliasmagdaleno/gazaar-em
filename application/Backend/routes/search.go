@@ -49,7 +49,7 @@ func RegisterSearchRoutes(router *gin.Engine) {
 				continue
 			}
 
-			thumbnailPath := "/assets/thumbnails/" + imageURL
+			thumbnailPath := "frontend/assets/thumbnails/" + imageURL
 			thumbnailFullPath := filepath.Join("assets/thumbnails", imageURL)
 			originalImagePath := filepath.Join("assets/", imageURL)
 

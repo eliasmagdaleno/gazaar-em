@@ -36,7 +36,7 @@ func RandomProductMiddleware() gin.HandlerFunc {
 			}
 			products = append(products, map[string]interface{}{
 				"item_id":   itemID,
-				"thumbnail": "/assets/thumbnails/" + imageURL,
+				"thumbnail": "frontend/assets/thumbnails/" + imageURL,
 				"title":     title,
 				"price":     price,
 			})
@@ -70,7 +70,7 @@ func RandomEventMiddleware() gin.HandlerFunc {
 				imageURL = "Thumbnail Unavailable"
 			}
 			events = append(events, map[string]interface{}{
-				"thumbnail": "/assets/thumbnails/" + imageURL,
+				"thumbnail": "frontend/assets/thumbnails/" + imageURL,
 				"title":     title,
 				"postDate":  postDate,
 			})
@@ -103,7 +103,7 @@ func ProductMiddleware() gin.HandlerFunc {
 				continue
 			}
 			products = append(products, map[string]interface{}{
-				"thumbnail": "/assets/thumbnails/" + imageURL,
+				"thumbnail": "frontend/assets/thumbnails/" + imageURL,
 				"title":     title,
 				"price":     price,
 			})
@@ -143,7 +143,7 @@ func ProductDetailsMiddleware() gin.HandlerFunc {
 			"price":       price,
 			"category":    category,
 			"sellerID":    sellerID,
-			"imageURL":    "/assets/thumbnails/" + imageURL,
+			"imageURL":    "frontend/assets/thumbnails/" + imageURL,
 			"postDate":    postDate,
 		}
 
