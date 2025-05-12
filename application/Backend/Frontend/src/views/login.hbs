@@ -9,8 +9,15 @@
 </head>
 <body class="h-full bg-gray-300">
   <div class="flex items-center justify-center h-screen">
-    <div class="w-full max-w-3xl bg-white-200 p-12 rounded-lg shadow-lg">
+    <div class="w-full max-w-3xl bg-white p-12 rounded-lg shadow-lg">
       <h2 class="text-3xl font-semibold text-center mb-6">Login to Gazaar</h2>
+
+      {{#if error}}
+        <div class="mb-4 p-3 text-red-700 bg-red-100 border border-red-400 rounded">
+          {{error}}
+        </div>
+      {{/if}}
+
       <form action="/login" method="POST" class="space-y-4">
         <input type="hidden" name="csrf_token" value="{{csrf}}" />
         <div>

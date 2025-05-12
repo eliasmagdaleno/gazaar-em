@@ -15,95 +15,66 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// RegisterAuthRoutes sets up the /login route
+/**
+ * RegisterAuthRoutes sets up the /login and /logout routes
+ */
 func RegisterAuthRoutes(router *gin.Engine) {
-	// GET /login - Show login form
+	/**
+	 * GET /login - Show login form
+	 */
 	router.GET("/login", func(c *gin.Context) {
-		// 1. Load the login template
-		loginTpl, err := core.LoadFrontendFile("src/views/login.hbs")
-		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading login template: %v", err))
-			return
-		}
-
-		// 2. Render the login content with CSRF token
-		content, err := raymond.Render(loginTpl, map[string]interface{}{
-			"csrf": c.GetString("csrf_token"),
-		})
-		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering login template: %v", err))
-			return
-		}
-
-		// 3. Load the layout
-		layoutTpl, err := core.LoadFrontendFile("src/views/layouts/layout.hbs")
-		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading layout: %v", err))
-			return
-		}
-
-		// 4. Render the final HTML
-		page, err := raymond.Render(layoutTpl, map[string]interface{}{
-			"title":   "Login",
-			"content": raymond.SafeString(content),
-		})
-		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))
-			return
-		}
-
-		c.Header("Content-Type", "text/html")
-		c.String(http.StatusOK, page)
+		showLoginPage(c, "")
 	})
 
-	// POST /login - Handle login form submission
+	/**
+	 * POST /login - Handle login form submission
+	 */
 	router.POST("/login", func(c *gin.Context) {
-		// 1. Get and validate input
 		email := strings.TrimSpace(c.PostForm("email"))
 		password := c.PostForm("password")
 
 		// Validate email format
 		if !isValidEmail(email) {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid email format"})
+			showLoginPage(c, "Invalid email format.")
 			return
 		}
 
-		// 2. Use parameterized query to prevent SQL injection
 		var hashedPassword string
-		err := database.DB.QueryRow("SELECT password FROM users WHERE email = ?", email).Scan(&hashedPassword)
+		err := database.DB.QueryRow("SELECT password FROM Account WHERE email_id = ?", email).Scan(&hashedPassword)
 		if err != nil {
 			if err == sql.ErrNoRows {
-				// Don't reveal whether the email exists or not
-				c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+				showLoginPage(c, "Incorrect email or password.")
 				return
 			}
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
+			showLoginPage(c, "Internal server error. Please try again.")
 			return
 		}
 
-		// 3. Compare passwords using bcrypt
 		err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+			showLoginPage(c, "Incorrect email or password.")
 			return
 		}
 
-		// 4. Set session cookie
 		c.SetCookie("session", "authenticated", 3600, "/", "", true, true)
 
-		// 5. Redirect to home page
 		c.Redirect(http.StatusFound, "/")
 	})
 
+	/**
+	 * POST /logout - Clear session cookie and redirect to login
+	 */
 	router.POST("/logout", func(c *gin.Context) {
-		// Clear the session cookie
 		c.SetCookie("session", "", -1, "/", "", true, true)
 		c.Redirect(http.StatusFound, "/login")
 	})
 
-	// Test endpoint to verify SQL injection prevention
+	/**
+	 * GET /test-login - Test SQL injection prevention
+	 * Future note: Probably better to do tests in
+	 * test file
+	 */
 	router.GET("/test-login", func(c *gin.Context) {
-		// Test cases for SQL injection attempts
 		testCases := []string{
 			"test@sfsu.edu' OR '1'='1",
 			"test@sfsu.edu'; DROP TABLE users; --",
@@ -112,7 +83,6 @@ func RegisterAuthRoutes(router *gin.Engine) {
 
 		results := make(map[string]string)
 		for _, testCase := range testCases {
-			// Try to query with the test case
 			var result string
 			err := database.DB.QueryRow("SELECT email FROM users WHERE email = ?", testCase).Scan(&result)
 
@@ -132,14 +102,51 @@ func RegisterAuthRoutes(router *gin.Engine) {
 	})
 }
 
-// isValidEmail checks if the email is valid and is an SFSU email
+/**
+ * showLoginPage renders the login page with an optional error message
+ */
+func showLoginPage(c *gin.Context, errorMessage string) {
+	loginTpl, err := core.LoadFrontendFile("src/views/login.hbs")
+	if err != nil {
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading login template: %v", err))
+		return
+	}
+
+	content, err := raymond.Render(loginTpl, map[string]interface{}{
+		"csrf":  c.GetString("csrf_token"),
+		"error": errorMessage,
+	})
+	if err != nil {
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering login template: %v", err))
+		return
+	}
+
+	layoutTpl, err := core.LoadFrontendFile("src/views/layouts/layout.hbs")
+	if err != nil {
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading layout: %v", err))
+		return
+	}
+
+	page, err := raymond.Render(layoutTpl, map[string]interface{}{
+		"title":   "Login",
+		"content": raymond.SafeString(content),
+	})
+	if err != nil {
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))
+		return
+	}
+
+	c.Header("Content-Type", "text/html")
+	c.String(http.StatusOK, page)
+}
+
+/**
+ * isValidEmail checks if the email is valid and ends with @sfsu.edu
+ */
 func isValidEmail(email string) bool {
-	// Basic email format validation
 	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
 	if !emailRegex.MatchString(email) {
 		return false
 	}
-
-	// Check if it's an SFSU email
 	return strings.HasSuffix(email, "@sfsu.edu")
 }
