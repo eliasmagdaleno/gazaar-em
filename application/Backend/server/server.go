@@ -41,6 +41,13 @@ func StartServer() {
 	// Trusted proxy configuration
 	router.SetTrustedProxies([]string{"192.168.0.0/24"})
 
+	// Register middleware globally if needed
+	// router.Use(routes.ProductMiddleware())
+	// router.Use(routes.RandomEventMiddleware())
+	// router.Use(routes.RandomProductMiddleware())
+
+
+
 	routes.RegisterHomeRoutes(router)
 	routes.RegisterMemberRoutes(router)
 	routes.RegisterVPRoutes(router)
@@ -48,6 +55,10 @@ func StartServer() {
 	routes.RegisterViewListingsRoutes(router)
 	routes.RegisterMessagesRoutes(router)
 	routes.RegisterAuthRoutes(router)
+	routes.RegisterProfileRoutes(router)
+	routes.RegisterMarketRoutes(router)
+	routes.RegisterEventsRoutes(router)
+	routes.RegisterCreateListingRoutes(router)
 
 	log.Println("🚀 Server running on http://0.0.0.0:8081")
 
@@ -79,6 +90,20 @@ func StartServer() {
 		raymond.RegisterPartial("productcard-search", productCardSrPartial)
 	}
 
+	productCardMarketplacePartial, err := loadTemplate("Frontend/src/views/partials/productcard-marketplace.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load productcard-marketplace partial: %v", err)
+	} else {
+		raymond.RegisterPartial("productcard-marketplace", productCardMarketplacePartial)
+	}
+
+	eventCardMarketplacePartial, err := loadTemplate("Frontend/src/views/partials/eventcard-marketplace.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load eventcard-marketplace partial: %v", err)
+	} else {
+		raymond.RegisterPartial("eventcard-marketplace", eventCardMarketplacePartial)
+	}
+
 	senderCardPartial, err := loadTemplate("Frontend/src/views/partials/sendercard.hbs")
 	if err != nil {
 		log.Printf("Warning: Could not load sendercard partial: %v", err)
@@ -86,6 +111,7 @@ func StartServer() {
 		raymond.RegisterPartial("sendercard", senderCardPartial)
 	}
 
+	// Correcting the variable name for senderMessagePartial
 	senderMessagePartial, err := loadTemplate("Frontend/src/views/partials/sendermessage.hbs")
 	if err != nil {
 		log.Printf("Warning: Could not load sendermessage partial: %v", err)
@@ -112,6 +138,20 @@ func StartServer() {
 		log.Printf("Warning: Could not load header partial: %v", err)
 	} else {
 		raymond.RegisterPartial("header", headerPartial)
+	}
+
+	registerPartial, err := loadTemplate("Frontend/src/views/registration.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load registration partial: %v", err)
+	} else {
+		raymond.RegisterPartial("registration", registerPartial)
+	}
+
+	errorCardPartial, err := loadTemplate("Frontend/src/views/partials/errorcard.hbs")
+	if err != nil {
+		log.Printf("Warning: Could not load errorcard partial: %v", err)
+	} else {
+		raymond.RegisterPartial("errorcard", errorCardPartial)
 	}
 
 	log.Println("🚀 Server running on http://0.0.0.0:9081")

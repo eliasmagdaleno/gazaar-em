@@ -1,0 +1,20 @@
+<div class="error-container">
+  <h1>Error {{statusCode}}</h1>
+  <p>{{message}}</p>
+  <a href="/">Redirect to Home page in <span id="countdown">10</span> seconds</a>
+</div>
+
+<script>
+  let countdown = 10;
+  const countdownElement = document.getElementById("countdown");
+  const redirectUrl = "/";
+
+  const interval = setInterval(() => {
+    countdown--;
+    countdownElement.textContent = countdown;
+    if (countdown <= 0) {
+      clearInterval(interval);
+      window.location.href = redirectUrl;
+    }
+  }, 1000);
+</script>

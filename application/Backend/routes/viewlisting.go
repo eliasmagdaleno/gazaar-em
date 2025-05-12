@@ -2,6 +2,7 @@ package routes
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"application/Backend/core"
@@ -11,39 +12,91 @@ import (
 )
 
 func RegisterViewListingsRoutes(router *gin.Engine) {
-	router.GET("/listing", func(c *gin.Context) {
-		viewListingTemplate, err := core.LoadFrontendFile("src/views/viewlisting.hbs")
-		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Error: %v", err))
+	router.GET("/viewlisting/:id", ProductDetailsMiddleware(), func(c *gin.Context) {
+		log.Println("viewlisting: Entering viewlisting route")
+		productDetails, exists := c.Get("productDetails")
+		if !exists {
+			log.Println("viewlisting: Product details not found in context")
+			renderErrorPage(c, http.StatusInternalServerError, "Failed to load product details")
 			return
 		}
-		content, err := raymond.Render(viewListingTemplate, map[string]interface{}{
-			"title": "View Listings",
-			"thumbnail": "assets/thumbnails/event1.jpg",
-			"fullImage": "assets/thumbnails/event1.jpg",
+
+		log.Printf("viewlisting: Product details: %+v", productDetails) // Debugging log
+
+		// Load the viewlisting.hbs template
+		viewlistingTemplate, err := core.LoadFrontendFile("src/views/viewlisting.hbs")
+		if err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading viewlisting template: %v", err))
+			return
+		}
+
+		// Render the viewlisting.hbs template with product details
+		content, err := raymond.Render(viewlistingTemplate, productDetails)
+		if err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering viewlisting template: %v", err))
+			return
+		}
+
+		// Load the layout.hbs template
+		layoutTemplate, err := core.LoadFrontendFile("src/views/layouts/layout.hbs")
+		if err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading layout template: %v", err))
+			return
+		}
+
+		// Render the layout.hbs template with the viewlisting content
+		output, err := raymond.Render(layoutTemplate, map[string]interface{}{
+			"title":   "View Listing",
+			"content": raymond.SafeString(content),
 		})
 		if err != nil {
-			c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering template: %v", err))
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))
 			return
 		}
-		 // Load the layout template
-		 layoutTemplate, err := core.LoadFrontendFile("src/views/layouts/layout.hbs")
-		 if err != nil {
-			 c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading layout template: %v", err))
-			 return
-		 }
- 
-		 // Render the layout with the viewlisting content
-		 output, err := raymond.Render(layoutTemplate, map[string]interface{}{
-			 "title":   "View Listing",
-			 "content": raymond.SafeString(content),
-		 })
-		 if err != nil {
-			 c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))
-			 return
-		 }
 
 		c.Header("Content-Type", "text/html")
 		c.String(http.StatusOK, output)
 	})
+}
+
+func RegisterCreateListingRoutes(router *gin.Engine) {
+	router.GET("/createlisting", createListingHandler)
+	router.POST("/createlisting", submitListingHandler)
+}
+
+func createListingHandler(c *gin.Context) {
+	createListingTemplate, err := core.LoadFrontendFile("src/views/createlisting.hbs")
+	if err != nil {
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading create listing template: %v", err))
+		return
+	}
+
+	content, err := raymond.Render(createListingTemplate, nil)
+	if err != nil {
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering create listing template: %v", err))
+		return
+	}
+
+	layoutTemplate, err := core.LoadFrontendFile("src/views/layouts/layout.hbs")
+	if err != nil {
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading layout template: %v", err))
+		return
+	}
+
+	output, err := raymond.Render(layoutTemplate, map[string]interface{}{
+		"title":   "Create Listing",
+		"content": raymond.SafeString(content),
+	})
+	if err != nil {
+		c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))
+		return
+	}
+
+	c.Header("Content-Type", "text/html")
+	c.String(http.StatusOK, output)
+}
+
+func submitListingHandler(c *gin.Context) {
+	// Handle form submission logic here
+	c.String(http.StatusOK, "Listing submitted successfully!")
 }

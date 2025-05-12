@@ -1,32 +1,49 @@
-{{! filepath: /home/student/Documents/CSC_648/csc648-fa25-0104-team03/application/Frontend/src/views/partials/eventcard.hbs }}
-<div class="event-collection">
-  <div
-    class="event-card bg-light-orange-500 rounded-lg p-2 shadow-md flex flow-row gap-4"
-  >
-    <div class="event-img-section shadow-md">
-      <img class="event-img max-w-md" src="{{thumbnail}}" />
-    </div>
-
-    <div class="event-info self-center flex-col w-full pt-2">
-      <p class="event-date font-semibold text-base">{{date}}</p>
-      <button
-        class="event-link hover:text-light-gray-500"
-        id="event-link"
-        onclick="window.location.href='/listing'"
-      >
-        <h2 class="event-title font-bold text-2xl sm:text-md md:text-3xl hover:text-light-gray-500 cursor-pointer">{{title}}</h2>
-      </button>
-      <p class="event-host">{{host}}</p>
-    </div>
-    <span class="save-button-span absolute">
-      <button class="save-button bg-blood-orange-500 rounded-full ml-1 mt-1 cursor-pointer" id="save-button">
-        <img
-          class="bookmark-icon size-6"
-          src="/frontend/Assets/icons/feather-dark-gray/bookmark.svg"
-          alt="Bookmark"
-        />
-      </button>
-    </span>
-
+<div
+  class="event-card bg-#f6f6f6 overflow-hidden relative"
+>
+  <div class="event-img-section border border-light-gray-500 rounded-lg ">
+    <button
+      class="event-link w-full h-48 cursor-pointer"
+      id="event-link"
+      onclick="window.location.href='/listing'"
+    >
+      <img
+        class="event-img "
+        src="{{thumbnail}}"
+        alt="{{title}}"
+      />
+    </button>
   </div>
+
+  <div class="event-info p-2 text-left">
+    <p class="event-date font-semibold text-base">{{postDate}}</p>
+    <button
+      class="event-link"
+      id="event-link"
+      onclick="window.location.href='/listing'"
+    >
+      <h3
+        class="event-title font-bold text-lg sm:text-sm md:text-base cursor-pointer"
+      >
+        {{title}}
+      </h3>
+    </button>
+    {{!--
+    <p class="event-host">{{host}}</p>
+    --}}
+  </div>
+  {{!--
+  <span class="save-button-span absolute">
+    <button
+      class="save-button bg-blood-orange-500 rounded-full ml-1 mt-1 cursor-pointer"
+      id="save-button"
+    >
+      <img
+        class="bookmark-icon size-6"
+        src="/frontend/Assets/icons/feather-dark-gray/bookmark.svg"
+        alt="Bookmark"
+      />
+    </button>
+  </span>
+  --}}
 </div>

@@ -1,22 +1,33 @@
-<div class="homepage-container bg-light-gray-500 h-screen flex flex-col gap-10">
+<div class="homepage-container h-screen flex flex-col gap-5 overflow-y-scroll">
+  <div class="event-section px-6 pt-4">
+    <button
+      class="events-button hover:bg-light-gray-500 rounded cursor-pointer p-2 mb-2"
+    >
+      <a href="/events">
+        <h2 class="featured-header text-3xl font-bold">Upcoming Events</h2>
+      </a>
+    </button>
 
-    
-    <div class="event-section px-6 pt-4">
-        <h2 class="upcoming-header text-3xl font-bold mb-4">Upcoming Events</h2>
-        <div class="event-list grid grid-cols 1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {{#each events}}
-                {{> eventcard}}
-            {{/each}}
-        </div>
+    <div class="event-list flex gap-6 overflow-x-auto whitespace-nowrap">
+      {{#each events}}
+      <div class="flex-shrink-0 w-64">{{> eventcard}}</div>
+      {{/each}}
     </div>
+  </div>
 
-        
-    <div class="product-section px-6 pt-4">
-        <h2 class="featured-header text-3xl font-bold mb-4">Featured Products</h2>
-        <div class="product-list grid grid-cols 1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {{#each products}}
-                {{> productcard-home}}
-            {{/each}}
-        </div>  
+  <div class="product-section px-6 pt-6 pb-28">
+    <button
+      class="marketplace-button hover:bg-light-gray-500 rounded cursor-pointer p-2 mb-2"
+    >
+      <a href="/market">
+        <h2 class="featured-header text-3xl font-bold">Featured Products</h2>
+      </a>
+    </button>
+
+    <div class="product-list flex gap-6 overflow-x-auto mb-6">
+      {{#each products}}
+      <div class="flex-shrink-0 w-64 h-auto">{{> productcard-marketplace}}</div>
+      {{/each}}
     </div>
+  </div>
 </div>
