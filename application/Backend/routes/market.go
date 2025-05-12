@@ -59,9 +59,10 @@ func fetchRandomMarketProducts(limit int) ([]map[string]interface{}, error) {
 }
 
 func marketHandler(c *gin.Context) {
-	products, err := fetchRandomMarketProducts(20)
-	if err != nil {
-		c.String(http.StatusInternalServerError, fmt.Sprintf("Error fetching products: %v", err))
+	// Retrieve the product cards set by the RandomProductMiddleware
+	productCards, exists := c.Get("productCards")
+	if !exists {
+		c.String(http.StatusInternalServerError, "Error: Product cards not found in context")
 		return
 	}
 
@@ -73,7 +74,7 @@ func marketHandler(c *gin.Context) {
 
 	content, err := raymond.Render(marketTemplate, map[string]interface{}{
 		"title":    "Market",
-		"products": products,
+		"products": productCards,
 	})
 	if err != nil {
 		c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering market content: %v", err))

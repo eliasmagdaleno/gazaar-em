@@ -15,7 +15,7 @@ import (
 // Middleware to fetch random product cards
 func RandomProductMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		query := "SELECT image_url, title, price FROM items WHERE LOWER(category) != 'events' ORDER BY RAND() LIMIT 20"
+		query := "SELECT item_id, image_url, title, price FROM items WHERE LOWER(category) != 'events' ORDER BY RAND() LIMIT 20"
 		rows, err := database.DB.Query(query)
 		if err != nil {
 			log.Printf("RandomProductMiddleware: Error executing query: %v", err)
@@ -27,13 +27,15 @@ func RandomProductMiddleware() gin.HandlerFunc {
 
 		var products []map[string]interface{}
 		for rows.Next() {
+			var itemID int
 			var imageURL, title string
 			var price float64
-			if err := rows.Scan(&imageURL, &title, &price); err != nil {
+			if err := rows.Scan(&itemID, &imageURL, &title, &price); err != nil {
 				log.Printf("RandomProductMiddleware: Row scan error: %v", err)
 				continue
 			}
 			products = append(products, map[string]interface{}{
+				"item_id":   itemID,
 				"thumbnail": "/assets/thumbnails/" + imageURL,
 				"title":     title,
 				"price":     price,
@@ -108,6 +110,44 @@ func ProductMiddleware() gin.HandlerFunc {
 		}
 
 		c.Set("productCards", products)
+		c.Next()
+	}
+}
+
+// Middleware to fetch a single product by ID
+func ProductDetailsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		productID := c.Param("id")
+		log.Printf("ProductDetailsMiddleware: Received productID: %s", productID) // Debugging log
+
+		query := `SELECT title, item_id, description, price, category, seller_id, image_url, post_date 
+				FROM items WHERE item_id = ?`
+		log.Printf("ProductDetailsMiddleware: Executing query: %s with productID: %s", query, productID) // Debugging log
+
+		row := database.DB.QueryRow(query, productID)
+
+		var product map[string]interface{}
+		var title, itemID, description, category, sellerID, imageURL, postDate string
+		var price float64
+		if err := row.Scan(&title, &itemID, &description, &price, &category, &sellerID, &imageURL, &postDate); err != nil {
+			log.Printf("ProductDetailsMiddleware: Error fetching product details: %v", err)
+			renderErrorPage(c, http.StatusNotFound, "Product not found")
+			c.Abort()
+			return
+		}
+
+		product = map[string]interface{}{
+			"title":       title,
+			"id":          itemID,
+			"description": description,
+			"price":       price,
+			"category":    category,
+			"sellerID":    sellerID,
+			"imageURL":    "/assets/thumbnails/" + imageURL,
+			"postDate":    postDate,
+		}
+
+		c.Set("productDetails", product)
 		c.Next()
 	}
 }

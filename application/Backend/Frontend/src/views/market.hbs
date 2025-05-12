@@ -5,7 +5,7 @@
   
 
   <!-- Main Content Section -->
-  <main class="main-content w-3/4 p-4">
+  <main class="main-content w-full p-4 overflow-y-scroll h-screen">
     <!-- Create New Listing Button -->
     <div class="create-listing-button-container text-right mb-4">
       <a href="/createlisting">
@@ -14,7 +14,7 @@
     </div>
 
     <!-- Product Cards Grid -->
-    <div class="product-cards-grid grid grid-cols-4 gap-4">
+    <div class="product-cards-grid grid grid-cols-4 gap-4 pb-18">
       {{#each products}}
         {{> productcard-marketplace}}
       {{/each}}

@@ -1,6 +1,6 @@
-<div class="listing-page-container bg-dark-gray-500 h-screen">
+<div class="listing-page-container  h-screen">
   <div class="listing-content grid grid-cols-12 pt-6 ml-10 mr-4">
-    <!-- Left Section: Image Gallery -->
+    {{!-- <!-- Left Section: Image Gallery -->
     <div class="img-gallery-section col-span-2 h-full mr-4 self-center">
       <div class="img-gallery flex flex-col self-center items-center m-3 gap-4">
         <button class="col-item cursor-pointer " onclick="setMainImage('{{this}}')">
@@ -46,17 +46,17 @@
 
       </div>
 
-    </div>
+    </div> --}}
 
     <!-- Center Section: Main Image -->
-    <div class="main-img col-span-7 relative mr-4">
+    <div class="main-img col-span-7 relative mr-4 ml-4">
       <img
         class="w-full h-96 object-cover rounded-md"
-        src="{{fullImage}}"
+        src="{{imageURL}}"
         alt="Main Image"
         id="mainImage"
       />
-      <button
+      {{!-- <button
         class="bookmark-button absolute top-4 right-4 bg-blood-orange-500 rounded-full p-2 cursor-pointer"
       >
         <img
@@ -64,15 +64,15 @@
           src="/frontend/Assets/icons/feather-dark-gray/bookmark.svg"
           alt="Bookmark"
         />
-      </button>
+      </button> --}}
       <!-- Message Form -->
       <div class="message-form mt-4">
         <h2 class="text-lg font-semibold mb-2 text-light-black-500">Send a
           Message to the Seller:</h2>
         <form action="/send-message" method="POST" class="flex flex-col gap-4 ">
           <textarea
-            class="message-input w-full h-24 p-4 border border-light-gray-500 bg-light-gray-500 rounded-md shadow-md"
-            rows="2"
+            class="message-input w-full p-4 border border-light-gray-500 bg-light-gray-500 rounded-md shadow-md"
+            rows="1"
             placeholder="Type your message here..."
           ></textarea>
           <button
@@ -84,14 +84,14 @@
     </div>
 
     <!-- Right Section: Item Details -->
-    <div class="item-details col-span-3 gap-6 text-light-black-500">
-      <h1 class="item-name text-2xl font-bold mb-2">ITEM NAME</h1>
-      <p class="item-price text-lg font-semibold">Price: $100</p>
-      <p class="item-condition text-sm">Condition: New</p>
+    <div class="item-details col-span-5 ml-6 gap-6 text-light-black-500">
+      <h1 class="item-name text-2xl font-bold mb-2">{{title}}</h1>
+      <p class="item-price text-lg font-semibold my-2">${{price}}</p>
+      <p class="item-posted text-sm ">Posted on: {{postDate}}</p>
+      <p class="item-condition text-sm">Category: {{category}}</p>
       <div class="product-description mt-4">
-        <h2 class="text-lg font-semibold">Product Description:</h2>
-        <p class="text-sm text-light-black-500">This is a detailed description
-          of the product.</p>
+        <h2 class="text-lg font-semibold my-4">Description:</h2>
+        <p class="text-sm text-light-black-500">{{description}}</p>
       </div>
       <!-- Seller Information and Message Form -->
       <div class="seller-and-message gap-6 mt-6">
@@ -105,7 +105,7 @@
             alt="Seller Profile"
           />
           <div class="seller-details flex flex-col ml-4">
-            <p class="seller-name text-lg font-bold">ACCOUNT NAME</p>
+            <p class="seller-name text-lg font-bold">{{sellerID}}</p>
             <div class="seller-rating-section flex flex-row gap-2">
               <img
                 class="star-icon w-6 h-6"

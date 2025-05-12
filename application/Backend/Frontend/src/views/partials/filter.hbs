@@ -1,6 +1,6 @@
 <div
   id="filterContainer"
-  class="flex flex-col bg-light-orange-500 shadow-lg transition-all duration-500 ease-in-out w-[300px] min-h-screen"
+  class="flex flex-col bg-light-orange-500 shadow-lg transition-all duration-500 ease-in-out w-[300px] min-h-screen overflow-hidden"
 >
   <!-- Header with toggle button -->
   <div class="flex justify-between items-center p-4 overflow-visible">
@@ -22,18 +22,18 @@
   </div>
 
   <!-- Content that will hide when collapsed -->
-  <div id="filterContent" class="mt-6 p-4 pt-0 overflow-y-auto h-screen">
+  <div id="filterContent" class="mt-6 p-4 pt-0 overflow-y-auto flex-1">
     <ul class="flex flex-col gap-6">
-      <li class="flex flex-row items-center gap-4">
-        <h3 class="text-md font-semibold">Price</h3>
+      <li class="flex flex-row items-center gap-4 text-base">
+        <h3 class="text-base font-semibold">Price</h3>
         <input
-          class="w-20 border border-dark-gray-500 bg-light-gray-500 rounded px-2 py-1 cursor-pointer"
+          class="w-14 border border-dark-gray-500 bg-light-gray-500 rounded px-2 py-1 text-sm cursor-pointer"
           type="number"
           placeholder="Min"
         />
         <p>To</p>
         <input
-          class="w-20 border border-dark-gray-500 bg-light-gray-500 rounded px-2 py-1 cursor-pointer"
+          class="w-14 border border-dark-gray-500 bg-light-gray-500 rounded px-2 py-1 text-sm  cursor-pointer"
           type="number"
           placeholder="Max"
         />
@@ -83,7 +83,7 @@
         </div>
       </li>
     </ul>
-    <div class="flex justify-between mt-4">
+    <div class="flex justify-between mt-4 mb-4 pb-8">
       <button
         id="resetFilters"
         class="bg-dark-gray-500 text-light-black-500 px-4 py-2 rounded shadow-md cursor-pointer"

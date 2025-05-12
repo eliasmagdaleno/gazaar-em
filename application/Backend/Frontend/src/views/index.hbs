@@ -1,11 +1,13 @@
-<div class="homepage-container h-screen flex flex-col gap-10 overflow-y-auto whitespace-nowrap ">
+<div class="homepage-container h-screen flex flex-col gap-5 overflow-y-scroll">
   <div class="event-section px-6 pt-4">
-      <button
+    <button
       class="events-button hover:bg-light-gray-500 rounded cursor-pointer p-2 mb-2"
     >
-      <a href="/events"> <h2 class="featured-header text-3xl font-bold">Upcoming Events</h2></a>
+      <a href="/events">
+        <h2 class="featured-header text-3xl font-bold">Upcoming Events</h2>
+      </a>
     </button>
-    
+
     <div class="event-list flex gap-6 overflow-x-auto whitespace-nowrap">
       {{#each events}}
       <div class="flex-shrink-0 w-64">{{> eventcard}}</div>
@@ -13,16 +15,18 @@
     </div>
   </div>
 
-  <div class="product-section px-6 pt-4 ">
+  <div class="product-section px-6 pt-6 pb-28">
     <button
       class="marketplace-button hover:bg-light-gray-500 rounded cursor-pointer p-2 mb-2"
     >
-      <a href="/market"> <h2 class="featured-header text-3xl font-bold">Featured Products</h2></a>
+      <a href="/market">
+        <h2 class="featured-header text-3xl font-bold">Featured Products</h2>
+      </a>
     </button>
-   
-    <div class="product-list flex gap-6 overflow-x-auto whitespace-nowrap mb-6">
+
+    <div class="product-list flex gap-6 overflow-x-auto mb-6">
       {{#each products}}
-      <div class="flex-shrink-0 w-64">{{> productcard-marketplace}}</div>
+      <div class="flex-shrink-0 w-64 h-auto">{{> productcard-marketplace}}</div>
       {{/each}}
     </div>
   </div>

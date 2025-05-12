@@ -3,7 +3,7 @@
     <button
       class="product-link w-full h-48 cursor-pointer"
       id="product-link"
-      onclick="window.location.href='/listing'"
+      onclick="window.location.href='/viewlisting/{{item_id}}'"
     >
       <img
         class="product-img w-full h-48 object-cover rounded-md"
@@ -16,7 +16,7 @@
     <button
       class="product-link"
       id="product-link"
-      onclick="window.location.href='/listing'"
+      onclick="window.location.href='/viewlisting/{{item_id}}'"
     >
       <h3 class="product-title text-lg font-bold cursor-pointer">{{title}}</h3>
     </button>
@@ -24,18 +24,4 @@
     <p class="product-price text-base text-gray-600">${{price}}</p>
     <p class="product-location text-sm text-gray-500">{{location}}</p>
   </div>
-  {{!--
-  <span class="save-button-span absolute">
-    <button
-      class="save-button bg-blood-orange-500 rounded-full top-1 right-1 ml-1 mt-1 cursor-pointer"
-      id="save-button"
-    >
-      <img
-        class="bookmark-icon size-6"
-        src="/frontend/Assets/icons/feather-dark-gray/bookmark.svg"
-        alt="Bookmark"
-      />
-    </button>
-  </span>
-  --}}
 </div>
