@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"application/Backend/core"
+	"application/Backend/database"
 
 	"github.com/aymerick/raymond"
 	"github.com/gin-gonic/gin"
@@ -12,12 +13,30 @@ import (
 
 func RegisterMessagesRoutes(router *gin.Engine) {
 	router.GET("/messages", func(c *gin.Context) {
-		// Test data for messages
-		messages := []map[string]interface{}{
-			{"isSender": true, "message": "Hi, is the item still available?", "timestamp": "10:00 AM"},
-			{"isSender": false, "message": "Yes, it is available.", "timestamp": "10:02 AM"},
-			{"isSender": true, "message": "Great! Can I pick it up tomorrow?", "timestamp": "10:05 AM"},
-			{"isSender": false, "message": "Sure, what time works for you?", "timestamp": "10:07 AM"},
+
+		rows, err := database.DB.Query(`
+      SELECT content,
+             DATE_FORMAT(timestamp, '%Y-%m-%d %H:%i') AS ts
+        FROM Message
+       ORDER BY timestamp ASC
+    `)
+		if err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("DB error: %v", err))
+			return
+		}
+		defer rows.Close()
+
+		// 2) Build a flat slice of message maps
+		var allMsgs []map[string]string
+		for rows.Next() {
+			var text, ts string
+			if err := rows.Scan(&text, &ts); err != nil {
+				continue
+			}
+			allMsgs = append(allMsgs, map[string]string{
+				"message":   text,
+				"timestamp": ts,
+			})
 		}
 
 		messagesTemplate, err := core.LoadFrontendFile("src/views/messages.hbs")
@@ -32,7 +51,7 @@ func RegisterMessagesRoutes(router *gin.Engine) {
 		}
 		content, err := raymond.Render(messagesTemplate, map[string]interface{}{
 			"title":    "View Messages",
-			"messages": messages,
+			"messages": allMsgs,
 		})
 
 		// Render the layout with the messages content

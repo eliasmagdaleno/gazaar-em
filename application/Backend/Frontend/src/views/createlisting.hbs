@@ -197,17 +197,27 @@
   let currentIndex = 0;
 
   function handleImageUpload(event) {
-    const files = event.target.files;
-    if (files.length > 5) {
-      alert('You can only upload a maximum of 5 images.');
-      event.target.value = ''; // Reset the input
-      return;
-    }
-    uploadedImages = Array.from(files).map(function (file) {
-      return URL.createObjectURL(file);
-    });
+    const files = Array.from(event.target.files);
+  if (files.length > 5) {
+    alert('You can only upload a maximum of 5 images.');
+    // clean up old previews
+    uploadedImages.forEach(url => URL.revokeObjectURL(url));
+    uploadedImages = [];
     currentIndex = 0;
     updateImagePreview();
+    event.target.value = '';
+    return;
+  }
+
+  // Revoke previous URLs
+  uploadedImages.forEach(url => URL.revokeObjectURL(url));
+
+  // Filter to actual images
+  const imageFiles = files.filter(file => file.type.startsWith('image/'));
+  uploadedImages = imageFiles.map(file => URL.createObjectURL(file));
+  currentIndex = 0;
+  updateImagePreview();
+  renderThumbnailList(uploadedImages);
   }
 
   function updateImagePreview() {
