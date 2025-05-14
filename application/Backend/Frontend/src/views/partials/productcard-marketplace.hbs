@@ -1,0 +1,27 @@
+<div class="product-card-marketplace bg-#f6f6f6 overflow-hidden relative">
+  <div class="product-img-section border border-light-gray-500 rounded-lg">
+    <button
+      class="product-link w-full h-48 cursor-pointer"
+      id="product-link"
+      onclick="window.location.href='/viewlisting/{{item_id}}'"
+    >
+      <img
+        class="product-img w-full h-48 object-cover rounded-md"
+        src="{{thumbnail}}"
+        alt="{{title}}"
+      />
+    </button>
+  </div>
+  <div class="product-info p-2 text-left">
+    <button
+      class="product-link"
+      id="product-link"
+      onclick="window.location.href='/viewlisting/{{item_id}}'"
+    >
+      <h3 class="product-title text-lg font-bold cursor-pointer">{{title}}</h3>
+    </button>
+
+    <p class="product-price text-base text-gray-600">${{price}}</p>
+    <p class="product-location text-sm text-gray-500">{{location}}</p>
+  </div>
+</div>
