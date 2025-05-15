@@ -4,8 +4,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
+	"strconv"
 
 	"application/Backend/core"
+	"application/Backend/database"
+	"application/Backend/utils"
 
 	"github.com/aymerick/raymond"
 	"github.com/gin-gonic/gin"
@@ -98,5 +103,63 @@ func createListingHandler(c *gin.Context) {
 
 func submitListingHandler(c *gin.Context) {
 	// Handle form submission logic here
+	title := c.PostForm("title")
+	desc := c.PostForm("description")
+	kind := c.PostForm("kind") // "product" or "event"
+
+	// 1) Handle the single uploaded image (use the first if multiple)
+	var imageName string
+	if fh, err := c.FormFile("images"); err == nil {
+		// Ensure the assets dir exists
+		os.MkdirAll("assets", os.ModePerm)
+
+		// Save original image
+		imageName = filepath.Base(fh.Filename)
+		dst := filepath.Join("assets", imageName)
+		if err := c.SaveUploadedFile(fh, dst); err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Image save error: %v", err))
+			return
+		}
+		// Optionally generate thumbnail now (market.go generates on demand)
+		thumbDir := filepath.Join("assets", "thumbnails")
+		os.MkdirAll(thumbDir, os.ModePerm)
+		_ = utils.GenerateThumbnail(dst, filepath.Join(thumbDir, imageName), 150, 150)
+	}
+
+	// 2) Parse price
+	priceStr := c.PostForm("price")
+	price, err := strconv.ParseFloat(priceStr, 64)
+	if err != nil {
+		c.String(http.StatusBadRequest, "Invalid price")
+		return
+	}
+
+	sellerID := c.GetInt("user_id")
+	category := c.PostForm("category")
+	if kind == "product" && category == "" {
+		c.String(http.StatusBadRequest, "Category is required for products")
+		return
+	}
+
+	// 3) Insert into items
+	_, err = database.DB.Exec(`
+        INSERT INTO items 
+          (title, description, price, category, seller_id, image_url, post_date)
+        VALUES (?, ?, ?, ?, ?, ?, NOW())
+    `, title, desc, price,
+		func() string {
+			if kind == "product" {
+				return category
+			}
+			return "event"
+		}(),
+		sellerID,
+		imageName,
+	)
+	if err != nil {
+		c.String(http.StatusInternalServerError, fmt.Sprintf("DB insert error: %v", err))
+		return
+	}
+
 	c.String(http.StatusOK, "Listing submitted successfully!")
 }

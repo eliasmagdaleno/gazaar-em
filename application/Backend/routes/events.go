@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"application/Backend/core"
+	"application/Backend/database"
 
 	"github.com/aymerick/raymond"
 	"github.com/gin-gonic/gin"
@@ -17,12 +18,37 @@ func RegisterEventsRoutes(router *gin.Engine) {
 }
 
 func eventsHandler(c *gin.Context) {
-	// Temporarily replace the eventCards data with a simplified hardcoded structure for testing
-	hardcodedEvents := []map[string]interface{}{
-		{"thumbnail": "frontend/assets/thumbnails/test1.jpg", "title": "Test Event 1", "postDate": "2025-05-01"},
-		{"thumbnail": "frontend/assets/thumbnails/test2.jpg", "title": "Test Event 2", "postDate": "2025-05-02"},
+
+	rows, err := database.DB.Query(
+		`SELECT item_id, image_url, title, seller_id,
+		DATE_FORMAT(post_date, '%M %e, %Y') AS date,
+		description
+   FROM items
+  	ORDER BY post_date DESC`,
+	)
+	if err != nil {
+		c.String(http.StatusInternalServerError, fmt.Sprintf("DB error: %v", err))
+		return
 	}
-	log.Printf("[DEBUG] Using hardcoded events for testing: %+v", hardcodedEvents)
+	defer rows.Close()
+
+	// Build a slice of event maps
+	var evs []map[string]interface{}
+	for rows.Next() {
+		var id int
+		var img, title, host, date, desc string
+		if err := rows.Scan(&id, &img, &title, &host, &date, &desc); err != nil {
+			continue
+		}
+		evs = append(evs, map[string]interface{}{
+			"id":        id,
+			"thumbnail": "/assets/thumbnails/" + img,
+			"title":     title,
+			"host":      host,
+			"date":      date,
+			"location":  desc,
+		})
+	}
 
 	eventsTemplate, err := core.LoadFrontendFile("src/views/events.hbs")
 	if err != nil {
@@ -34,12 +60,12 @@ func eventsHandler(c *gin.Context) {
 	// Add detailed logging to trace template rendering
 	log.Printf("[DEBUG] Rendering events.hbs with data: %+v", map[string]interface{}{
 		"title":  "Events",
-		"events": hardcodedEvents,
+		"events": evs,
 	})
 
 	content, err := raymond.Render(eventsTemplate, map[string]interface{}{
 		"title":  "Events",
-		"events": hardcodedEvents,
+		"events": evs,
 	})
 	if err != nil {
 		log.Printf("[ERROR] Error rendering events.hbs: %v", err)
@@ -48,7 +74,7 @@ func eventsHandler(c *gin.Context) {
 	}
 
 	// Add logging to confirm the events data is accessible in the template
-	log.Printf("[DEBUG] Retrieved events data: %+v", hardcodedEvents)
+	log.Printf("[DEBUG] Retrieved events data: %+v", evs)
 
 	layoutTemplate, err := core.LoadFrontendFile("src/views/layouts/layout.hbs")
 	if err != nil {
