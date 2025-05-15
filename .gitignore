@@ -26,12 +26,16 @@ docker-compose.override.yml
 volumes/
 data/
 tmp/
+node_modules/
 
-# Ignore the entire .devcontainer folder (optional)
+# Ignore the entire .devcontainer folder 
 .devcontainer/
 
-# Ignore docker-compose.yml if you don't want to commit it (optional)
+# Ignore docker-compose.yml 
 docker-compose.yml
 
-# Ignore the workspace file if you don't want to share it (optional)
-CSC648-Project.code-workspace
+# Ignore dockerfile
+Dockerfile
+
+# Ignore the workspace file 
+csc648-fa25-0104-team03.code-workspace
