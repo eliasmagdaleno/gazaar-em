@@ -1,14 +1,16 @@
 <div
-  class="results-container flex flex-row justify-start gap-25 bg-white min-h-screen"
+  class="results-container flex flex-row justify-start gap-25 min-h-screen overflow-hidden"
 >
   {{> filter}}
-  <main class="results-section text-center w-3/4 p-4 overflow-y-auto h-screen">
+  <main
+    class="results-section text-center p-4 flex-1 overflow-y-auto h-screen pb-64 mb-20"
+  >
     <h1 class="results-header font-bold text-3xl text-left mt-2">Results</h1>
     <p class="results-count text-base text-left">{{count}} Results found</p>
 
     {{#if products}}
     <div class="product-section mr-4 mt-4">
-      <div class="product-cards-grid grid grid-cols-4 gap-4">
+      <div class="product-cards-grid grid grid-cols-4 gap-4 pb-40 mb-10">
         {{#each products}} {{> productcard-marketplace}} {{/each}}
       </div>
     </div>
@@ -17,23 +19,36 @@
     {{/if}}
   </main>
 </div>
+
+<style>
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+  }
+  .product-cards-grid {
+    margin-bottom: 240px !important;
+  }
+</style>
+
 <script>
-    let sidebar = document.getElementById("filterContainer")[0];
-    let sidebar_content = document.getElementById("filterContent")[0];
-    window.onscroll = () => {
-        let scrollTop = window.scrollY;
-        let viewportHeight = window.innerHeight;
-        let contentHeight = sidebar_content.getBoundingClientRect().height;
-        let sidebarTop = sidebar.getBoundingClientRect().top + window.pageYOffset;
+  let sidebar = document.getElementById('filterContainer')[0];
+  let sidebar_content = document.getElementById('filterContent')[0];
+  window.onscroll = () => {
+    let scrollTop = window.scrollY;
+    let viewportHeight = window.innerHeight;
+    let contentHeight = sidebar_content.getBoundingClientRect().height;
+    let sidebarTop = sidebar.getBoundingClientRect().top + window.pageYOffset;
 
-        if(scrollTop > contentHeight - viewportHeight + sidebarTop) {
-            sidebar_content.style.transform = `translateY( - ${contentHeight - viewportHeight - sidebarTop}px)`;
-            sidebar_content.style.position = "fixed";
-        } else {
-           sidebar_content.style.transform = "";
-            sidebar_content.style.position = "";
-        }
-
-
+    if (scrollTop > contentHeight - viewportHeight + sidebarTop) {
+      sidebar_content.style.transform = `translateY( - ${
+        contentHeight - viewportHeight - sidebarTop
+      }px)`;
+      sidebar_content.style.position = 'fixed';
+    } else {
+      sidebar_content.style.transform = '';
+      sidebar_content.style.position = '';
     }
+  };
 </script>

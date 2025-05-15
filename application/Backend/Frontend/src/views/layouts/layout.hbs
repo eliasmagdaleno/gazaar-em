@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="/frontend/src/css/output.css?version=3" />
-        {{#each css}}
-            <link rel="stylesheet" type="text/css" href="/frontend/src/css/{{this}}"/> 
-        {{/each}}
-        {{#each js}}
-            <script defer src="/frontend/src/js/{{this}}" type="text/javascript"></script>
-        {{/each}}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/frontend/src/css/output.css?version=3"
+    />
+    {{#each css}}
+    <link rel="stylesheet" type="text/css" href="/frontend/src/css/{{this}}" />
+    {{/each}} {{#each js}}
+    <script
+      defer
+      src="/frontend/src/js/{{this}}"
+      type="text/javascript"
+    ></script>
+    {{/each}}
 
+    <title>{{title}}</title>
+  </head>
 
-        <title>{{title}}</title>
-    </head>
-    <body class="bg-white overflow-hidden">
-        {{> header}}
-        <div class="banner bg-blood-orange-500 w-screen"> 
-            {{> navbar}}
-        </div>
-            
-        {{{content}}}
-        <script src="/frontend/src/js/navbar.js" type="text/javascript"></script>
-    </body>
+  <body class="bg-white min-h-screen">
+    <div class="banner w-screen sticky top-0 z-50">
+      {{> header}} {{> navbar}}
+    </div>
+
+    {{{content}}}
+    <script src="/frontend/src/js/navbar.js" type="text/javascript"></script>
+  </body>
 </html>
