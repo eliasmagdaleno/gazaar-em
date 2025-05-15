@@ -12,3 +12,26 @@
 
 # Miscellaneous
 .env             
+
+# Ignore Docker build artifacts
+*.tar.gz
+*.tar
+*.img
+*.qcow2
+
+# Ignore Docker Compose override files (if any)
+docker-compose.override.yml
+
+# Ignore Docker volumes or generated files
+volumes/
+data/
+tmp/
+
+# Ignore the entire .devcontainer folder (optional)
+.devcontainer/
+
+# Ignore docker-compose.yml if you don't want to commit it (optional)
+docker-compose.yml
+
+# Ignore the workspace file if you don't want to share it (optional)
+CSC648-Project.code-workspace
