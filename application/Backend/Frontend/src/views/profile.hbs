@@ -11,10 +11,13 @@
       alt="User Profile Picture"
     />
     <div class="user-details flex flex-col">
-      <h1 class="user-name text-light-black-500 text-3xl font-bold">{{username}}</h1>
+      <h1 class="user-name text-light-black-500 text-3xl font-bold">
+        {{username}}
+      </h1>
       <p class="user-bio text-lg text-dark-gray-500">{{bio}}</p>
       <p class="user-rating text-lg text-dark-gray-500">
-        <span class="font-bold">Rating:</span> {{rating}}/5
+        <span class="font-bold">Rating:</span>
+        {{rating}}/5
       </p>
       <a
         href="/settings"
@@ -24,44 +27,28 @@
       </a>
     </div>
   </div>
-  <div class="user-items-section flex flex-row mx-2 gap-6 text-center justify-evenly">
-    {{!-- <div class="pending-items-section flex flex-col w-full">
-      <h2 class="section-header text-2xl font-bold mb-4 ">Pending Items</h2>
-      <div
-        class="pending-items-list"
-      >
-        {{#each pendingItems}} {{> productcard-home}} {{else}}
-        <p class="text-gray-600">You have no pending items.</p>
+
+  <div
+    class="user-items-section flex flex-row mx-2 gap-6 text-center justify-evenly"
+  >
+
+    <!-- Posted Items Section -->
+    <div class="posted-items-section flex flex-col w-full">
+      <h2 class="section-header text-2xl font-bold mb-4">Your Posted Items</h2>
+      <div class="items-list">
+        {{#each items}} {{> productcard-marketplace}} {{else}}
+        <p class="text-gray-600">You have not posted any items yet.</p>
         {{/each}}
       </div>
-    </div> --}}
+    </div>
 
-      <!-- Posted Items Section -->
-      <div class="posted-items-section flex flex-col w-full">
-        <h2 class="section-header text-2xl font-bold mb-4">
-          Your Posted Items
-        </h2>
-        <div
-          class="items-list"
-        >
-          {{#each items}} {{> productcard-home}} {{else}}
-          <p class="text-gray-600">You have not posted any items yet.</p>
-          {{/each}}
-        </div>
-      </div>
-
-      <!-- Posted Events Section -->
-      <div class="posted-events-section flex flex-col w-full">
-        <h2 class="section-header text-2xl font-bold mb-4">
-          Your Posted Events
-        </h2>
-        <div
-          class="events-list"
-        >
-          {{#each events}} {{> eventcard}} {{else}}
-          <p class="text-gray-600">You have not created any events yet.</p>
-          {{/each}}
-        </div>
+    <!-- Posted Events Section -->
+    <div class="posted-events-section flex flex-col w-full">
+      <h2 class="section-header text-2xl font-bold mb-4">Your Posted Events</h2>
+      <div class="events-list">
+        {{#each events}} {{> eventcard}} {{else}}
+        <p class="text-gray-600">You have not created any events yet.</p>
+        {{/each}}
       </div>
     </div>
   </div>
