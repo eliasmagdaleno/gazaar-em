@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 
@@ -12,21 +13,34 @@ import (
 )
 
 func RegisterMessagesRoutes(router *gin.Engine) {
+	// GET endpoint to view messages
 	router.GET("/messages", func(c *gin.Context) {
-
-		rows, err := database.DB.Query(`
-      SELECT content,
-             DATE_FORMAT(timestamp, '%Y-%m-%d %H:%i') AS ts
-        FROM Message
-       ORDER BY timestamp ASC
-    `)
+		roomId := c.Query("room")
+		var rows *sql.Rows
+		var err error
+		if roomId != "" {
+			rows, err = database.DB.Query(`
+				SELECT content,
+					   DATE_FORMAT(timestamp, '%Y-%m-%d %H:%i') AS ts
+				  FROM Message
+				 WHERE room = ?
+				ORDER BY timestamp ASC
+			`, roomId)
+		} else {
+			rows, err = database.DB.Query(`
+				SELECT content,
+					   DATE_FORMAT(timestamp, '%Y-%m-%d %H:%i') AS ts
+				  FROM Message
+				ORDER BY timestamp ASC
+			`)
+		}
 		if err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("DB error: %v", err))
 			return
 		}
 		defer rows.Close()
 
-		// 2) Build a flat slice of message maps
+		// Build a flat slice of message maps
 		var allMsgs []map[string]string
 		for rows.Next() {
 			var text, ts string
@@ -66,5 +80,27 @@ func RegisterMessagesRoutes(router *gin.Engine) {
 
 		c.Header("Content-Type", "text/html")
 		c.String(http.StatusOK, output)
+	})
+
+	// POST endpoint to send messages
+	router.POST("/messages", func(c *gin.Context) {
+		message := c.PostForm("message")
+		if message == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Message cannot be empty"})
+			return
+		}
+
+		// Insert message into database
+		_, err := database.DB.Exec(`
+			INSERT INTO Message (content, timestamp)
+			VALUES (?, NOW())
+		`, message)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to save message: %v", err)})
+			return
+		}
+
+		// Redirect back to messages page
+		c.Redirect(http.StatusSeeOther, "/messages")
 	})
 }
