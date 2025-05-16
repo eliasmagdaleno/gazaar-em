@@ -1,0 +1,648 @@
+<div
+  class="select-location-container min-h-screen flex flex-col gap-10 p-0 overflow-y-auto"
+  style="height: 100vh"
+>
+  <h2 class="text-3xl font-bold mb-6 text-center">Select Meeting Location</h2>
+  <div class="flex flex-row gap-12 flex-grow h-full">
+    <!-- Map Section -->
+    <div
+      class="flex-grow bg-dark-gray-500 w-1/3 p-6 rounded-lg shadow-md relative flex flex-col"
+    >
+      <div class="relative w-full h-full flex-grow">
+        <img
+          id="campusMap"
+          src="/frontend/Assets/originalImage/SFStateMainCampusMap.png"
+          alt="Campus Map"
+          class="w-full h-full object-contain rounded-md"
+          style="min-height: 0; min-width: 0"
+        />
+        <img
+          id="mapPin"
+          src="/path/to/your/pin-icon.png"
+          alt="Pin"
+          class="absolute hidden"
+          style="
+            width: 32px;
+            height: 32px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            z-index: 10;
+          "
+        />
+      </div>
+    </div>
+    <!-- Locations List -->
+    <div
+      class="w-1/3 bg-dark-gray-500 p-6 rounded-lg shadow-md flex flex-col gap-4 overflow-y-auto max-h-full"
+    >
+      <h3 class="text-xl font-semibold mb-4">Available Locations</h3>
+      <ul id="locationList" class="flex flex-col gap-2">
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Administration"
+          >
+            Administration (I-J8-9)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Annex I & II (ANX)"
+          >
+            Annex I & II (ANX) (D3-4)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="August Coppola Theatre (in FA)"
+          >
+            August Coppola Theatre (in FA) (H6)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Bike Barn (in GYM)"
+          >
+            Bike Barn (in GYM) (G7-8)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Bookstore (in CCSC)"
+          >
+            Bookstore (in CCSC) (H7)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Burk Hall (BH)"
+          >
+            Burk Hall (BH) (G-H6)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Business (BUS)"
+          >
+            Business (BUS) (H-I8-9)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Cesar Chavez Student Center (CCSC)"
+          >
+            Cesar Chavez Student Center (CCSC) (H7)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Child Care Center (A.S. ECEC)"
+          >
+            Child Care Center (A.S. ECEC) (F2)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Children's Campus"
+          >
+            Children's Campus (C-D3)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Conference Center (in Towers)"
+          >
+            Conference Center (in Towers) (G4)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Copy Center (in CCSC)"
+          >
+            Copy Center (in CCSC) (H7)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Corporation Yard (CYD)"
+          >
+            Corporation Yard (CYD) (C-D4-5)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Cox Stadium"
+          >
+            Cox Stadium (E-F6-8)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Creative Arts (CA)"
+          >
+            Creative Arts (CA) (I-J5-7)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Dining Center (aka City Eats)"
+          >
+            Dining Center (aka City Eats) (G3)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Ethnic Studies & Psychology (EP)"
+          >
+            Ethnic Studies & Psychology (EP) (G6)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Facilities & Capital Planning (in CYD)"
+          >
+            Facilities & Capital Planning (in CYD) (D4)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Fine Arts (FA)"
+          >
+            Fine Arts (FA) (H-I6)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Garden of Remembrance"
+          >
+            Garden of Remembrance (H6)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Greenhouse 2"
+          >
+            Greenhouse 2 (F9-10)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Gymnasium (GYM)"
+          >
+            Gymnasium (GYM) (G7-8)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Health Center (SHS)"
+          >
+            Health Center (SHS) (G6)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Hensill Hall (HH)"
+          >
+            Hensill Hall (HH) (G9-10)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Housing, Dining & Conference Services (in TCSQ)"
+          >
+            Housing, Dining & Conference Services (in TCSQ) (G4)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Housing Office (in MWH)"
+          >
+            Housing Office (in MWH) (G3)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="HSS"
+          >
+            HSS (H-I9-10)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Humanities (HUM)"
+          >
+            Humanities (HUM) (H-I4-5)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Jack Adams Hall (in CCSC)"
+          >
+            Jack Adams Hall (in CCSC) (H-I7)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Knuth Hall (in CA)"
+          >
+            Knuth Hall (in CA) (I6)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Labor Archives (in LIB)"
+          >
+            Labor Archives (in LIB) (I-J7-8)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Library (LIB, JP Leonard & Sutro)"
+          >
+            Library (LIB, JP Leonard & Sutro) (I-J7-8)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Little Theatre (in CA)"
+          >
+            Little Theatre (in CA) (I6)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Maloney Field (hardball)"
+          >
+            Maloney Field (hardball) (E-F3-4)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Manzanita Square"
+          >
+            Manzanita Square (J9)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Marcus Hall"
+          >
+            Marcus Hall (I-J5)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Mary Park Hall (MPH)"
+          >
+            Mary Park Hall (MPH) (F-G2)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Mary Ward Hall (MWH)"
+          >
+            Mary Ward Hall (MWH) (G2-3)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Mashouf Wellness Center (MWC)"
+          >
+            Mashouf Wellness Center (MWC) (G-H1-2)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="McKenna Theatre (in CA)"
+          >
+            McKenna Theatre (in CA) (J6)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Memorial Grove"
+          >
+            Memorial Grove (G-H7-8)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Museum (in HUM)"
+          >
+            Museum (in HUM) (I4-5)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Nasser Family Plaza (GYM)"
+          >
+            Nasser Family Plaza (GYM) (G7)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="OneStop Center (in SSB)"
+          >
+            OneStop Center (in SSB) (G5)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Parking Garage (main)"
+          >
+            Parking Garage (main) (E-F4-5)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Parking & Transportation (in CYD)"
+          >
+            Parking & Transportation (in CYD) (D4)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Planetarium (in TH)"
+          >
+            Planetarium (in TH) (F8-9)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Police (in CYD)"
+          >
+            Police (in CYD) (D4)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Procurement (in CYD)"
+          >
+            Procurement (in CYD) (E5)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Recycling/Resource Center"
+          >
+            Recycling/Resource Center (E-F5-6)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Science (SCI)"
+          >
+            Science (SCI) (G-H8-9)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Science Replacement Building (Future)"
+          >
+            Science Replacement Building (Future) (G-H9-10)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Seven Hills Center"
+          >
+            Seven Hills Center (F3)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Shipping & Receiving (in CYD)"
+          >
+            Shipping & Receiving (in CYD) (D5)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Softball Field"
+          >
+            Softball Field (H-I1-2)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Student Events Center (in ANX I)"
+          >
+            Student Events Center (in ANX I) (D3-4)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Student Services (SSB)"
+          >
+            Student Services (SSB) (G4)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Studio Theatre (in CA)"
+          >
+            Studio Theatre (in CA) (I6)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Sutro Library (in LIB)"
+          >
+            Sutro Library (in LIB) (I7-8)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Temporary Buildings"
+          >
+            Temporary Buildings (F9)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Tennis Courts"
+          >
+            Tennis Courts (D-E2-3)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Thornton Hall (TH)"
+          >
+            Thornton Hall (TH) (F-G8-9)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="The Towers at Centennial Square (TCSQ)"
+          >
+            The Towers at Centennial Square (TCSQ) (G-H3-5)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Towers Conference Center (TCONF)"
+          >
+            Towers Conference Center (TCONF) (G3-4)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="University Park North (UPN)"
+          >
+            University Park North (UPN) (A5-E10)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="University Park South (UPS)"
+          >
+            University Park South (UPS) (I1-K8)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="Village at Centennial Square"
+          >
+            Village at Centennial Square (G-H3-5)
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition"
+            data-location="West Campus Green"
+          >
+            West Campus Green
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="flex justify-end mt-8">
+    <button
+      id="confirmLocationBtn"
+      class="bg-light-orange-500 text-white px-6 py-2 rounded shadow-md hover:bg-blood-orange-500 transition cursor-pointer"
+      disabled
+    >
+      Confirm Location
+    </button>
+  </div>
+</div>
+
+<script>
+  // Pin positions for each location (for now, random/fixed positions)
+  const pinPositions = {};
+  // Example: pinPositions['Administration'] = {top: '40%', left: '60%'};
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const locationBtns = document.querySelectorAll('.location-btn');
+    const confirmBtn = document.getElementById('confirmLocationBtn');
+    const mapPin = document.getElementById('mapPin');
+
+    // Assign random/fixed positions for demonstration
+    locationBtns.forEach((btn, idx) => {
+      const loc = btn.getAttribute('data-location');
+      // For demo, distribute pins in a grid
+      pinPositions[loc] = {
+        top: `${20 + (idx % 10) * 7}%`,
+        left: `${20 + Math.floor(idx / 10) * 15}%`,
+      };
+    });
+
+    locationBtns.forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const loc = this.getAttribute('data-location');
+        const pos = pinPositions[loc];
+        if (pos) {
+          mapPin.style.top = pos.top;
+          mapPin.style.left = pos.left;
+          mapPin.classList.remove('hidden');
+        }
+        confirmBtn.disabled = false;
+        // Highlight selected button
+        locationBtns.forEach((b) =>
+          b.classList.remove('bg-light-orange-500', 'text-white')
+        );
+        this.classList.add('bg-light-orange-500', 'text-white');
+      });
+    });
+
+    confirmBtn.addEventListener('click', function () {
+      const selectedBtn = document.querySelector(
+        '.location-btn.bg-light-orange-500'
+      );
+      if (selectedBtn) {
+        const loc = selectedBtn.getAttribute('data-location');
+        alert(`Location selected: ${loc}`);
+        window.location.href = '/createlisting/confirmation';
+      }
+    });
+  });
+</script>

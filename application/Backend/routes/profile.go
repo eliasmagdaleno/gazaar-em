@@ -11,11 +11,12 @@ import (
 )
 
 func RegisterProfileRoutes(router *gin.Engine) {
-	router.GET("/profile", func(c *gin.Context) {
+	router.GET("/profile", RandomProductMiddleware(), RandomEventMiddleware(), func(c *gin.Context) {
 		username := "John Doe"
 		bio := "Welcome to my profile! I love selling and hosting events."
 
-		var items []map[string]string
+		items, _ := c.Get("productCards")
+		events, _ := c.Get("eventCards")
 
 		profileTemplate, err := core.LoadFrontendFile("src/views/profile.hbs")
 		if err != nil {
@@ -27,6 +28,8 @@ func RegisterProfileRoutes(router *gin.Engine) {
 			"username": username,
 			"bio":      bio,
 			"items":    items,
+			"events":   events,
+			"section":  c.Query("section"),
 		})
 		if err != nil {
 			renderErrorPage(c, http.StatusInternalServerError, fmt.Sprintf("Error rendering profile content: %v", err))

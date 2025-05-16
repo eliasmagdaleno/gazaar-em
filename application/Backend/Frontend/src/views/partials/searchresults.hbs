@@ -1,16 +1,16 @@
 <div
-  class="results-container flex flex-row justify-start gap-25 min-h-screen overflow-hidden"
+  class="results-container flex flex-row justify-start min-h-screen overflow-hidden"
 >
   {{> filter}}
   <main
-    class="results-section text-center p-4 flex-1 overflow-y-auto h-screen pb-64 mb-20"
+    class="results-section text-center p-4 flex-1 overflow-y-auto h-screen"
   >
     <h1 class="results-header font-bold text-3xl text-left mt-2">Results</h1>
     <p class="results-count text-base text-left">{{count}} Results found</p>
 
     {{#if products}}
     <div class="product-section mr-4 mt-4">
-      <div class="product-cards-grid grid grid-cols-4 gap-4 pb-40 mb-10">
+      <div class="product-cards-grid grid grid-cols-4 gap-4 pb-18 mb-10">
         {{#each products}} {{> productcard-marketplace}} {{/each}}
       </div>
     </div>

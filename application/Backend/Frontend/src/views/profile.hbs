@@ -1,55 +1,176 @@
-<div
-  class="profile-page-container bg-light-gray-500 h-screen flex flex-col gap-10 p-6"
->
+<div class="profile-page-container flex flex-row gap-10 min-h-screen">
   <!-- User Information Section -->
   <div
-    class="user-info-section flex flex-row self-center items-center w-2xl gap-6 bg-light-orange-500 p-6 rounded-lg shadow-md"
+    class="user-info-section flex flex-col items-start min-w-[225px] max-w-[300px] p-2 bg-light-orange-500 sticky top-0 h-screen"
   >
-    <img
-      class="user-profile-pic w-20 h-20 bg-blood-orange-500 rounded-full object-cover"
-      src="/frontend/Assets/icons/feather-light-black/user.svg"
-      alt="User Profile Picture"
-    />
-    <div class="user-details flex flex-col">
-      <h1 class="user-name text-light-black-500 text-3xl font-bold">
-        {{username}}
-      </h1>
-      <p class="user-bio text-lg text-dark-gray-500">{{bio}}</p>
-      <p class="user-rating text-lg text-dark-gray-500">
-        <span class="font-bold">Rating:</span>
-        {{rating}}/5
-      </p>
-      <a
-        href="/settings"
-        class="edit-profile-link text-blue-500 hover:underline mt-2"
+    <div class="user-info-content flex flex-col items-start p-1 w-full">
+      <div
+        class="user-details flex flex-row items-center mt-4 w-full justify-start gap-4"
       >
-        Edit Profile
-      </a>
+        <img
+          class="user-profile-pic w-14 h-14 bg-blood-orange-500 rounded-full object-cover"
+          src="/frontend/Assets/icons/feather-light-black/user.svg"
+          alt="User Profile Picture"
+        />
+        <h1 class="user-name text-light-black-500 text-2xl font-bold ml-2">
+          {{username}}
+        </h1>
+      </div>
+      <div
+        class="user-rating flex items-center text-lg text-dark-gray-500 mt-2"
+      >
+        <span class="font-bold text-base mr-2">Rating:</span>
+        <span class="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#F09D51"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+          >
+            <path
+              d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+            />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#F09D51"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+          >
+            <path
+              d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+            />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#F09D51"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+          >
+            <path
+              d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+            />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#F09D51"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+          >
+            <path
+              d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+            />
+          </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="#E8E9EB"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+          >
+            <path
+              d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+            />
+          </svg>
+          <span class="ml-2 text-dark-gray-500">4/5</span>
+        </span>
+      </div>
+
+      <nav
+        class="sidebar-nav flex flex-col w-full mt-85 text-light-black-500 items-start"
+      >
+        <button
+          type="button"
+          id="nav-items"
+          class="sidebar-link w-full px-3 py-2 rounded hover:bg-white flex items-center gap-2"
+        >
+          <img
+            src="/frontend/Assets/icons/feather-light-black/shopping-cart.svg"
+            alt="Items"
+            class="w-5 h-5"
+          />
+          Posted Items
+        </button>
+        <button
+          type="button"
+          id="nav-events"
+          class="sidebar-link w-full px-3 py-2 rounded hover:bg-white flex items-center gap-2"
+        >
+          <img
+            src="/frontend/Assets/icons/feather-light-black/users.svg"
+            alt="Events"
+            class="w-5 h-5"
+          />
+          Posted Events
+        </button>
+        <a
+          href="/settings"
+          class="sidebar-link w-full px-3 py-2 rounded hover:bg-white flex items-center gap-2"
+        >
+          <img
+            src="/frontend/Assets/icons/feather-light-black/settings.svg"
+            alt="Settings"
+            class="w-5 h-5"
+          />
+          Edit Profile
+        </a>
+      </nav>
     </div>
   </div>
 
   <div
-    class="user-items-section flex flex-row mx-2 gap-6 text-center justify-evenly"
+    class="user-main-content w-2/3 flex-1 mx-2 mt-4 overflow-y-auto max-h-screen pb-20"
   >
-
-    <!-- Posted Items Section -->
-    <div class="posted-items-section flex flex-col w-full">
-      <h2 class="section-header text-2xl font-bold mb-4">Your Posted Items</h2>
-      <div class="items-list">
-        {{#each items}} {{> productcard-marketplace}} {{else}}
-        <p class="text-gray-600">You have not posted any items yet.</p>
-        {{/each}}
+    <div id="section-items">
+      <div class="posted-items-section flex flex-col w-full">
+        <h2 class="section-header text-2xl font-bold mb-4">
+          Your Posted Items
+        </h2>
+        <div class="items-list grid grid-cols-4 gap-4 pb-18 mb-10 mr-4">
+          {{#each items}} {{> productcard-marketplace}} {{else}}
+          <p class="text-gray-600">You have not posted any items yet.</p>
+          {{/each}}
+        </div>
       </div>
     </div>
-
-    <!-- Posted Events Section -->
-    <div class="posted-events-section flex flex-col w-full">
-      <h2 class="section-header text-2xl font-bold mb-4">Your Posted Events</h2>
-      <div class="events-list">
-        {{#each events}} {{> eventcard}} {{else}}
-        <p class="text-gray-600">You have not created any events yet.</p>
-        {{/each}}
+    <div id="section-events" style="display: none">
+      <div class="posted-events-section flex flex-col w-full">
+        <h2 class="section-header text-2xl font-bold mb-4">
+          Your Posted Events
+        </h2>
+        <div class="events-list grid grid-cols-4 gap-4 pb-18 mb-10">
+          {{#each events}} {{> eventcard}} {{else}}
+          <p class="text-gray-600">You have not created any events yet.</p>
+          {{/each}}
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const navItems = document.getElementById('nav-items');
+    const navEvents = document.getElementById('nav-events');
+    const sectionItems = document.getElementById('section-items');
+    const sectionEvents = document.getElementById('section-events');
+    navItems.addEventListener('click', function () {
+      sectionItems.style.display = '';
+      sectionEvents.style.display = 'none';
+      navItems.classList.add('bg-white', 'font-bold');
+      navEvents.classList.remove('bg-white', 'font-bold');
+    });
+    navEvents.addEventListener('click', function () {
+      sectionItems.style.display = 'none';
+      sectionEvents.style.display = '';
+      navEvents.classList.add('bg-white', 'font-bold');
+      navItems.classList.remove('bg-white', 'font-bold');
+    });
+    // Default: show items
+    navItems.classList.add('bg-white', 'font-bold');
+  });
+</script>
