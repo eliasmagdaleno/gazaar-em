@@ -69,8 +69,9 @@
       <div class="message-form mt-4">
         <h2 class="text-lg font-semibold mb-2 text-light-black-500">Send a
           Message to the Seller:</h2>
-        <form action="/send-message" method="POST" class="flex flex-col gap-4 ">
+        <form action="/messages" method="POST" class="flex flex-col gap-4 ">
           <textarea
+            name="message"
             class="message-input w-full p-4 border border-light-gray-500 bg-light-gray-500 rounded-md shadow-md"
             rows="1"
             placeholder="Type your message here..."

@@ -90,7 +90,7 @@ func RegisterMessagesRoutes(router *gin.Engine) {
 			return
 		}
 
-		// Insert message into database
+		// Insert message into database (no room)
 		_, err := database.DB.Exec(`
 			INSERT INTO Message (content, timestamp)
 			VALUES (?, NOW())
@@ -100,7 +100,7 @@ func RegisterMessagesRoutes(router *gin.Engine) {
 			return
 		}
 
-		// Redirect back to messages page
+		// Redirect to the messages page
 		c.Redirect(http.StatusSeeOther, "/messages")
 	})
 }
