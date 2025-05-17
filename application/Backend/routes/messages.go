@@ -137,4 +137,23 @@ func RegisterMessagesRoutes(router *gin.Engine) {
 		// Redirect to the seller's chat room
 		c.Redirect(http.StatusSeeOther, "/messages?room="+roomId)
 	})
+
+	// POST endpoint to delete a chat room
+	router.POST("/messages/delete-room", func(c *gin.Context) {
+		roomId := c.PostForm("room")
+		if roomId == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Room ID is required"})
+			return
+		}
+
+		// Delete all messages in this room
+		_, err := database.DB.Exec("DELETE FROM Message WHERE room = ?", roomId)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to delete messages: %v", err)})
+			return
+		}
+
+		// Optionally, redirect to /messages (no room selected)
+		c.Redirect(http.StatusSeeOther, "/messages")
+	})
 }
