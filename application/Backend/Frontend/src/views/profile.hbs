@@ -1,0 +1,55 @@
+<div
+  class="profile-page-container bg-light-gray-500 h-screen flex flex-col gap-10 p-6"
+>
+  <!-- User Information Section -->
+  <div
+    class="user-info-section flex flex-row self-center items-center w-2xl gap-6 bg-light-orange-500 p-6 rounded-lg shadow-md"
+  >
+    <img
+      class="user-profile-pic w-20 h-20 bg-blood-orange-500 rounded-full object-cover"
+      src="/frontend/Assets/icons/feather-light-black/user.svg"
+      alt="User Profile Picture"
+    />
+    <div class="user-details flex flex-col">
+      <h1 class="user-name text-light-black-500 text-3xl font-bold">
+        {{username}}
+      </h1>
+      <p class="user-bio text-lg text-dark-gray-500">{{bio}}</p>
+      <p class="user-rating text-lg text-dark-gray-500">
+        <span class="font-bold">Rating:</span>
+        {{rating}}/5
+      </p>
+      <a
+        href="/settings"
+        class="edit-profile-link text-blue-500 hover:underline mt-2"
+      >
+        Edit Profile
+      </a>
+    </div>
+  </div>
+
+  <div
+    class="user-items-section flex flex-row mx-2 gap-6 text-center justify-evenly"
+  >
+
+    <!-- Posted Items Section -->
+    <div class="posted-items-section flex flex-col w-full">
+      <h2 class="section-header text-2xl font-bold mb-4">Your Posted Items</h2>
+      <div class="items-list">
+        {{#each items}} {{> productcard-marketplace}} {{else}}
+        <p class="text-gray-600">You have not posted any items yet.</p>
+        {{/each}}
+      </div>
+    </div>
+
+    <!-- Posted Events Section -->
+    <div class="posted-events-section flex flex-col w-full">
+      <h2 class="section-header text-2xl font-bold mb-4">Your Posted Events</h2>
+      <div class="events-list">
+        {{#each events}} {{> eventcard}} {{else}}
+        <p class="text-gray-600">You have not created any events yet.</p>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>

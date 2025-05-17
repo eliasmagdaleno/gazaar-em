@@ -1,117 +1,52 @@
 package routes
 
 import (
-	"fmt"
-	"log"
 	"net/http"
-	"os"
-	"path/filepath"
 
-	"application/Backend/utils"
+	"application/Backend/core"
 
 	"github.com/aymerick/raymond"
 	"github.com/gin-gonic/gin"
 )
 
-var (
-	layoutTemplate string
-	indexTemplate  string
-)
+// Update RegisterHomeRoutes to use ProductCardMiddleware and EventCardMiddleware
+func RegisterHomeRoutes(router *gin.Engine) {
+	router.GET("/", RandomEventMiddleware(), RandomProductMiddleware(), func(c *gin.Context) {
+		products, _ := c.Get("productCards")
+		events, _ := c.Get("eventCards")
 
-func loadTemplate(filePath string) (string, error) {
-	absPath, err := filepath.Abs(filePath)
-	if err != nil {
-		return "", err
-	}
-
-	data, err := os.ReadFile(absPath)
-	if err != nil {
-		return "", err
-	}
-
-	return string(data), nil
-}
-
-func RegisterHomeRoutes(r *gin.Engine) error {
-	var err error
-
-	// Serve static files from the Frontend/Assets folder
-	r.Static("/assets", "../Frontend/Assets")
-
-	// Ensure thumbnails are generated
-	thumbnails := []struct {
-		inputPath  string
-		outputPath string
-	}{
-		{"../Frontend/Assets/event1.jpg", "../Frontend/Assets/thumbnails/event1.jpg"},
-		{"../Frontend/Assets/event2.jpg", "../Frontend/Assets/thumbnails/event2.jpg"},
-		{"../Frontend/Assets/event3.jpg", "../Frontend/Assets/thumbnails/event3.jpg"},
-		{"../Frontend/Assets/event4.jpg", "../Frontend/Assets/thumbnails/event4.jpg"},
-		{"../Frontend/Assets/product1.jpg", "../Frontend/Assets/thumbnails/product1.jpg"},
-		{"../Frontend/Assets/product2.jpg", "../Frontend/Assets/thumbnails/product2.jpg"},
-		{"../Frontend/Assets/product3.jpg", "../Frontend/Assets/thumbnails/product3.jpg"},
-		{"../Frontend/Assets/product4.jpg", "../Frontend/Assets/thumbnails/product4.jpg"},
-	}
-
-	for _, t := range thumbnails {
-		err = utils.GenerateThumbnail(t.inputPath, t.outputPath, 150, 150)
+		indexTemplate, err := core.LoadFrontendFile("src/views/index.hbs")
 		if err != nil {
-			log.Printf("Error generating thumbnail for %s: %v", t.inputPath, err)
+			renderErrorPage(c, http.StatusInternalServerError, "Failed to load index template")
+			return
 		}
-	}
 
-	// Load templates
-	layoutTemplate, err = loadTemplate("../Frontend/src/views/layouts/layout.hbs")
-	if err != nil {
-		return fmt.Errorf("error loading layout: %w", err)
-	}
+		content, err := raymond.Render(indexTemplate, map[string]interface{}{
+			"title":    "Home",
+			"products": products,
+			"events":   events,
+		})
+		if err != nil {
+			renderErrorPage(c, http.StatusInternalServerError, "Failed to render index template")
+			return
+		}
 
-	indexTemplate, err = loadTemplate("../Frontend/src/views/index.hbs")
-	if err != nil {
-		return fmt.Errorf("error loading index: %w", err)
-	}
+		layoutTemplate, err := core.LoadFrontendFile("src/views/layouts/layout.hbs")
+		if err != nil {
+			renderErrorPage(c, http.StatusInternalServerError, "Failed to load layout template")
+			return
+		}
 
-	r.GET("/", homeHandler)
+		output, err := raymond.Render(layoutTemplate, map[string]interface{}{
+			"title":   "Home",
+			"content": raymond.SafeString(content),
+		})
+		if err != nil {
+			renderErrorPage(c, http.StatusInternalServerError, "Failed to render layout template")
+			return
+		}
 
-	return nil
-}
-
-func homeHandler(c *gin.Context) {
-	content, err := raymond.Render(indexTemplate, map[string]interface{}{
-		"title": "Home",
-		"events": []map[string]string{
-			{"thumbnail": "/assets/thumbnails/event1.jpg", "date": "April 1, 2025", "title": "Event 1", "host": "Host A"},
-			{"thumbnail": "/assets/thumbnails/event2.jpg", "date": "April 2, 2025", "title": "Event 2", "host": "Host B"},
-			{"thumbnail": "/assets/thumbnails/event3.jpg", "date": "April 2, 2025", "title": "Event 3", "host": "Host C"},
-			{"thumbnail": "/assets/thumbnails/event4.jpg", "date": "April 2, 2025", "title": "Event 4", "host": "Host D"},
-		},
-		"products": []map[string]string{
-			{"thumbnail": "/assets/thumbnails/product1.jpg", "title": "Product 1", "host": "$10", "condition": "New"},
-			{"thumbnail": "/assets/thumbnails/product2.jpg", "title": "Product 2", "host": "$20", "condition": "Used"},
-			{"thumbnail": "/assets/thumbnails/product3.jpg", "title": "Product 3", "host": "$15", "condition": "Used"},
-			{"thumbnail": "/assets/thumbnails/product4.jpg", "title": "Product 4", "host": "$25", "condition": "Used"},
-		},
-		"searchResults": []map[string]string{
-			{"thumbnail": "/assets/thumbnails/search1.jpg", "title": "Search Result 1", "description": "Description 1"},
-			{"thumbnail": "/assets/thumbnails/search2.jpg", "title": "Search Result 2", "description": "Description 2"},
-			{"thumbnail": "/assets/thumbnails/search3.jpg", "title": "Search Result 3", "description": "Description 3"},
-			{"thumbnail": "/assets/thumbnails/search4.jpg", "title": "Search Result 4", "description": "Description 4"},
-		},
+		c.Header("Content-Type", "text/html")
+		c.String(http.StatusOK, output)
 	})
-	if err != nil {
-		c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering index content: %v", err))
-		return
-	}
-
-	output, err := raymond.Render(layoutTemplate, map[string]interface{}{
-		"title":   "Home",
-		"content": raymond.SafeString(content),
-	})
-	if err != nil {
-		c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))
-		return
-	}
-
-	c.Header("Content-Type", "text/html")
-	c.String(http.StatusOK, output)
 }

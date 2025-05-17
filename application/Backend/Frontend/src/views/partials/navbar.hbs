@@ -1,0 +1,72 @@
+<nav class="navbar bg-blood-orange-500 text-light-black-500 shadow-lg ">
+  <ul class="flex flex-wrap relative justify-around items-center gap-4 list-none first:pl-2 last:pr-2 p-4 text-2xl font-semibold text-center">
+    <li >
+
+      <a href="/" class="group">
+        <img class="size-8 shrink-0 group-hover:hidden" src="/frontend/Assets/icons/feather-light-black/home.svg" alt="Home" />
+        <img class="size-8 shrink-0 hidden group-hover:block" src="/frontend/Assets/icons/feather-light-gray/home.svg" alt="Home Hover" />
+      </a>
+    </li>
+
+    <li class="font-bold">
+      Gazaar
+    </li>
+
+
+    <li class="flex items-center bg-light-gray-500 rounded-lg">
+
+      <form
+        class="flex items-center gap-2 shadow-sm"
+        action="/search"
+        method="GET"
+        enctype="application/x-www-form-urlencoded"
+      >
+        {{!-- {{log this}} --}}
+        <div class="search-filter text-center">
+          <select class="filter-dropdown text-center text-base" name="category" type="text">
+            <option value="All" {{#if isAll}}selected{{/if}}>All</option>
+            <option value="Books" {{#if isBooks}}selected{{/if}}>Books</option>
+            <option value="Electronics" {{#if isElectronics}}selected{{/if}}>Electronics</option>
+            <option value="Furniture" {{#if isFurniture}}selected{{/if}}>Furniture</option>
+          </select>
+        </div>
+        <input
+          id="search-text"
+          class="bg-light-gray-500 placeholder:italic placeholder:text-lg "
+          name="q"
+          type="text"
+          value="{{q}}"
+          placeholder="Search..."
+        />
+        <button type="submit" class="search-button bg-light-gray-500 rounded-md">
+          <img class="size-6 shrink-0" src="/frontend/Assets/icons/feather-light-black/search.svg" alt="Search" />
+        </button>
+      </form>
+    </li>
+    <li>
+      <a class="market-link  hover:text-light-gray-500" href="/market">Market</a>
+    </li>
+    <li>
+      <a class="events-link  hover:text-light-gray-500" href="/events">Events</a>
+    </li>
+    <li class="relative">
+      <button id="profile-button" class="flex items-center gap-2 cursor-pointer group rounded-full p-2 bg-light-orange-500">
+        <img class="size-8 shrink-0 group-hover:hidden" src="/frontend/Assets/icons/feather-light-black/user.svg" alt="Profile" />
+        <img class="size-8 shrink-0 hidden group-hover:block" src="/frontend/Assets/icons/feather-light-gray/user.svg" alt="Profile Hover" />
+      </button>
+      <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-light-orange-500 rounded-md shadow-md z-50">
+        <a href="/profile" class="block px-4 py-2 hover:bg-light-gray-500">Profile</a>
+        <a href="/messages" class="block px-4 py-2 hover:bg-light-gray-500">Messages</a>
+        <a href="/purchases" class="block px-4 py-2 hover:bg-light-gray-500">Purchases</a>
+        <a href="/wishlist" class="block px-4 py-2 hover:bg-light-gray-500">Wishlist</a>
+        <a href="/settings" class="block px-4 py-2 hover:bg-light-gray-500">Settings</a>
+        <form action="/logout" method="POST" >
+          <input type="hidden" value="{{csrf}}" />
+          <button type="submit" class="w-full  hover:bg-light-gray-500">Logout</button>
+        </form>
+      </div>
+    </li>
+
+  </ul>
+</nav>
+

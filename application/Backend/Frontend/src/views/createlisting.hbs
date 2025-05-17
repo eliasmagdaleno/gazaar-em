@@ -1,0 +1,227 @@
+<div
+  class="create-listing-container min-h-screen flex flex-col gap-10 p-6 overflow-y-scroll"
+>
+  <!-- Selection Section -->
+  <div class="selection-section bg-dark-gray-500 p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4 text-light-black-500 text-center">
+      Select Listing Type
+    </h2>
+    <div class="flex gap-4">
+      <button
+        id="productButton"
+        class="w-1/2 px-4 py-2 bg-light-orange-500 text-white rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer"
+      >
+        Product
+      </button>
+      <button
+        id="eventButton"
+        class="w-1/2 px-4 py-2 bg-light-orange-500 text-white rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer"
+      >
+        Event
+      </button>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div id="formSection" class="flex flex-row gap-12 hidden">
+    <!-- Left Section: Form -->
+    <div
+      class="create-listing-form w-1/2 bg-dark-gray-500 p-6 rounded-lg shadow-md mr-4"
+    >
+      <h2 class="create-listing-header text-3xl font-bold mb-6">
+        Create Listing
+      </h2>
+      <form
+        action="/createlisting"
+        method="POST"
+        enctype="multipart/form-data"
+        class="space-y-4"
+      >
+        <div class="form-field">
+          <label for="title" class="block text-lg font-semibold mb-2">
+            Title
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            required
+            class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+          />
+        </div>
+        <div id="productFields" class="hidden">
+          <div class="form-field">
+            <label for="price" class="block text-lg font-semibold mb-2">
+              Price
+            </label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              step="0.01"
+              class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+            />
+          </div>
+          <div class="form-field">
+            <label for="category" class="block text-lg font-semibold mb-2">
+              Category
+            </label>
+            <select
+              id="category"
+              name="category"
+              class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+            >
+              <option value="books">Books</option>
+              <option value="electronics">Electronics</option>
+              <option value="furniture">Furniture</option>
+            </select>
+          </div>
+        </div>
+        <div id="eventFields" class="hidden">
+          <div class="form-field">
+            <label for="location" class="block text-lg font-semibold mb-2">
+              Location
+            </label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+            />
+          </div>
+          <div class="form-field">
+            <label for="date" class="block text-lg font-semibold mb-2">
+              Event Date
+            </label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+            />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="description" class="block text-lg font-semibold mb-2">
+            Description
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            rows="4"
+            class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded resize-none focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="w-full px-4 py-2 bg-light-orange-500 text-white rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+
+    <!-- Right Section: Images -->
+    <div class="images-section w-1/2 bg-dark-gray-500 p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold mb-4">Upload Image</h2>
+      <div class="form-field">
+        <label for="images" class="block text-lg font-semibold mb-2">
+          Upload Listing Image
+        </label>
+        <input
+          type="file"
+          id="images"
+          name="images"
+          accept="image/*"
+          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+          onchange="handleImageUpload(event)"
+        />
+      </div>
+      <div
+        id="imagePreview"
+        class="image-preview mt-4 flex flex-col items-center"
+      >
+        <img
+          id="currentImage"
+          class="w-full h-64 object-cover rounded-md"
+          src=""
+          alt="Image Preview"
+        />
+      </div>
+    </div>
+  </div>
+  <!-- Next Button at the bottom of the page -->
+  <div class="flex justify-end self-center mt-8">
+    <button
+      id="nextPageButton"
+      class="bg-light-orange-500 text-white px-6 py-2 rounded shadow-md hover:bg-blood-orange-500 transition cursor-pointer hidden"
+      onclick="goToNextPage()"
+      type="button"
+    >
+      Next
+    </button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const productButton = document.getElementById('productButton');
+    const eventButton = document.getElementById('eventButton');
+    const formSection = document.getElementById('formSection');
+    const productFields = document.getElementById('productFields');
+    const eventFields = document.getElementById('eventFields');
+    const nextPageButton = document.getElementById('nextPageButton');
+
+    productButton.addEventListener('click', function () {
+      formSection.classList.remove('hidden');
+      productFields.classList.remove('hidden');
+      eventFields.classList.add('hidden');
+      nextPageButton.classList.remove('hidden');
+    });
+
+    eventButton.addEventListener('click', function () {
+      formSection.classList.remove('hidden');
+      eventFields.classList.remove('hidden');
+      productFields.classList.add('hidden');
+      nextPageButton.classList.remove('hidden');
+    });
+  });
+
+  function handleImageUpload(event) {
+    const files = Array.from(event.target.files);
+  if (files.length > 5) {
+    alert('You can only upload a maximum of 5 images.');
+    // clean up old previews
+    uploadedImages.forEach(url => URL.revokeObjectURL(url));
+    uploadedImages = [];
+    currentIndex = 0;
+    updateImagePreview();
+    event.target.value = '';
+    return;
+  }
+
+  // Revoke previous URLs
+  uploadedImages.forEach(url => URL.revokeObjectURL(url));
+
+  // Filter to actual images
+  const imageFiles = files.filter(file => file.type.startsWith('image/'));
+  uploadedImages = imageFiles.map(file => URL.createObjectURL(file));
+  currentIndex = 0;
+  updateImagePreview();
+  renderThumbnailList(uploadedImages);
+  }
+
+  function updateImagePreview() {
+    const currentImage = document.getElementById('currentImage');
+    if (file) {
+      currentImage.src = URL.createObjectURL(file);
+    } else {
+      currentImage.src = '';
+    }
+  }
+
+  function goToNextPage() {
+    // Replace with your navigation logic
+    window.location.href = '/next-page';
+  }
+</script>

@@ -1,0 +1,44 @@
+<div class="product-collection">
+  <div
+    class="product-card bg-dark-gray-500 rounded-lg p-2 shadow-md flex flex-row gap-4"
+  >
+    <div class="product-img-section rounded-md">
+       <button
+        class="event-link cursor-pointer"
+        id="event-link"
+        onclick="window.location.href='/listing'"
+      >
+        <img class="product-img max-w-md" src="{{thumbnail}}" />
+      </button>
+    </div>
+    <div class="product-info self-center flex-col w-full pt-2">
+      <button
+        class="product-link"
+        id="product-link"
+        onclick="window.location.href='/listing'"
+      >
+        <h2
+          class="product-title text-2xl sm:text-md md:text-3xl font-bold cursor-pointer"
+        >{{title}}</h2>
+      </button>
+      <p class="product-price font-semibold text-base">${{price}}</p>
+      <p class="product-condition">{{condition}}</p>
+      {{!-- <p class="product-seller">{{seller}}</p>
+            <p class="product-location">{{location}}</p>
+            <p class="product-description">{{description}}</p> --}}
+    </div>
+    {{!-- <span class="save-button-span absolute">
+      <button
+        class="save-button bg-blood-orange-500 ml-1 mt-1 cursor-pointer rounded-full"
+        id="save-button"
+      >
+        <img
+          class="bookmark-icon size-6"
+          src="/frontend/Assets/icons/feather-dark-gray/bookmark.svg"
+          alt="Bookmark"
+        />
+      </button>
+    </span> --}}
+
+  </div>
+</div>
