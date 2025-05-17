@@ -70,11 +70,13 @@
         <h2 class="text-lg font-semibold mb-2 text-light-black-500">Send a
           Message to the Seller:</h2>
         <form action="/messages" method="POST" class="flex flex-col gap-4 ">
+          <input type="hidden" name="room" value="{{sellerID}}">
           <textarea
             name="message"
             class="message-input w-full p-4 border border-light-gray-500 bg-light-gray-500 rounded-md shadow-md"
             rows="1"
             placeholder="Type your message here..."
+            required
           ></textarea>
           <button
             type="submit"
@@ -121,6 +123,10 @@
           </div>
 
         </div>
+        <a href="/messages?room={{sellerID}}" 
+           class="inline-block mt-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg px-6 py-2 shadow transition">
+          Chat with Seller
+        </a>
       </div>
     </div>
 

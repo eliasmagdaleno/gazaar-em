@@ -9,12 +9,9 @@
             </button>
         </div>
         <div id="sendersContent" class="senders-list flex flex-col mt-2 gap-0.5">
-            {{> sendercard }}
-            {{> sendercard }}
-            {{> sendercard }}
-            {{> sendercard }}
-            {{> sendercard }}
-            {{> sendercard }}
+            {{#each rooms}}
+                {{> sendercard this}}
+            {{/each}}
         </div>
     </div>
 
@@ -38,6 +35,7 @@
         </div>
         <div class="message-form mt-4 text-light-black-500 pt-4 pb-6 self-center">
             <form action="/messages" method="POST" class="message-input flex items-center w-xl bg-light-gray-500 border border-light-black-500 rounded-md">
+                <input type="hidden" name="room" value="{{roomId}}">
                 <textarea name="message" class="flex-grow p-2 text-light-black-500 resize-none" rows="1" placeholder="Type your message here..."></textarea>
                 <button type="submit" class="send-button text-light-gray-500 rounded-full cursor-pointer mr-1">
                     <img class="send-icon overflow-hidden" src="/frontend/Assets/icons/feather-blood-orange/send.svg" alt="Send" />
@@ -76,8 +74,8 @@
 
             senderCards.forEach(card => {
                 card.addEventListener('click', () => {
-                    const senderName = card.querySelector('.sender-name').textContent;
-                    senderNameElement.textContent = senderName;
+                    const roomId = card.dataset.roomId;
+                    window.location.href = `/messages?room=${roomId}`;
                 });
             });
         });

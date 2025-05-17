@@ -53,6 +53,37 @@ func RegisterMessagesRoutes(router *gin.Engine) {
 			})
 		}
 
+		// Fetch all unique room IDs (sellerIDs) from the Message table
+		roomRows, err := database.DB.Query("SELECT DISTINCT room FROM Message")
+		if err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("DB error: %v", err))
+			return
+		}
+		defer roomRows.Close()
+
+		var rooms []map[string]interface{}
+		for roomRows.Next() {
+			var roomId int
+			if err := roomRows.Scan(&roomId); err != nil {
+				continue
+			}
+			// Optionally, fetch the seller's name from a Users table if you have one
+			var sellerName string
+			err = database.DB.QueryRow("SELECT name FROM Users WHERE id = ?", roomId).Scan(&sellerName)
+			if err != nil {
+				sellerName = fmt.Sprintf("User %d", roomId)
+			}
+			// Optionally, fetch the last message for this room
+			var lastMessage string
+			_ = database.DB.QueryRow("SELECT content FROM Message WHERE room = ? ORDER BY timestamp DESC LIMIT 1", roomId).Scan(&lastMessage)
+
+			rooms = append(rooms, map[string]interface{}{
+				"id":          roomId,
+				"name":        sellerName,
+				"lastMessage": lastMessage,
+			})
+		}
+
 		messagesTemplate, err := core.LoadFrontendFile("src/views/messages.hbs")
 		if err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("Error: %v", err))
@@ -66,6 +97,8 @@ func RegisterMessagesRoutes(router *gin.Engine) {
 		content, err := raymond.Render(messagesTemplate, map[string]interface{}{
 			"title":    "View Messages",
 			"messages": allMsgs,
+			"rooms":    rooms,
+			"roomId":   roomId,
 		})
 
 		// Render the layout with the messages content
@@ -85,22 +118,23 @@ func RegisterMessagesRoutes(router *gin.Engine) {
 	// POST endpoint to send messages
 	router.POST("/messages", func(c *gin.Context) {
 		message := c.PostForm("message")
-		if message == "" {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Message cannot be empty"})
+		roomId := c.PostForm("room")
+		if message == "" || roomId == "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Message and room cannot be empty"})
 			return
 		}
 
-		// Insert message into database (no room)
+		// Insert message into database with room
 		_, err := database.DB.Exec(`
-			INSERT INTO Message (content, timestamp)
-			VALUES (?, NOW())
-		`, message)
+			INSERT INTO Message (content, timestamp, room)
+			VALUES (?, NOW(), ?)
+		`, message, roomId)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": fmt.Sprintf("Failed to save message: %v", err)})
 			return
 		}
 
-		// Redirect to the messages page
-		c.Redirect(http.StatusSeeOther, "/messages")
+		// Redirect to the seller's chat room
+		c.Redirect(http.StatusSeeOther, "/messages?room="+roomId)
 	})
 }
