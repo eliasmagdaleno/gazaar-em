@@ -120,7 +120,12 @@ func RegisterMessagesRoutes(router *gin.Engine) {
 		message := c.PostForm("message")
 		roomId := c.PostForm("room")
 		if message == "" || roomId == "" {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "Message and room cannot be empty"})
+			// Just redirect back to the current chat room (or /messages if no room)
+			if roomId != "" {
+				c.Redirect(http.StatusSeeOther, "/messages?room="+roomId)
+			} else {
+				c.Redirect(http.StatusSeeOther, "/messages")
+			}
 			return
 		}
 
