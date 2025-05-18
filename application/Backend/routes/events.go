@@ -23,12 +23,15 @@ func RegisterEventsRoutes(router *gin.Engine) {
 func eventsHandler(c *gin.Context) {
 
 	rows, err := database.DB.Query(
-		`SELECT item_id, image_url, title, seller_id,
-		DATE_FORMAT(post_date, '%M %e, %Y') AS date,
-		description
-   FROM items
-  	ORDER BY post_date DESC`,
-	)
+	`SELECT items.item_id, items.image_url, items.title, Account.user_name AS host,
+       DATE_FORMAT(items.post_date, '%M %e, %Y') AS date,
+       items.description
+		FROM items
+		JOIN Account ON items.seller_id = Account.user_id
+		WHERE LOWER(items.category) = 'events' AND items.approve = 1
+		ORDER BY items.post_date DESC`,
+)
+
 	if err != nil {
 		c.String(http.StatusInternalServerError, fmt.Sprintf("DB error: %v", err))
 		return
