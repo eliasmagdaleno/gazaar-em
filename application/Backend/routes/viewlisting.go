@@ -155,15 +155,13 @@ func submitListingHandler(c *gin.Context) {
 	priceStr := c.PostForm("price")
 	price, err := strconv.ParseFloat(priceStr, 64)
 	if err != nil {
-		c.String(http.StatusBadRequest, "Invalid price")
-		return
+		price = 0.0;
 	}
 
 	sellerID := c.GetInt("user_id")
 	category := c.PostForm("category")
 	if kind == "product" && category == "" {
-		c.String(http.StatusBadRequest, "Category is required for products")
-		return
+		category = "events"
 	}
 
 	_, err = database.DB.Exec(`
