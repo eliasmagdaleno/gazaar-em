@@ -1,21 +1,22 @@
+{{> filter}}
+<!-- Main Content Section -->
+<main class="main-content flex flex-row flex-1 w-fit p-4">
 
 
-  {{> filter}}
-  <!-- Main Content Section -->
-  <main class="main-content flex flex-row flex-1 w-fit p-4 overflow-y-auto">
+  <!-- Product Cards Grid -->
+  <div class="product-section flex flex-row mr-4 mt-4">
+    <div class="product-cards-grid grid grid-cols-4 gap-4">
+      {{#each products}} {{> productcard-marketplace}} {{/each}}
+    </div>
+  </div>
     <!-- Create New Listing Button -->
-    <div class="create-listing-button-container text-right mb-4">
-      <a href="/createlisting">
-        <button class="create-listing-button bg-light-black-500 text-dark-gray-500 py-2 px-4 shadow-md rounded cursor-pointer">Create New Listing</button>
-      </a>
-    </div>
-
-    <!-- Product Cards Grid -->
-    <div class="product-section mr-4 mt-4"> 
-      <div class="product-cards-grid grid grid-cols-4 gap-4 pb-18 mb-10">
-      {{#each products}}
-        {{> productcard-marketplace}}
-      {{/each}}
-      </div>
-    </div>
-  </main>
+  <div class="create-listing-button-container text-right mb-4">
+    <a href="/createlisting">
+      <button
+        class="create-listing-button bg-light-black-500 text-dark-gray-500 py-2 px-4 shadow-md rounded cursor-pointer"
+      >
+        Create New Listing
+      </button>
+    </a>
+  </div>
+</main>
