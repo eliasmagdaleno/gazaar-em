@@ -46,4 +46,19 @@
     </button>
   </span>
   --}}
+
+  <span class="delete-button-span absolute bottom-10 right-2">
+    <form action="/events/delete" method="POST"
+          onsubmit="return confirm('Delete this listing?');">
+      <input type="hidden" name="id" value="{{id}}" />
+      <button type="submit" class="delete-button p-1">
+        <img
+          src="/frontend/Assets/icons/feather-light-black/trash-2.svg"
+          alt="Delete"
+          class="w-6 h-7"
+        />
+      </button>
+    </form>
+  </span>
+
 </div>
