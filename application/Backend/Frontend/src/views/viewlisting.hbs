@@ -69,11 +69,14 @@
       <div class="message-form mt-4">
         <h2 class="text-lg font-semibold mb-2 text-light-black-500">Send a
           Message to the Seller:</h2>
-        <form action="/send-message" method="POST" class="flex flex-col gap-4 ">
+        <form action="/messages" method="POST" class="flex flex-col gap-4 ">
+          <input type="hidden" name="room" value="{{sellerID}}">
           <textarea
+            name="message"
             class="message-input w-full p-4 border border-light-gray-500 bg-light-gray-500 rounded-md shadow-md"
             rows="1"
             placeholder="Type your message here..."
+            required
           ></textarea>
           <button
             type="submit"
@@ -101,7 +104,7 @@
         >
           <img
             class="seller-pfp w-16 h-16 rounded-full object-cover"
-            src="frontend/Assets/icons/feather-light-black/user.svg"
+            src="../frontend/Assets/icons/feather-light-black/user.svg"
             alt="Seller Profile"
           />
           <div class="seller-details flex flex-col ml-4">
@@ -109,7 +112,7 @@
             <div class="seller-rating-section flex flex-row gap-2">
               <img
                 class="star-icon w-6 h-6"
-                src="frontend/Assets/icons/feather-blood-orange/star.svg"
+                src="../frontend/Assets/icons/feather-blood-orange/star.svg"
                 alt="Star"
               />
               <p class="seller-rating text-base">
@@ -120,6 +123,10 @@
           </div>
 
         </div>
+        <a href="/messages?room={{sellerID}}" 
+           class="inline-block mt-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg px-6 py-2 shadow transition">
+          Chat with Seller
+        </a>
       </div>
     </div>
 

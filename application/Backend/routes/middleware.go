@@ -59,6 +59,19 @@ func RandomEventMiddleware() gin.HandlerFunc {
 		}
 		defer rows.Close()
 
+		var imageURL2, title2 string
+		var postDate2 string 
+
+		for rows.Next() {
+			err := rows.Scan(&imageURL2, &title2, &postDate2)
+			if err != nil {
+				log.Println("Row scan error:", err)
+				continue
+			}
+			log.Printf("Image: %s\nTitle: %s\nPost Date: %s\n\n", imageURL2, title2, postDate2)
+		}
+
+
 		var events []map[string]interface{}
 		for rows.Next() {
 			var imageURL, title, postDate string
