@@ -1,17 +1,15 @@
-<button
-  class="sender-card bg-dark-gray-500 border border-dark-gray-500 cursor-pointer hover:bg-light-gray-500 w-[350] h-20 mx-4 rounded-3xl p-4 shadow-md flex flex-row gap-6"
->
-  <img
-    class="sender-pfp h-14 w-14 rounded-full justify-self-center"
-    src="/frontend/Assets/icons/feather-light-black/user.svg"
-  />
-  <div class="sender-info flex flex-row w-full gap-2">
-    <div class="flex flex-col text-left">
-      <p class="sender-name font-bold text-lg">{{name}}</p>
-      <p class="sender-last-message text-light-black-500 text-xs ">{{lastMessage}}</p>
-    </div>
-    <p
-      class="sender-timestamp text-gray-500 ml-auto self-center text-[10px]"
-    >{{timestamp}}</p>
+<div class="sender-card flex items-center gap-3 p-4 bg-white rounded-xl shadow hover:bg-orange-100 cursor-pointer transition" data-room-id="{{id}}">
+  <img src="/frontend/Assets/icons/feather-light-black/user.svg" alt="User" class="w-8 h-8 rounded-full" />
+  <div class="flex-1">
+    <div class="font-semibold text-gray-800">{{name}}</div>
+    {{#if lastMessage}}
+      <div class="text-xs text-gray-500 truncate w-40">{{lastMessage}}</div>
+    {{/if}}
   </div>
-</button>
+  <form action="/messages/delete-room" method="POST" onsubmit="return confirm('Delete this chat?');">
+    <input type="hidden" name="room" value="{{id}}">
+    <button type="submit" class="ml-2 text-red-500 hover:text-red-700" title="Delete Chat">
+      🗑️
+    </button>
+  </form>
+</div>

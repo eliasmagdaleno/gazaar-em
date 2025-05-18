@@ -23,10 +23,17 @@
   </div>
 
   <!-- Form Section -->
+<<<<<<< HEAD
   <div id="formSection" class="flex flex-row gap-12 flex-grow hidden">
     <!-- Left Section: Form -->
     <div
       class="create-listing-form w-1/2 bg-dark-gray-500 p-6 rounded-lg shadow-md mr-4 text-light-black-500"
+=======
+  <div id="formSection" class="flex flex-row gap-12 hidden">
+    <!-- Left Section: Form -->
+    <div
+      class="create-listing-form w-1/2 bg-dark-gray-500 p-6 rounded-lg shadow-md mr-4"
+>>>>>>> a2225ad32889996081d7c753a7c114cf4447732e
     >
       <h2 class="create-listing-header text-3xl font-bold mb-6">
         Create Listing
@@ -122,9 +129,13 @@
     </div>
 
     <!-- Right Section: Images -->
+<<<<<<< HEAD
     <div
       class="images-section w-1/2 bg-dark-gray-500  p-6 rounded-lg shadow-md text-light-black-500"
     >
+=======
+    <div class="images-section w-1/2 bg-dark-gray-500 p-6 rounded-lg shadow-md">
+>>>>>>> a2225ad32889996081d7c753a7c114cf4447732e
       <h2 class="text-2xl font-bold mb-4">Upload Image</h2>
       <div class="form-field">
         <label for="images" class="block text-lg font-semibold mb-2">
@@ -173,12 +184,22 @@
     const productFields = document.getElementById('productFields');
     const eventFields = document.getElementById('eventFields');
     const nextPageButton = document.getElementById('nextPageButton');
+<<<<<<< HEAD
+=======
+    const imageInput = document.getElementById('images');
+    const imagePreview = document.getElementById('currentImage');
+    const kindInput = document.getElementById('kind');
+>>>>>>> a2225ad32889996081d7c753a7c114cf4447732e
 
     productButton.addEventListener('click', function () {
       formSection.classList.remove('hidden');
       productFields.classList.remove('hidden');
       eventFields.classList.add('hidden');
       nextPageButton.classList.remove('hidden');
+<<<<<<< HEAD
+=======
+      if (kindInput) kindInput.value = 'product';
+>>>>>>> a2225ad32889996081d7c753a7c114cf4447732e
     });
 
     eventButton.addEventListener('click', function () {
@@ -186,6 +207,7 @@
       eventFields.classList.remove('hidden');
       productFields.classList.add('hidden');
       nextPageButton.classList.remove('hidden');
+<<<<<<< HEAD
     });
   });
 
@@ -202,5 +224,25 @@
   function goToNextPage() {
     // Navigate to the location selection page
     window.location.href = '/selectlocation';
+=======
+      if (kindInput) kindInput.value = 'event';
+    });
+
+    imageInput?.addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const imageURL = URL.createObjectURL(file);
+        imagePreview.src = imageURL;
+        imagePreview.classList.remove('hidden');
+      } else {
+        imagePreview.src = '';
+        imagePreview.classList.add('hidden');
+      }
+    });
+  });
+
+  function goToNextPage() {
+    window.location.href = '/next-page';
+>>>>>>> a2225ad32889996081d7c753a7c114cf4447732e
   }
 </script>

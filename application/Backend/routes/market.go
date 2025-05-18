@@ -37,7 +37,7 @@ func fetchRandomMarketProducts(limit int) ([]map[string]interface{}, error) {
 			continue
 		}
 
-		thumbnailPath := "/assets/thumbnails/" + imageURL
+		thumbnailPath := "frontend/assets/thumbnails/" + imageURL
 		thumbnailFullPath := filepath.Join("assets/thumbnails", imageURL)
 		originalImagePath := filepath.Join("assets/", imageURL)
 
