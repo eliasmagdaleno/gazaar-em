@@ -1,4 +1,4 @@
-<div class="homepage-container flex flex-col gap-5">
+<div class="homepage-container flex flex-col overflow-hidden gap-5">
   <div class="event-section px-6 pt-4">
     <button
       class="events-button hover:bg-light-gray-500 rounded cursor-pointer p-2 mb-2"
@@ -9,7 +9,7 @@
     </button>
 
     <div
-      class="event-list flex gap-6 overflow-auto whitespace-nowrap"
+      class="event-list flex gap-6 overflow-x-auto whitespace-nowrap"
     >
       {{#each events}}
       <div class="flex-shrink-0 w-64">{{> eventcard}}</div>
@@ -27,7 +27,7 @@
     </button>
 
     <div
-      class="product-list flex gap-6 overflow-auto mb-6 whitespace-nowrap"
+      class="product-list flex gap-6 overflow-x-auto mb-6 whitespace-nowrap"
     >
       {{#each products}}
       <div class="flex-shrink-0 w-64">{{> productcard-marketplace}}</div>
