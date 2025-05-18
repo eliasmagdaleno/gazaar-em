@@ -1,5 +1,5 @@
 <div
-  class="event-card-marketplace bg-#f6f6f6 rounded-lg shadow-md overflow-hidden relative"
+  class="event-card-marketplace bg-#f6f6f6 rounded-lg shadow-md overflow-hidden flex flex-col h-full p-4"
 >
   <img
     class="event-image w-full rounded-lg h-48 object-cover cursor-pointer"
@@ -30,4 +30,19 @@
       />
     </button>
   </span> --}}
+
+   <!-- ↓↓↓ Delete button ↓↓↓ -->
+  <span class="delete-button-span mt-auto self-end">
+    <form action="/events/delete" method="POST"
+          onsubmit="return confirm('Delete this listing?');">
+      <input type="hidden" name="id" value="{{id}}" />
+      <button type="submit" class="delete-button p-1">
+        <img
+          src="/frontend/Assets/icons/feather-light-black/trash-2.svg"
+          alt="Delete"
+          class="w-6 h-6"
+        />
+      </button>
+    </form>
+  </span>
 </div>

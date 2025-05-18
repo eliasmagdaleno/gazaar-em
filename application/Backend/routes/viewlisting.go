@@ -62,6 +62,30 @@ func RegisterViewListingsRoutes(router *gin.Engine) {
 		c.Header("Content-Type", "text/html")
 		c.String(http.StatusOK, output)
 	})
+
+	router.POST("/send-message-to-seller", func(c *gin.Context) {
+		productID := c.PostForm("product_id")
+		sellerID := c.PostForm("seller_id")
+		message := c.PostForm("message")
+
+		if productID == "" || sellerID == "" || message == "" {
+			c.String(http.StatusBadRequest, "Missing required fields")
+			return
+		}
+
+		// Save the message to the database (you may want a new table for this)
+		_, err := database.DB.Exec(`
+			INSERT INTO SellerMessages (product_id, seller_id, message, timestamp)
+			VALUES (?, ?, ?, NOW())
+		`, productID, sellerID, message)
+		if err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Failed to save message: %v", err))
+			return
+		}
+
+		// Redirect back to the product page or show a success message
+		c.Redirect(http.StatusSeeOther, "/viewlisting/"+productID)
+	})
 }
 
 func RegisterCreateListingRoutes(router *gin.Engine) {
