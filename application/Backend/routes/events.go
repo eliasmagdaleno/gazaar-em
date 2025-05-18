@@ -45,7 +45,7 @@ func eventsHandler(c *gin.Context) {
 		}
 		evs = append(evs, map[string]interface{}{
 			"id":        id,
-			"thumbnail": "/assets/thumbnails/" + img,
+			"thumbnail": "../../frontend/assets/thumbnails/" + img,
 			"title":     title,
 			"host":      host,
 			"date":      date,

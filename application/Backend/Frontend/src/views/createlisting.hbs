@@ -171,12 +171,16 @@
     const productFields = document.getElementById('productFields');
     const eventFields = document.getElementById('eventFields');
     const nextPageButton = document.getElementById('nextPageButton');
+    const imageInput = document.getElementById('images');
+    const imagePreview = document.getElementById('currentImage');
+    const kindInput = document.getElementById('kind');
 
     productButton.addEventListener('click', function () {
       formSection.classList.remove('hidden');
       productFields.classList.remove('hidden');
       eventFields.classList.add('hidden');
       nextPageButton.classList.remove('hidden');
+      if (kindInput) kindInput.value = 'product';
     });
 
     eventButton.addEventListener('click', function () {
@@ -184,44 +188,23 @@
       eventFields.classList.remove('hidden');
       productFields.classList.add('hidden');
       nextPageButton.classList.remove('hidden');
+      if (kindInput) kindInput.value = 'event';
+    });
+
+    imageInput?.addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const imageURL = URL.createObjectURL(file);
+        imagePreview.src = imageURL;
+        imagePreview.classList.remove('hidden');
+      } else {
+        imagePreview.src = '';
+        imagePreview.classList.add('hidden');
+      }
     });
   });
 
-  function handleImageUpload(event) {
-    const files = Array.from(event.target.files);
-  if (files.length > 5) {
-    alert('You can only upload a maximum of 5 images.');
-    // clean up old previews
-    uploadedImages.forEach(url => URL.revokeObjectURL(url));
-    uploadedImages = [];
-    currentIndex = 0;
-    updateImagePreview();
-    event.target.value = '';
-    return;
-  }
-
-  // Revoke previous URLs
-  uploadedImages.forEach(url => URL.revokeObjectURL(url));
-
-  // Filter to actual images
-  const imageFiles = files.filter(file => file.type.startsWith('image/'));
-  uploadedImages = imageFiles.map(file => URL.createObjectURL(file));
-  currentIndex = 0;
-  updateImagePreview();
-  renderThumbnailList(uploadedImages);
-  }
-
-  function updateImagePreview() {
-    const currentImage = document.getElementById('currentImage');
-    if (file) {
-      currentImage.src = URL.createObjectURL(file);
-    } else {
-      currentImage.src = '';
-    }
-  }
-
   function goToNextPage() {
-    // Replace with your navigation logic
     window.location.href = '/next-page';
   }
 </script>
