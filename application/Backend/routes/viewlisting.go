@@ -286,7 +286,7 @@ func finalizeListingHandler(c *gin.Context) {
 	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"
 
-	approveURL := fmt.Sprintf("http://localhost:9081/approve/%d", itemID)
+	approveURL := fmt.Sprintf("http://204.236.166.51:9081/approve/%d", itemID)
 	subject := "New Listing Approval"
 	body := fmt.Sprintf("Subject: %s\n\nA new listing was created.\n Click below to approve:\n\n%s", subject, approveURL)
 
