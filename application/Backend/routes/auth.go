@@ -4,11 +4,11 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
 	"regexp"
 	"strings"
-	"math/rand"
-    "time"
+	"time"
 
 	"application/Backend/core"
 	"application/Backend/database"
@@ -58,8 +58,16 @@ func RegisterAuthRoutes(router *gin.Engine) {
 			showLoginPage(c, "Incorrect email or password.")
 			return
 		}
+		var userID int 
+		err = database.DB.QueryRow("SELECT user_id FROM Account WHERE email_id = ?", email).Scan(&userID)
+		if err != nil {
+			showLoginPage(c, "Internal server error. Please try again.")
+			return
+		}
 
-		c.SetCookie("session", "authenticated", 3600, "/", "", true, true)
+		c.SetCookie("session", "authenticated", 7200, "/", "", true, true)
+		c.SetCookie("user_id", fmt.Sprintf("%d", userID), 7200, "/", "", true, true)
+		log.Println("User ID set in cookie:", userID)
 
 		c.Redirect(http.StatusFound, "/")
 	})

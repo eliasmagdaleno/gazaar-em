@@ -17,8 +17,9 @@ import (
 )
 
 func RegisterViewListingsRoutes(router *gin.Engine) {
+	router.Use(SignedInMiddleware())
 	router.GET("/viewlisting/:id", ProductDetailsMiddleware(), func(c *gin.Context) {
-		log.Println("viewlisting: Entering viewlisting route")
+		// log.Println("viewlisting: Entering viewlisting route")
 
 		productDetails, exists := c.Get("productDetails")
 		if !exists {
@@ -71,21 +72,33 @@ func RegisterViewListingsRoutes(router *gin.Engine) {
 		c.String(http.StatusOK, output)
 	})
 
-	router.POST("/send-message-to-seller", func(c *gin.Context) {
-		productID := c.PostForm("product_id")
-		sellerID := c.PostForm("seller_id")
+	router.POST("/send-message", func(c *gin.Context) {
+		productID := c.PostForm("id")
+		sellerID := c.PostForm("sellerID")
 		message := c.PostForm("message")
+		userID := c.GetInt("user_id")
+		log.Printf("send-message: userID: %d", userID)
+
+
+		log.Printf("send-message: productID: %s, sellerID: %s, message: %s", productID, sellerID, message)
 
 		if productID == "" || sellerID == "" || message == "" {
 			c.String(http.StatusBadRequest, "Missing required fields")
 			return
 		}
 
-		// Save the message to the database (you may want a new table for this)
-		_, err := database.DB.Exec(`
-			INSERT INTO SellerMessages (product_id, seller_id, message, timestamp)
-			VALUES (?, ?, ?, NOW())
-		`, productID, sellerID, message)
+		roomID, err := strconv.Atoi(productID)
+		if err != nil {
+			c.String(http.StatusBadRequest, "Invalid product ID")
+			return
+		}
+		log.Printf("send-message: roomID: %d", roomID)
+
+
+		_, err = database.DB.Exec(`
+			INSERT INTO Message (sender_id, receiver_id, content, timestamp, room)
+			VALUES (?, ?, ?, NOW(), ?)
+		`, userID, sellerID, message, roomID)
 		if err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("Failed to save message: %v", err))
 			return

@@ -2,22 +2,32 @@
   class="create-listing-container flex flex-col gap-10 p-6 w-full overflow-y-scroll"
 >
   <!-- Selection Section -->
-  <div class="selection-section bg-dark-gray-500 p-6 rounded-lg shadow-md">
+  <div class="selection-section bg-dark-gray-500 p-6 rounded-lg shadow-lg">
     <h2 class="text-2xl font-bold mb-4 text-light-black-500 text-center">
       Select Listing Type
     </h2>
     <div class="flex gap-4">
       <button
         id="productButton"
-        class="w-1/2 px-4 py-2 bg-light-orange-500 text-light-black-500 rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer"
+        class="w-1/2 px-4 py-2 bg-light-orange-500 text-light-black-500 text-xl font-semibold rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer flex flex-row items-center justify-center gap-3"
       >
-        Product
+        <img
+          src="/frontend/assets/icons/feather-light-black/shopping-cart.svg"
+          alt="Items"
+          class="w-8 h-8"
+        />
+        <span>Product</span>
       </button>
       <button
         id="eventButton"
-        class="w-1/2 px-4 py-2 bg-light-orange-500 text-light-black-500 rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer"
+        class="w-1/2 px-4 py-2 bg-light-orange-500 text-light-black-500 text-xl font-semibold rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer flex flex-row items-center justify-center gap-3"
       >
-        Event
+        <img
+          src="/frontend/assets/icons/feather-light-black/calendar.svg"
+          alt="Event"
+          class="w-8 h-8"
+        />
+        <span>Event</span>
       </button>
     </div>
   </div>
@@ -26,7 +36,7 @@
   <div id="formSection" class="flex flex-row gap-12 flex-grow hidden">
     <!-- Left Section: Form -->
     <div
-      class="create-listing-form w-1/2 bg-dark-gray-500 p-6 rounded-lg shadow-md mr-4 text-light-black-500"
+      class="create-listing-form w-1/2 bg-dark-gray-500 p-6 rounded-lg shadow-lg mr-4 text-light-black-500"
     >
       <h2 class="create-listing-header text-3xl font-bold mb-6">
         Create Listing
@@ -46,7 +56,7 @@
             id="title"
             name="title"
             required
-            class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+            class="w-full px-4 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
           />
         </div>
         <div id="productFields" class="hidden">
@@ -59,7 +69,7 @@
               id="price"
               name="price"
               step="0.01"
-              class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+              class="w-full px-4 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
             />
           </div>
           <div class="form-field">
@@ -69,7 +79,7 @@
             <select
               id="category"
               name="category"
-              class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+              class="w-full px-4 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
             >
               <option value="books">Books</option>
               <option value="electronics">Electronics</option>
@@ -86,7 +96,7 @@
               type="text"
               id="location"
               name="location"
-              class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+              class="w-full px-4 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
             />
           </div>
           <div class="form-field">
@@ -97,7 +107,7 @@
               type="date"
               id="date"
               name="date"
-              class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+              class="w-full px-4 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
             />
           </div>
         </div>
@@ -109,45 +119,40 @@
             id="description"
             name="description"
             rows="4"
-            class="w-full px-4 py-2 bg-light-gray-500 border border-gray-300 rounded resize-none focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+            class="w-full px-4 py-2 bg-white border border-gray-300 rounded resize-none focus:outline-none focus:ring-2 focus:ring-light-orange-500"
           ></textarea>
         </div>
-        <button
-          type="submit"
-          class="w-full px-4 py-2 bg-light-orange-500 text-white rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer"
-        >
-          Submit
-        </button>
       </form>
     </div>
 
     <!-- Right Section: Images -->
     <div
-      class="images-section w-1/2 bg-dark-gray-500  p-6 rounded-lg shadow-md text-light-black-500"
+      class="images-section w-1/2 bg-dark-gray-500 p-6 rounded-lg shadow-lg text-light-black-500 flex flex-col items-center justify-center"
     >
       <h2 class="text-2xl font-bold mb-4">Upload Image</h2>
-      <div class="form-field">
+      <div class="form-field w-full flex flex-col items-center">
+        {{!--
         <label for="images" class="block text-lg font-semibold mb-2">
           Upload Listing Image
         </label>
+        --}}
+        <div
+          id="imagePreview"
+          class="image-preview w-3/5 h-3/5 object-scale-down mt-4 flex items-center justify-center"
+        >
+          <img
+            id="currentImage"
+            class="w-full h-full object-scale-down border border-gray-300 self-center rounded-md"
+            src=""
+          />
+        </div>
         <input
           type="file"
           id="images"
           name="images"
           accept="image/*"
-          class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500"
+          class="w-full px-4 py-2 border border-gray-300 bg-white rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500 mt-4"
           onchange="handleImageUpload(event)"
-        />
-      </div>
-      <div
-        id="imagePreview"
-        class="image-preview mt-4 flex flex-col items-center"
-      >
-        <img
-          id="currentImage"
-          class="w-full h-64 object-cover rounded-md"
-          src=""
-          alt="Image Preview"
         />
       </div>
     </div>
@@ -156,11 +161,11 @@
   <div class="flex justify-end self-center mt-8">
     <button
       id="nextPageButton"
-      class="bg-light-orange-500 text-white px-6 py-2 rounded shadow-md hover:bg-blood-orange-500 transition cursor-pointer hidden"
+      class="bg-light-orange-500 text-light-black-500 w-md px-6 py-2 text-xl font-semibold rounded shadow-md hover:bg-blood-orange-500 transition cursor-pointer hidden"
       onclick="goToNextPage()"
       type="button"
     >
-      Next
+      Next Page
     </button>
   </div>
 </div>
@@ -207,6 +212,6 @@
   });
 
   function goToNextPage() {
-    window.location.href = '/next-page';
+    window.location.href = '/selectlocation';
   }
 </script>
