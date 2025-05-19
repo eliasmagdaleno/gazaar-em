@@ -177,7 +177,7 @@ func submitListingHandler(c *gin.Context) {
 	if fh, err := c.FormFile("images"); err == nil {
 		imageName = filepath.Base(fh.Filename)
 		ext := strings.ToLower(filepath.Ext(imageName))
-		dst := filepath.Join("frontend/assets/originalImage", imageName) 
+		dst := filepath.Join("Frontend/assets/originalImage", imageName) 
 		
 		if err := c.SaveUploadedFile(fh, dst); err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("Image save error: %v", err))
@@ -193,7 +193,7 @@ func submitListingHandler(c *gin.Context) {
 			category = "events"
 		}
 		
-		thumbDir := filepath.Join("frontend", "assets", "thumbnails")
+		thumbDir := filepath.Join("Frontend", "assets", "thumbnails")
 		thumbPath := filepath.Join(thumbDir, title + ext)
 
 		if err := utils.GenerateThumbnail(dst, thumbPath, 150, 150); err != nil {
@@ -314,6 +314,5 @@ func finalizeListingHandler(c *gin.Context) {
 	c.SetCookie("listing_price", "", -1, "/", "", false, true)
 	c.SetCookie("listing_category", "", -1, "/", "", false, true)
 
-	c.String(http.StatusOK, "Listing created successfully!")
 	c.Redirect(http.StatusSeeOther, "/")
 }
