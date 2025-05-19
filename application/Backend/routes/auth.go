@@ -65,8 +65,8 @@ func RegisterAuthRoutes(router *gin.Engine) {
 			return
 		}
 
-		c.SetCookie("session", "authenticated", 7200, "/", "", true, true)
-		c.SetCookie("user_id", fmt.Sprintf("%d", userID), 7200, "/", "", true, true)
+		c.SetCookie("session", "authenticated", 7200, "/", "", false, true)
+		c.SetCookie("user_id", fmt.Sprintf("%d", userID), 7200, "/", "", false, true)
 		log.Println("User ID set in cookie:", userID)
 
 		c.Redirect(http.StatusFound, "/")
