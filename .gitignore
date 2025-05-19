@@ -12,3 +12,30 @@
 
 # Miscellaneous
 .env             
+
+# Ignore Docker build artifacts
+*.tar.gz
+*.tar
+*.img
+*.qcow2
+
+# Ignore Docker Compose override files (if any)
+docker-compose.override.yml
+
+# Ignore Docker volumes or generated files
+volumes/
+data/
+tmp/
+node_modules/
+
+# Ignore the entire .devcontainer folder 
+.devcontainer/
+
+# Ignore docker-compose.yml 
+docker-compose.yml
+
+# Ignore dockerfile
+Dockerfile
+
+# Ignore the workspace file 
+csc648-fa25-0104-team03.code-workspace

@@ -70,11 +70,38 @@ func RegisterViewListingsRoutes(router *gin.Engine) {
 		c.Header("Content-Type", "text/html")
 		c.String(http.StatusOK, output)
 	})
+
+	router.POST("/send-message-to-seller", func(c *gin.Context) {
+		productID := c.PostForm("product_id")
+		sellerID := c.PostForm("seller_id")
+		message := c.PostForm("message")
+
+		if productID == "" || sellerID == "" || message == "" {
+			c.String(http.StatusBadRequest, "Missing required fields")
+			return
+		}
+
+		// Save the message to the database (you may want a new table for this)
+		_, err := database.DB.Exec(`
+			INSERT INTO SellerMessages (product_id, seller_id, message, timestamp)
+			VALUES (?, ?, ?, NOW())
+		`, productID, sellerID, message)
+		if err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Failed to save message: %v", err))
+			return
+		}
+
+		// Redirect back to the product page or show a success message
+		c.Redirect(http.StatusSeeOther, "/viewlisting/"+productID)
+	})
 }
 
 func RegisterCreateListingRoutes(router *gin.Engine) {
 	router.GET("/createlisting", createListingHandler)
 	router.POST("/createlisting", submitListingHandler)
+
+	// New route for selectlocation
+	router.GET("/selectlocation", selectLocationHandler)
 }
 
 func createListingHandler(c *gin.Context) {
@@ -131,15 +158,13 @@ func submitListingHandler(c *gin.Context) {
 	priceStr := c.PostForm("price")
 	price, err := strconv.ParseFloat(priceStr, 64)
 	if err != nil {
-		c.String(http.StatusBadRequest, "Invalid price")
-		return
+		price = 0.0;
 	}
 
 	sellerID := c.GetInt("user_id")
 	category := c.PostForm("category")
 	if kind == "product" && category == "" {
-		c.String(http.StatusBadRequest, "Category is required for products")
-		return
+		category = "events"
 	}
 
 	_, err = database.DB.Exec(`
@@ -162,4 +187,37 @@ func submitListingHandler(c *gin.Context) {
 	}
 
 	c.String(http.StatusOK, "Listing submitted successfully!")
+}
+
+// Handler for selectlocation page
+func selectLocationHandler(c *gin.Context) {
+	selectLocationTemplate, err := core.LoadFrontendFile("src/views/selectlocation.hbs")
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Error loading select location template: %v", err)
+		return
+	}
+
+	content, err := raymond.Render(selectLocationTemplate, nil)
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Error rendering select location template: %v", err)
+		return
+	}
+
+	layoutTemplate, err := core.LoadFrontendFile("src/views/layouts/layout.hbs")
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Error loading layout template: %v", err)
+		return
+	}
+
+	output, err := raymond.Render(layoutTemplate, map[string]interface{}{
+		"title":   "Select Location",
+		"content": raymond.SafeString(content),
+	})
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Error rendering layout: %v", err)
+		return
+	}
+
+	c.Header("Content-Type", "text/html")
+	c.String(http.StatusOK, output)
 }
