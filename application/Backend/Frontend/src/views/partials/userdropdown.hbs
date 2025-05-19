@@ -1,14 +1,17 @@
 <div class="dropdown">
   <button class="dropbtn">
-    Username
-    {{user.username}}
-    <img class="size-12 shrink-0" src="/frontend/Assets/icons/user.svg" alt="User" />
+    Username {{user.username}}
+    <img
+      class="size-12 shrink-0"
+      src="/frontend/assets/icons/user.svg"
+      alt="User"
+    />
   </button>
   <div class="dropdown-content">
     <a href="/messages">Messages</a>
-    <form action="/users/logout" method="POST" >
-        <input type="hidden" value="{{csrf}}" />
-        <button type="submit">Logout</button>
+    <form action="/users/logout" method="POST">
+      <input type="hidden" value="{{csrf}}" />
+      <button type="submit">Logout</button>
     </form>
   </div>
 </div>

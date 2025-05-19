@@ -1,14 +1,29 @@
-<div class="sender-card flex items-center gap-3 p-4 bg-white rounded-xl shadow hover:bg-orange-100 cursor-pointer transition" data-room-id="{{id}}">
-  <img src="/frontend/Assets/icons/feather-light-black/user.svg" alt="User" class="w-8 h-8 rounded-full" />
+<div
+  class="sender-card flex items-center gap-3 p-4 bg-white rounded-xl shadow hover:bg-orange-100 cursor-pointer transition"
+  data-room-id="{{id}}"
+>
+  <img
+    src="/frontend/assets/icons/feather-light-black/user.svg"
+    alt="User"
+    class="w-8 h-8 rounded-full"
+  />
   <div class="flex-1">
     <div class="font-semibold text-gray-800">{{name}}</div>
     {{#if lastMessage}}
-      <div class="text-xs text-gray-500 truncate w-40">{{lastMessage}}</div>
+    <div class="text-xs text-gray-500 truncate w-40">{{lastMessage}}</div>
     {{/if}}
   </div>
-  <form action="/messages/delete-room" method="POST" onsubmit="return confirm('Delete this chat?');">
-    <input type="hidden" name="room" value="{{id}}">
-    <button type="submit" class="ml-2 text-red-500 hover:text-red-700" title="Delete Chat">
+  <form
+    action="/messages/delete-room"
+    method="POST"
+    onsubmit="return confirm('Delete this chat?');"
+  >
+    <input type="hidden" name="room" value="{{id}}" />
+    <button
+      type="submit"
+      class="ml-2 text-red-500 hover:text-red-700"
+      title="Delete Chat"
+    >
       🗑️
     </button>
   </form>

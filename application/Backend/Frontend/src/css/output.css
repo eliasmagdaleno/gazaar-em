@@ -22,6 +22,7 @@
     --color-gray-800: oklch(27.8% 0.033 256.848);
     --color-white: #fff;
     --spacing: 0.25rem;
+    --container-xs: 20rem;
     --container-md: 28rem;
     --container-xl: 36rem;
     --container-2xl: 42rem;
@@ -245,6 +246,21 @@
   .top-4 {
     top: calc(var(--spacing) * 4);
   }
+  .top-16 {
+    top: calc(var(--spacing) * 16);
+  }
+  .top-18 {
+    top: calc(var(--spacing) * 18);
+  }
+  .top-20 {
+    top: calc(var(--spacing) * 20);
+  }
+  .top-22 {
+    top: calc(var(--spacing) * 22);
+  }
+  .top-24 {
+    top: calc(var(--spacing) * 24);
+  }
   .top-26 {
     top: calc(var(--spacing) * 26);
   }
@@ -377,6 +393,9 @@
   .mb-10 {
     margin-bottom: calc(var(--spacing) * 10);
   }
+  .mb-20 {
+    margin-bottom: calc(var(--spacing) * 20);
+  }
   .ml-1 {
     margin-left: calc(var(--spacing) * 1);
   }
@@ -391,6 +410,9 @@
   }
   .ml-6 {
     margin-left: calc(var(--spacing) * 6);
+  }
+  .ml-10 {
+    margin-left: calc(var(--spacing) * 10);
   }
   .ml-14 {
     margin-left: calc(var(--spacing) * 14);
@@ -409,6 +431,9 @@
   }
   .ml-35 {
     margin-left: calc(var(--spacing) * 35);
+  }
+  .ml-auto {
+    margin-left: auto;
   }
   .block {
     display: block;
@@ -488,11 +513,20 @@
   .h-16 {
     height: calc(var(--spacing) * 16);
   }
+  .h-20 {
+    height: calc(var(--spacing) * 20);
+  }
   .h-24 {
     height: calc(var(--spacing) * 24);
   }
+  .h-40 {
+    height: calc(var(--spacing) * 40);
+  }
   .h-48 {
     height: calc(var(--spacing) * 48);
+  }
+  .h-60 {
+    height: calc(var(--spacing) * 60);
   }
   .h-64 {
     height: calc(var(--spacing) * 64);
@@ -505,6 +539,9 @@
   }
   .h-\[700px\] {
     height: 700px;
+  }
+  .h-auto {
+    height: auto;
   }
   .h-full {
     height: 100%;
@@ -536,11 +573,17 @@
   .w-2\/3 {
     width: calc(2/3 * 100%);
   }
+  .w-2xl {
+    width: var(--container-2xl);
+  }
   .w-3 {
     width: calc(var(--spacing) * 3);
   }
   .w-3\/4 {
     width: calc(3/4 * 100%);
+  }
+  .w-3\/5 {
+    width: calc(3/5 * 100%);
   }
   .w-4 {
     width: calc(var(--spacing) * 4);
@@ -566,6 +609,9 @@
   .w-16 {
     width: calc(var(--spacing) * 16);
   }
+  .w-20 {
+    width: calc(var(--spacing) * 20);
+  }
   .w-30 {
     width: calc(var(--spacing) * 30);
   }
@@ -577,6 +623,9 @@
   }
   .w-64 {
     width: calc(var(--spacing) * 64);
+  }
+  .w-86 {
+    width: calc(var(--spacing) * 86);
   }
   .w-120 {
     width: calc(var(--spacing) * 120);
@@ -596,6 +645,9 @@
   .w-full {
     width: 100%;
   }
+  .w-md {
+    width: var(--container-md);
+  }
   .w-screen {
     width: 100vw;
   }
@@ -610,6 +662,9 @@
   }
   .max-w-\[300px\] {
     max-width: 300px;
+  }
+  .max-w-full {
+    max-width: 100%;
   }
   .max-w-md {
     max-width: var(--container-md);
@@ -701,6 +756,9 @@
   .justify-end {
     justify-content: flex-end;
   }
+  .justify-evenly {
+    justify-content: space-evenly;
+  }
   .justify-start {
     justify-content: flex-start;
   }
@@ -734,6 +792,9 @@
   .gap-12 {
     gap: calc(var(--spacing) * 12);
   }
+  .gap-25 {
+    gap: calc(var(--spacing) * 25);
+  }
   .space-y-4 {
     :where(& > :not(:last-child)) {
       --tw-space-y-reverse: 0;
@@ -753,10 +814,16 @@
   .self-start {
     align-self: flex-start;
   }
+  .justify-self-center {
+    justify-self: center;
+  }
   .truncate {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .overflow-auto {
+    overflow: auto;
   }
   .overflow-hidden {
     overflow: hidden;
@@ -767,6 +834,9 @@
   .overflow-x-auto {
     overflow-x: auto;
   }
+  .overflow-x-scroll {
+    overflow-x: scroll;
+  }
   .overflow-y-auto {
     overflow-y: auto;
   }
@@ -775,6 +845,9 @@
   }
   .rounded {
     border-radius: 0.25rem;
+  }
+  .rounded-3xl {
+    border-radius: var(--radius-3xl);
   }
   .rounded-full {
     border-radius: calc(infinity * 1px);
@@ -921,6 +994,15 @@
   .pr-2 {
     padding-right: calc(var(--spacing) * 2);
   }
+  .pr-6 {
+    padding-right: calc(var(--spacing) * 6);
+  }
+  .pr-15 {
+    padding-right: calc(var(--spacing) * 15);
+  }
+  .pr-40 {
+    padding-right: calc(var(--spacing) * 40);
+  }
   .pr-45 {
     padding-right: calc(var(--spacing) * 45);
   }
@@ -941,6 +1023,12 @@
   }
   .pb-28 {
     padding-bottom: calc(var(--spacing) * 28);
+  }
+  .pb-40 {
+    padding-bottom: calc(var(--spacing) * 40);
+  }
+  .pb-64 {
+    padding-bottom: calc(var(--spacing) * 64);
   }
   .text-center {
     text-align: center;
