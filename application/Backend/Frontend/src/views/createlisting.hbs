@@ -9,15 +9,25 @@
     <div class="flex gap-4">
       <button
         id="productButton"
-        class="w-1/2 px-4 py-2 bg-light-orange-500 text-light-black-500 text-xl font-semibold rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer"
+        class="w-1/2 px-4 py-2 bg-light-orange-500 text-light-black-500 text-xl font-semibold rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer flex flex-row items-center justify-center gap-3"
       >
-        Product
+        <img
+          src="/frontend/assets/icons/feather-light-black/shopping-cart.svg"
+          alt="Items"
+          class="w-8 h-8"
+        />
+        <span>Product</span>
       </button>
       <button
         id="eventButton"
-        class="w-1/2 px-4 py-2 bg-light-orange-500 text-light-black-500 text-xl font-semibold rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer"
+        class="w-1/2 px-4 py-2 bg-light-orange-500 text-light-black-500 text-xl font-semibold rounded hover:bg-blood-orange-500 transition shadow-md cursor-pointer flex flex-row items-center justify-center gap-3"
       >
-        Event
+        <img
+          src="/frontend/assets/icons/feather-light-black/calendar.svg"
+          alt="Event"
+          class="w-8 h-8"
+        />
+        <span>Event</span>
       </button>
     </div>
   </div>
@@ -151,7 +161,7 @@
   <div class="flex justify-end self-center mt-8">
     <button
       id="nextPageButton"
-      class="bg-light-orange-500 text-light-black-500 w-md px-6 py-2 rounded shadow-md hover:bg-blood-orange-500 transition cursor-pointer hidden"
+      class="bg-light-orange-500 text-light-black-500 w-md px-6 py-2 text-xl font-semibold rounded shadow-md hover:bg-blood-orange-500 transition cursor-pointer hidden"
       onclick="goToNextPage()"
       type="button"
     >
@@ -202,6 +212,6 @@
   });
 
   function goToNextPage() {
-    window.location.href = '/next-page';
+    window.location.href = '/selectlocation';
   }
 </script>

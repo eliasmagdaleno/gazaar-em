@@ -64,10 +64,10 @@ func eventsHandler(c *gin.Context) {
 	}
 
 	// Add detailed logging to trace template rendering
-	log.Printf("[DEBUG] Rendering events.hbs with data: %+v", map[string]interface{}{
-		"title":  "Events",
-		"events": evs,
-	})
+	// log.Printf("[DEBUG] Rendering events.hbs with data: %+v", map[string]interface{}{
+	// 	"title":  "Events",
+	// 	"events": evs,
+	// })
 
 	content, err := raymond.Render(eventsTemplate, map[string]interface{}{
 		"title":  "Events",
