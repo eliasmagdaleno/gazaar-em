@@ -855,6 +855,9 @@
   .object-cover {
     object-fit: cover;
   }
+  .object-scale-down {
+    object-fit: scale-down;
+  }
   .p-0 {
     padding: calc(var(--spacing) * 0);
   }
