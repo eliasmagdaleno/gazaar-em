@@ -37,7 +37,7 @@ func StartServer() {
 
 	// Serve static files (e.g., images, CSS, JS)
 	router.Static("/frontend", "Frontend")
-	router.Static("/assets", "assets")
+	router.Static("/assets", "Frontend/assets")
 
 	// Trusted proxy configuration
 	router.SetTrustedProxies([]string{"192.168.0.0/24"})

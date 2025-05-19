@@ -42,11 +42,13 @@
         Create Listing
       </h2>
       <form
+        id="CreatingListingForm"
         action="/createlisting"
         method="POST"
         enctype="multipart/form-data"
         class="space-y-4"
       >
+        <input type="hidden" id="kind" name="kind" value="" />
         <div class="form-field">
           <label for="title" class="block text-lg font-semibold mb-2">
             Title
@@ -151,6 +153,7 @@
           id="images"
           name="images"
           accept="image/*"
+          form="CreatingListingForm"
           class="w-full px-4 py-2 border border-gray-300 bg-white rounded focus:outline-none focus:ring-2 focus:ring-light-orange-500 mt-4"
           onchange="handleImageUpload(event)"
         />
@@ -161,7 +164,7 @@
   <div class="flex justify-end self-center mt-8">
     <button
       id="nextPageButton"
-      class="bg-light-orange-500 text-light-black-500 w-md px-6 py-2 text-xl font-semibold rounded shadow-md hover:bg-blood-orange-500 transition cursor-pointer hidden"
+      class="bg-light-orange-500 text-light-black-500 w-md px-6 py-2 text-xl font-semibold rounded shadow-md hover:bg-blood-orange-500 transition cursor-pointer hidden enabled"
       onclick="goToNextPage()"
       type="button"
     >
@@ -187,6 +190,7 @@
       productFields.classList.remove('hidden');
       eventFields.classList.add('hidden');
       nextPageButton.classList.remove('hidden');
+      document.getElementById('category').enabled = false;
       if (kindInput) kindInput.value = 'product';
     });
 
@@ -195,6 +199,7 @@
       eventFields.classList.remove('hidden');
       productFields.classList.add('hidden');
       nextPageButton.classList.remove('hidden');
+      document.getElementById('category').disabled = false;
       if (kindInput) kindInput.value = 'event';
     });
 
@@ -212,6 +217,6 @@
   });
 
   function goToNextPage() {
-    window.location.href = '/selectlocation';
+    document.getElementById("CreatingListingForm").submit();
   }
 </script>
