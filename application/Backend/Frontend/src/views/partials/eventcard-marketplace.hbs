@@ -18,27 +18,32 @@
     <p class="event-host">"{{host}}"</p>
     <p class="event-location text-sm text-gray-500">{{location}}</p>
   </div>
-  {{!-- <span class="save-button-span absolute">
+  {{!--
+  <span class="save-button-span absolute">
     <button
       class="save-button bg-blood-orange-500 ml-1 mt-1 cursor-pointer"
       id="save-button"
     >
       <img
         class="bookmark-icon size-8"
-        src="/frontend/Assets/icons/feather-dark-gray/bookmark.svg"
+        src="/frontend/assets/icons/feather-dark-gray/bookmark.svg"
         alt="Bookmark"
       />
     </button>
-  </span> --}}
+  </span>
+  --}}
 
-   <!-- ↓↓↓ Delete button ↓↓↓ -->
+  <!-- ↓↓↓ Delete button ↓↓↓ -->
   <span class="delete-button-span mt-auto self-end">
-    <form action="/events/delete" method="POST"
-          onsubmit="return confirm('Delete this listing?');">
+    <form
+      action="/events/delete"
+      method="POST"
+      onsubmit="return confirm('Delete this listing?');"
+    >
       <input type="hidden" name="id" value="{{id}}" />
       <button type="submit" class="delete-button p-1">
         <img
-          src="/frontend/Assets/icons/feather-light-black/trash-2.svg"
+          src="/frontend/assets/icons/feather-light-black/trash-2.svg"
           alt="Delete"
           class="w-6 h-6"
         />

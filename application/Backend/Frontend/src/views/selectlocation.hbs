@@ -1,20 +1,9 @@
-<div
-  class="select-location-container min-h-screen flex flex-col gap-10 p-0 pb-25 w-full"
-  style="height: 100vh"
->
+<div class="select-location-container min-h-screen flex flex-col gap-10 p-0 pb-25 w-full" style="height: 100vh">
   <!-- Back Button -->
-  <button
-    id="backBtn"
+  <button id="backBtn"
     class="absolute left-6 top-28 flex items-center gap-2 text-lg text-light-black-500 hover:text-blood-orange-500 transition bg-transparent border-none outline-none"
-    type="button"
-    onclick="window.location.href='/createlisting'"
-    aria-label="Back"
-  >
-    <img
-      src="/frontend/Assets/icons/feather-light-black/arrow-left.svg"
-      alt="Back"
-      class="w-6 h-6"
-    />
+    type="button" onclick="window.location.href='/createlisting'" aria-label="Back">
+    <img src="/frontend/assets/icons/feather-light-black/arrow-left.svg" alt="Back" class="w-6 h-6" />
     Back
   </button>
   <h2 class="text-3xl text-light-black-500 mt-2 font-bold text-center">
@@ -23,185 +12,156 @@
   <div class="content-container flex flex-row gap-12 px-4">
     <!-- Map Section -->
     <div
-      class="map-section-container flex-1 h-[700px] bg-dark-gray-500 p-6 rounded-lg shadow-md flex flex-col justify-center items-center min-w-0"
-    >
-      <div
-        class="map-image-container w-full h-full flex justify-center items-center p-1 m-1"
-        style="position: relative"
-      >
-        <img
-          id="campusMap"
-          src="/frontend/Assets/originalImage/SFStateMainCampusMap.png"
-          alt="Campus Map"
-          class="w-full h-full object-contain rounded-md"
-        />
-        <svg
-          id="mapPin"
-          class="absolute hidden"
-          style="
+      class="map-section-container flex-1 h-[700px] bg-dark-gray-500 p-6 rounded-lg shadow-md flex flex-col justify-center items-center min-w-0">
+      <div class="map-image-container w-full h-full flex justify-center items-center p-1 m-1"
+        style="position: relative">
+        <img id="campusMap" src="/frontend/assets/originalImage/SFStateMainCampusMap.png" alt="Campus Map"
+          class="w-full h-full object-contain rounded-md" />
+        <svg id="mapPin" class="absolute hidden" style="
             width: 32px;
             height: 32px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -100%);
             z-index: 10;
-          "
-          viewBox="0 0 24 24"
-          fill="#FF0000"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-label="Pin"
-        >
+          " viewBox="0 0 24 24" fill="#FF0000" xmlns="http://www.w3.org/2000/svg" aria-label="Pin">
           <path
-            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-          />
+            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
         </svg>
       </div>
     </div>
     <!-- Locations List -->
     <div
-      class="location-section w-[400px] h-[700px] bg-dark-gray-500 text-light-black-500 p-6 rounded-lg shadow-md flex flex-col gap-4 min-w-0"
-    >
+      class="location-section w-[400px] h-3/4 bg-dark-gray-500 text-light-black-500 p-6 rounded-lg shadow-md flex flex-col gap-4 min-w-0">
       <h3 class="text-xl font-semibold mb-4">Available Locations</h3>
-      <ul
-        id="locationList"
-        class="flex flex-col gap-1 text-left text-light-black-500 overflow-y-auto h-full"
-      >
+      <ul id="locationList" class="flex flex-col gap-1 text-left text-light-black-500 overflow-y-auto h-full">
         <li>
           <button
             class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition text-left"
-            data-location="Parking Garage (Main)"
-          >
+            data-location="Parking Garage (Main)">
             Parking Garage (Main) [E-F5-6]
           </button>
         </li>
         <li>
           <button
             class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition text-left"
-            data-location="Student Center"
-          >
+            data-location="Student Center">
             Student Events Center [D3-4]
           </button>
         </li>
         <li>
           <button
             class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition text-left"
-            data-location="Library"
-          >
+            data-location="Library">
             Sutro Library [F9]
           </button>
         </li>
         <li>
           <button
             class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition text-left"
-            data-location="Creative Arts"
-          >
+            data-location="Library">
+            Sutro Library [F9]
+          </button>
+        </li>
+        <li>
+          <button
+            class="location-btn w-full px-4 py-2 bg-light-gray-500 rounded hover:bg-light-orange-500 transition text-left"
+            data-location="Creative Arts">
             Creative Arts [I-J5-7]
           </button>
         </li>
       </ul>
+      <!-- Post Listing Button always at the bottom, outside content-container -->
+      <form id="postListingForm" method="POST" action="/createlisting/submit" class="w-full flex flex-col items-center"
+        onsubmit="return confirmPostListing();">
+        <input type="hidden" name="location" id="selectedLocationInput" />
+        <div class="flex justify-center w-full px-8 pb-8">
+          <button id="postListingBtn"
+            class="bg-blood-orange-500 text-light-black-500 px-10 py-4 rounded-lg shadow-lg text-xl font-bold hover:bg-light-orange-500 transition flex items-center w-full max-w-xl justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+            type="submit">
+            <img src="/frontend/assets/icons/feather-light-black/plus.svg" alt="Add" class="w-6 h-6 mr-2" />
+            Post Listing
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-  <!-- Post Listing Button always at the bottom, outside content-container -->
-  <form
-    id="postListingForm"
-    method="POST"
-    action="/createlisting/submit"
-    class="w-full flex flex-col items-center"
-    onsubmit="return confirmPostListing();"
-  >
-    <input type="hidden" name="location" id="selectedLocationInput" />
-    <div class="flex justify-center w-full px-8 pb-8">
-      <button
-        id="postListingBtn"
-        class="bg-blood-orange-500 text-light-black-500 px-20 py-4 rounded-lg shadow-lg text-xl font-bold hover:bg-light-orange-500 transition flex items-center w-full max-w-xl justify-center"
-        type="submit"
-      >
-        <img
-          src="/frontend/Assets/icons/feather-light-black/plus.svg"
-          alt="Add"
-          class="w-6 h-6 mr-2"
-        />
-        Post Listing
-      </button>
-    </div>
-  </form>
-</div>
 
-<script>
-  // Pin positions for each location (fixed positions)
-  const pinPositions = {
-    'Parking Lot': { top: '45%', left: '48%' },
-    'Student Center': { top: '70%', left: '60%' },
-    Library: { top: '80%', left: '62%' },
-    'Creative Arts': { top: '80%', left: '50%' },
-  };
+  <script>
+    // Pin positions for each location (fixed positions)
+    const pinPositions = {
+      'Parking Lot': { top: '45%', left: '48%' },
+      'Student Center': { top: '70%', left: '60%' },
+      Library: { top: '80%', left: '62%' },
+      'Creative Arts': { top: '80%', left: '50%' },
+    };
 
-  // Location value mapping
-  const locationValueMap = {
-    'Parking Lot': 0,
-    'Student Center': 1,
-    Library: 2,
-    Gym: 3,
-    'Creative Arts': 4,
-  };
+    // Location value mapping
+    const locationValueMap = {
+      'Parking Lot': 0,
+      'Student Center': 1,
+      Library: 2,
+      Gym: 3,
+      'Creative Arts': 4,
+    };
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const locationBtns = document.querySelectorAll('.location-btn');
-    const postListingBtn = document.getElementById('postListingBtn');
-    const selectedLocationInput = document.getElementById(
-      'selectedLocationInput'
-    );
-    const confirmBtn = document.getElementById('confirmLocationBtn');
-    const mapPin = document.getElementById('mapPin');
+    document.addEventListener('DOMContentLoaded', function () {
+      const locationBtns = document.querySelectorAll('.location-btn');
+      const postListingBtn = document.getElementById('postListingBtn');
+      const selectedLocationInput = document.getElementById(
+        'selectedLocationInput'
+      );
+      const confirmBtn = document.getElementById('confirmLocationBtn');
+      const mapPin = document.getElementById('mapPin');
 
-    locationBtns.forEach((btn) => {
-      btn.addEventListener('click', function () {
-        const loc = this.getAttribute('data-location');
-        const pos = pinPositions[loc];
-        if (pos) {
-          mapPin.style.top = pos.top;
-          mapPin.style.left = pos.left;
-          mapPin.classList.remove('hidden');
-        }
-        // Set value for form submission
-        selectedLocationInput.value = locationValueMap[loc];
-        // Enable submit button
-        postListingBtn.disabled = false;
-        // Highlight selected button
-        locationBtns.forEach((b) =>
-          b.classList.remove('bg-light-orange-500', 'text-white')
-        );
-        this.classList.add('bg-light-orange-500', 'text-white');
+      locationBtns.forEach((btn) => {
+        btn.addEventListener('click', function () {
+          const loc = this.getAttribute('data-location');
+          const pos = pinPositions[loc];
+          if (pos) {
+            mapPin.style.top = pos.top;
+            mapPin.style.left = pos.left;
+            mapPin.classList.remove('hidden');
+          }
+          // Set value for form submission
+          selectedLocationInput.value = locationValueMap[loc];
+          // Enable submit button
+          postListingBtn.disabled = false;
+          // Highlight selected button
+          locationBtns.forEach((b) =>
+            b.classList.remove('bg-light-orange-500', 'text-white')
+          );
+          this.classList.add('bg-light-orange-500', 'text-white');
+        });
       });
+
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', function () {
+          const selectedBtn = document.querySelector(
+            '.location-btn.bg-light-orange-500'
+          );
+          if (selectedBtn) {
+            const loc = selectedBtn.getAttribute('data-location');
+            alert(`Location selected: ${loc}`);
+            window.location.href = '/createlisting/confirmation';
+          }
+        });
+      }
+
+      // Post Listing confirmation popup
+      // Make sure the event listener is attached regardless of button position
+      setTimeout(function () {
+        const postBtn = document.getElementById('postListingBtn');
+        if (postBtn) {
+          // Remove all custom click handlers for postBtn to avoid conflicts
+          const newPostBtn = postBtn.cloneNode(true);
+          postBtn.parentNode.replaceChild(newPostBtn, postBtn);
+        }
+      }, 0);
     });
 
-    if (confirmBtn) {
-      confirmBtn.addEventListener('click', function () {
-        const selectedBtn = document.querySelector(
-          '.location-btn.bg-light-orange-500'
-        );
-        if (selectedBtn) {
-          const loc = selectedBtn.getAttribute('data-location');
-          alert(`Location selected: ${loc}`);
-          window.location.href = '/createlisting/confirmation';
-        }
-      });
+    // Add confirmation for posting the listing
+    function confirmPostListing() {
+      return confirm('Are you sure you want to post this listing?');
     }
-
-    // Post Listing confirmation popup
-    // Make sure the event listener is attached regardless of button position
-    setTimeout(function () {
-      const postBtn = document.getElementById('postListingBtn');
-      if (postBtn) {
-        // Remove all custom click handlers for postBtn to avoid conflicts
-        const newPostBtn = postBtn.cloneNode(true);
-        postBtn.parentNode.replaceChild(newPostBtn, postBtn);
-      }
-    }, 0);
-  });
-
-  // Add confirmation for posting the listing
-  function confirmPostListing() {
-    return confirm('Are you sure you want to post this listing?');
-  }
-</script>
+  </script>

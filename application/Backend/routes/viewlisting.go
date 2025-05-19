@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
+	"net/smtp"
 
 	"application/Backend/core"
 	"application/Backend/database"
@@ -14,11 +15,13 @@ import (
 
 	"github.com/aymerick/raymond"
 	"github.com/gin-gonic/gin"
+
 )
 
 func RegisterViewListingsRoutes(router *gin.Engine) {
+	router.Use(SignedInMiddleware())
 	router.GET("/viewlisting/:id", ProductDetailsMiddleware(), func(c *gin.Context) {
-		log.Println("viewlisting: Entering viewlisting route")
+		// log.Println("viewlisting: Entering viewlisting route")
 
 		productDetails, exists := c.Get("productDetails")
 		if !exists {
@@ -71,21 +74,33 @@ func RegisterViewListingsRoutes(router *gin.Engine) {
 		c.String(http.StatusOK, output)
 	})
 
-	router.POST("/send-message-to-seller", func(c *gin.Context) {
-		productID := c.PostForm("product_id")
-		sellerID := c.PostForm("seller_id")
+	router.POST("/send-message", func(c *gin.Context) {
+		productID := c.PostForm("id")
+		sellerID := c.PostForm("sellerID")
 		message := c.PostForm("message")
+		userID := c.GetInt("user_id")
+		log.Printf("send-message: userID: %d", userID)
+
+
+		log.Printf("send-message: productID: %s, sellerID: %s, message: %s", productID, sellerID, message)
 
 		if productID == "" || sellerID == "" || message == "" {
 			c.String(http.StatusBadRequest, "Missing required fields")
 			return
 		}
 
-		// Save the message to the database (you may want a new table for this)
-		_, err := database.DB.Exec(`
-			INSERT INTO SellerMessages (product_id, seller_id, message, timestamp)
-			VALUES (?, ?, ?, NOW())
-		`, productID, sellerID, message)
+		roomID, err := strconv.Atoi(productID)
+		if err != nil {
+			c.String(http.StatusBadRequest, "Invalid product ID")
+			return
+		}
+		log.Printf("send-message: roomID: %d", roomID)
+
+
+		_, err = database.DB.Exec(`
+			INSERT INTO Message (sender_id, receiver_id, content, timestamp, room)
+			VALUES (?, ?, ?, NOW(), ?)
+		`, userID, sellerID, message, roomID)
 		if err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("Failed to save message: %v", err))
 			return
@@ -100,8 +115,23 @@ func RegisterCreateListingRoutes(router *gin.Engine) {
 	router.GET("/createlisting", createListingHandler)
 	router.POST("/createlisting", submitListingHandler)
 
-	// New route for selectlocation
 	router.GET("/selectlocation", selectLocationHandler)
+	router.POST("/createlisting/submit", finalizeListingHandler)
+
+
+	// Approval mini route
+	router.GET("/approve/:id", func(c *gin.Context) {
+	id := c.Param("id")
+	_, err := database.DB.Exec(`UPDATE items SET approve = 1 WHERE item_id = ?`, id)
+	if err != nil {
+		log.Printf("Failed to approve item %s: %v", id, err)
+		c.String(http.StatusInternalServerError, "Failed to approve listing.")
+		return
+	}
+	c.String(http.StatusOK, fmt.Sprintf("Listing %s approved!", id))
+
+	c.Redirect(http.StatusSeeOther, "/login")
+})
 }
 
 func createListingHandler(c *gin.Context) {
@@ -140,56 +170,49 @@ func submitListingHandler(c *gin.Context) {
 	title := c.PostForm("title")
 	desc := c.PostForm("description")
 	kind := c.PostForm("kind")
-
-	var imageName string
+	priceStr := c.PostForm("price")
+	category := c.PostForm("category")
+	imageName := ""
+	new_base := ""
 	if fh, err := c.FormFile("images"); err == nil {
-		os.MkdirAll("assets", os.ModePerm)
 		imageName = filepath.Base(fh.Filename)
-		dst := filepath.Join("assets", imageName)
+		ext := strings.ToLower(filepath.Ext(imageName))
+		dst := filepath.Join("Frontend/assets/originalImage", imageName) 
+		
 		if err := c.SaveUploadedFile(fh, dst); err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("Image save error: %v", err))
 			return
 		}
-		thumbDir := filepath.Join("assets", "thumbnails")
-		os.MkdirAll(thumbDir, os.ModePerm)
-		_ = utils.GenerateThumbnail(dst, filepath.Join(thumbDir, imageName), 150, 150)
+
+		if kind == "product" && category == "" {
+			category = "events"
+		}
+
+
+		if kind == "event" {
+			category = "events"
+		}
+		
+		thumbDir := filepath.Join("Frontend", "assets", "thumbnails")
+		thumbPath := filepath.Join(thumbDir, title + ext)
+
+		if err := utils.GenerateThumbnail(dst, thumbPath, 150, 150); err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Thumbnail generation error: %v", err))
+			return
+		}
+		new_base = title + ext
 	}
 
-	priceStr := c.PostForm("price")
-	price, err := strconv.ParseFloat(priceStr, 64)
-	if err != nil {
-		price = 0.0;
-	}
+	c.SetCookie("listing_title", title, 3600, "/", "", false, true)
+	c.SetCookie("listing_description", desc, 3600, "/", "", false, true)
+	c.SetCookie("listing_kind", kind, 3600, "/", "", false, true)
+	c.SetCookie("listing_image", new_base, 3600, "/", "", false, true)
+	c.SetCookie("listing_price", priceStr, 3600, "/", "", false, true)
+	c.SetCookie("listing_category", category, 3600, "/", "", false, true)
 
-	sellerID := c.GetInt("user_id")
-	category := c.PostForm("category")
-	if kind == "product" && category == "" {
-		category = "events"
-	}
-
-	_, err = database.DB.Exec(`
-        INSERT INTO items 
-          (title, description, price, category, seller_id, image_url, post_date)
-        VALUES (?, ?, ?, ?, ?, ?, NOW())
-    `, title, desc, price,
-		func() string {
-			if kind == "product" {
-				return category
-			}
-			return "event"
-		}(),
-		sellerID,
-		imageName,
-	)
-	if err != nil {
-		c.String(http.StatusInternalServerError, fmt.Sprintf("DB insert error: %v", err))
-		return
-	}
-
-	c.String(http.StatusOK, "Listing submitted successfully!")
+	c.Redirect(http.StatusSeeOther, "/selectlocation")
 }
 
-// Handler for selectlocation page
 func selectLocationHandler(c *gin.Context) {
 	selectLocationTemplate, err := core.LoadFrontendFile("src/views/selectlocation.hbs")
 	if err != nil {
@@ -220,4 +243,76 @@ func selectLocationHandler(c *gin.Context) {
 
 	c.Header("Content-Type", "text/html")
 	c.String(http.StatusOK, output)
+}
+
+func finalizeListingHandler(c *gin.Context) {
+	sellerID := c.GetInt("user_id")
+	location := c.PostForm("location") // From hidden field or button click
+
+	// Read data from cookies
+	title, _ := c.Cookie("listing_title")
+	desc, _ := c.Cookie("listing_description")
+	imageName, _ := c.Cookie("listing_image")
+	priceStr, _ := c.Cookie("listing_price")
+	category, _ := c.Cookie("listing_category")
+
+	price, err := strconv.ParseFloat(priceStr, 64)
+	if err != nil {
+		price = 0.0
+	}
+
+	insertedID, err := database.DB.Exec(`
+        INSERT INTO items 
+          (title, description, price, category, seller_id, image_url, post_date, address)
+        VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)
+    `, title, desc, price, category, sellerID, imageName, location)
+
+		
+	if err != nil {
+	log.Printf("Insert failed: %v", err)
+	c.String(http.StatusInternalServerError, "Insert failed")
+	return
+	}
+
+	itemID, err := insertedID.LastInsertId()
+	if err != nil {
+		itemID = 0
+	}
+
+
+	from := "quitefact@gmail.com"
+	password := "bknh xsgm csda kcub"
+	to := "zacharyh777@gmail.com"
+	smtpHost := "smtp.gmail.com"
+	smtpPort := "587"
+
+	approveURL := fmt.Sprintf("http://204.236.166.51:9081/approve/%d", itemID)
+	subject := "New Listing Approval"
+	body := fmt.Sprintf("Subject: %s\n\nA new listing was created.\n Click below to approve:\n\n%s", subject, approveURL)
+
+	go func() {
+		auth := smtp.PlainAuth("", from, password, smtpHost)
+		err := smtp.SendMail(
+			smtpHost+":"+smtpPort,
+			auth,
+			from,
+			[]string{to},
+			[]byte(body),
+		)
+		if err != nil {
+			log.Printf("Error sending approval email: %v", err)
+		} else {
+			log.Printf("Approval email sent for item ID %d", insertedID)
+		}
+	}()
+
+	// Clear cookies
+	c.SetCookie("listing_title", "", -1, "/", "", false, true)
+	c.SetCookie("listing_description", "", -1, "/", "", false, true)
+	c.SetCookie("listing_kind", "", -1, "/", "", false, true)
+	c.SetCookie("listing_image", "", -1, "/", "", false, true)
+	c.SetCookie("listing_price", "", -1, "/", "", false, true)
+	c.SetCookie("listing_category", "", -1, "/", "", false, true)
+
+	c.Redirect(http.StatusSeeOther, "/")
 }

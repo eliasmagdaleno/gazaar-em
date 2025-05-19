@@ -37,15 +37,13 @@ func StartServer() {
 
 	// Serve static files (e.g., images, CSS, JS)
 	router.Static("/frontend", "Frontend")
-	router.Static("/assets", "assets")
+	router.Static("/assets", "Frontend/assets")
 
 	// Trusted proxy configuration
 	router.SetTrustedProxies([]string{"192.168.0.0/24"})
-
-	// Register middleware globally if needed
-	// router.Use(routes.ProductMiddleware())
-	// router.Use(routes.RandomEventMiddleware())
-	// router.Use(routes.RandomProductMiddleware())
+	
+	router.Use(routes.UserIDMiddleware())
+	
 
 
 
@@ -141,11 +139,11 @@ func StartServer() {
 		raymond.RegisterPartial("header", headerPartial)
 	}
 
-	registerPartial, err := loadTemplate("Frontend/src/views/registration.hbs")
+	registerPartial, err := loadTemplate("Frontend/src/views/register.hbs")
 	if err != nil {
-		log.Printf("Warning: Could not load registration partial: %v", err)
+		log.Printf("Warning: Could not load register partial: %v", err)
 	} else {
-		raymond.RegisterPartial("registration", registerPartial)
+		raymond.RegisterPartial("register", registerPartial)
 	}
 
 	errorCardPartial, err := loadTemplate("Frontend/src/views/partials/errorcard.hbs")

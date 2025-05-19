@@ -1,17 +1,11 @@
-<div
-  class="event-card bg-#f6f6f6 overflow-hidden relative"
->
-  <div class="event-img-section border border-light-gray-500 rounded-lg ">
+<div class="event-card bg-#f6f6f6 overflow-hidden relative">
+  <div class="event-img-section border border-light-gray-500 rounded-lg">
     <button
       class="event-link w-full h-48 cursor-pointer"
       id="event-link"
       onclick="window.location.href='/events'"
     >
-      <img
-        class="event-img "
-        src="{{thumbnail}}"
-        alt="{{title}}"
-      />
+      <img class="event-img" src="{{thumbnail}}" alt="{{title}}" />
     </button>
   </div>
 
@@ -40,7 +34,7 @@
     >
       <img
         class="bookmark-icon size-6"
-        src="/frontend/Assets/icons/feather-dark-gray/bookmark.svg"
+        src="/frontend/assets/icons/feather-dark-gray/bookmark.svg"
         alt="Bookmark"
       />
     </button>
@@ -48,17 +42,19 @@
   --}}
 
   <span class="delete-button-span absolute bottom-10 right-2">
-    <form action="/events/delete" method="POST"
-          onsubmit="return confirm('Delete this listing?');">
+    <form
+      action="/events/delete"
+      method="POST"
+      onsubmit="return confirm('Delete this listing?');"
+    >
       <input type="hidden" name="id" value="{{id}}" />
       <button type="submit" class="delete-button p-1">
         <img
-          src="/frontend/Assets/icons/feather-light-black/trash-2.svg"
+          src="/frontend/assets/icons/feather-light-black/trash-2.svg"
           alt="Delete"
           class="w-6 h-7"
         />
       </button>
     </form>
   </span>
-
 </div>
