@@ -41,11 +41,9 @@ func StartServer() {
 
 	// Trusted proxy configuration
 	router.SetTrustedProxies([]string{"192.168.0.0/24"})
-
-	// Register middleware globally if needed
-	// router.Use(routes.ProductMiddleware())
-	// router.Use(routes.RandomEventMiddleware())
-	// router.Use(routes.RandomProductMiddleware())
+	
+	router.Use(routes.UserIDMiddleware())
+	
 
 
 

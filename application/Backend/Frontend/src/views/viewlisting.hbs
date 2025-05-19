@@ -58,11 +58,21 @@
             Send a Message to the Seller:
           </h2>
           <form
-            action="/messages"
+            action="/send-message"
             method="POST"
             class="message-input flex items-center w-full bg-light-gray-500 border-1 border-light-black-500 rounded-md p-2 focus-within:border-blue-500 transition-colors"
           >
-            <input type="hidden" name="room" value="{{sellerID}}" />
+            {{!-- <input type="hidden" name="room" value="{{sellerID}}" /> --}}
+            <input
+              type="hidden"
+              name="id"
+              value="{{id}}"
+            />
+            <input
+              type="hidden"
+              name="sellerID"
+              value="{{sellerID}}"
+            />
             <textarea
               name="message"
               class="message-input flex-grow p-1 text-light-black-500 border-none outline-none resize-none bg-transparent"

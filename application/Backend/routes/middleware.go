@@ -13,6 +13,31 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func UserIDMiddleware() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        userIDStr, err := c.Cookie("user_id")
+        if err == nil {
+            if userID, err := strconv.Atoi(userIDStr); err == nil {
+                c.Set("user_id", userID)
+            }
+        }
+        c.Next()
+    }
+}
+
+// Middleware to set is_signed_in in context
+func SignedInMiddleware() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        session, err := c.Cookie("session")
+        if err == nil && session == "authenticated" {
+            c.Set("is_signed_in", true)
+        } else {
+            c.Set("is_signed_in", false)
+        }
+        c.Next()
+    }
+}
+
 // Middleware to fetch random product cards
 func RandomProductMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -119,7 +144,7 @@ func ProductMiddleware() gin.HandlerFunc {
 func ProductDetailsMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		productID := c.Param("id")
-		log.Printf("ProductDetailsMiddleware: Received productID: %s", productID) // Debugging log
+		// log.Printf("ProductDetailsMiddleware: Received productID: %s", productID) // Debugging log
 
 		query := `SELECT items.title, items.item_id, items.description, items.price, items.category, items.seller_id, items.image_url, items.address, 
 		Account.user_name AS seller_name, 
@@ -127,7 +152,7 @@ func ProductDetailsMiddleware() gin.HandlerFunc {
 		FROM items
 		JOIN Account ON items.seller_id = Account.user_id
 		WHERE item_id = ?`
-		log.Printf("ProductDetailsMiddleware: Executing query: %s with productID: %s", query, productID) // Debugging log
+		// log.Printf("ProductDetailsMiddleware: Executing query: %s with productID: %s", query, productID) // Debugging log
 
 		row := database.DB.QueryRow(query, productID)
 
