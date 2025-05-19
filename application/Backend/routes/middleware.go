@@ -4,6 +4,7 @@ import (
 	"application/Backend/core"
 	"application/Backend/database"
 	"log"
+	"strconv"
 
 	"net/http"
 
@@ -136,6 +137,14 @@ func ProductDetailsMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		// Map numeric address/location to human-readable string
+		locationNames := []string{"Parking Garage (main) [E-F5-6]", "Student Events Center [D3-4]", " Sutro Library [F9]", "Gymnasium [G7-8]", " Creative Arts [I-J5-7]"}
+		locationIdx, err := strconv.Atoi(address)
+		locationName := address // fallback to raw value
+		if err == nil && locationIdx >= 0 && locationIdx < len(locationNames) {
+			locationName = locationNames[locationIdx]
+		}
+
 		product = map[string]interface{}{
 			"title":       title,
 			"id":          itemID,
@@ -146,6 +155,8 @@ func ProductDetailsMiddleware() gin.HandlerFunc {
 			"imageURL":    "frontend/assets/thumbnails/" + imageURL,
 			"postDate":    postDate,
 			"address":     address,
+			"location":    address, // keep numeric for JS if needed
+			"locationName": locationName, // human-readable for template
 		}
 
 		c.Set("productDetails", product)
