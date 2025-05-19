@@ -41,7 +41,7 @@ func SignedInMiddleware() gin.HandlerFunc {
 // Middleware to fetch random product cards
 func RandomProductMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		query := "SELECT item_id, image_url, title, price FROM items WHERE LOWER(category) != 'events' ORDER BY RAND() LIMIT 20"
+		query := "SELECT item_id, image_url, title, price FROM items WHERE LOWER(category) != 'events' AND approve = 1 ORDER BY RAND() LIMIT 20"
 		rows, err := database.DB.Query(query)
 		if err != nil {
 			log.Printf("RandomProductMiddleware: Error executing query: %v", err)
@@ -76,7 +76,7 @@ func RandomProductMiddleware() gin.HandlerFunc {
 // Middleware to fetch random event cards
 func RandomEventMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		query := "SELECT image_url, title, post_date FROM items WHERE LOWER(category) = 'events' ORDER BY RAND() LIMIT 20"
+		query := "SELECT image_url, title, post_date FROM items WHERE LOWER(category) = 'events' AND approve = 1 ORDER BY RAND() LIMIT 20"
 		rows, err := database.DB.Query(query)
 		if (err != nil) {
 			log.Printf("RandomEventMiddleware: Error executing query: %v", err)
@@ -110,7 +110,7 @@ func RandomEventMiddleware() gin.HandlerFunc {
 // Middleware to fetch non-random product cards
 func ProductMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		query := "SELECT image_url, title, price FROM items WHERE LOWER(category) != 'events' LIMIT 20"
+		query := "SELECT image_url, title, price FROM items WHERE LOWER(category) != 'events' AND approve = 1 LIMIT 20"
 		rows, err := database.DB.Query(query)
 		if err != nil {
 			log.Printf("ProductMiddleware: Error executing query: %v", err)
@@ -151,7 +151,7 @@ func ProductDetailsMiddleware() gin.HandlerFunc {
 			DATE_FORMAT(items.post_date, '%Y-%m-%d') AS post_date
 		FROM items
 		JOIN Account ON items.seller_id = Account.user_id
-		WHERE item_id = ?`
+		WHERE item_id = ? AND approve = 1`
 		// log.Printf("ProductDetailsMiddleware: Executing query: %s with productID: %s", query, productID) // Debugging log
 
 		row := database.DB.QueryRow(query, productID)

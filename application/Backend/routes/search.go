@@ -19,7 +19,7 @@ func RegisterSearchRoutes(router *gin.Engine) {
 		q := c.Query("q")
 		category := c.Query("category")
 
-		query := "SELECT item_id, category, title, description, price, image_url FROM items WHERE 1=1 AND LOWER(category) != 'events'"
+		query := "SELECT item_id, category, title, description, price, image_url FROM items WHERE 1=1 AND LOWER(category) != 'events' AND approve = 1"
 		var args []interface{}
 
 		if category != "" && category != "All" {
@@ -55,7 +55,7 @@ func RegisterSearchRoutes(router *gin.Engine) {
 
 			// Check if the thumbnail exists, if not, generate it
 			if _, err := os.Stat(thumbnailFullPath); os.IsNotExist(err) {
-				err := utils.GenerateThumbnail(originalImagePath, thumbnailFullPath, 150, 150) // Example size: 150x150
+				err := utils.GenerateThumbnail(originalImagePath, thumbnailFullPath, 150, 150)
 				if err != nil {
 					log.Println("Thumbnail generation error:", err)
 				}

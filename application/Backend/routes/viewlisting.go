@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"net/smtp"
 
 	"application/Backend/core"
 	"application/Backend/database"
@@ -116,6 +117,21 @@ func RegisterCreateListingRoutes(router *gin.Engine) {
 
 	router.GET("/selectlocation", selectLocationHandler)
 	router.POST("/createlisting/submit", finalizeListingHandler)
+
+
+	// Approval mini route
+	router.GET("/approve/:id", func(c *gin.Context) {
+	id := c.Param("id")
+	_, err := database.DB.Exec(`UPDATE items SET approve = 1 WHERE item_id = ?`, id)
+	if err != nil {
+		log.Printf("Failed to approve item %s: %v", id, err)
+		c.String(http.StatusInternalServerError, "Failed to approve listing.")
+		return
+	}
+	c.String(http.StatusOK, fmt.Sprintf("Listing %s approved!", id))
+
+	c.Redirect(http.StatusSeeOther, "/login")
+})
 }
 
 func createListingHandler(c *gin.Context) {
@@ -245,18 +261,52 @@ func finalizeListingHandler(c *gin.Context) {
 		price = 0.0
 	}
 
-	_, err = database.DB.Exec(`
+	insertedID, err := database.DB.Exec(`
         INSERT INTO items 
           (title, description, price, category, seller_id, image_url, post_date, address)
         VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)
     `, title, desc, price, category, sellerID, imageName, location)
 
+		
 	if err != nil {
-		c.String(http.StatusInternalServerError, fmt.Sprintf("DB insert error: %v", err))
-		return
+	log.Printf("Insert failed: %v", err)
+	c.String(http.StatusInternalServerError, "Insert failed")
+	return
 	}
 
-	// Clear cookies (optional cleanup)
+	itemID, err := insertedID.LastInsertId()
+	if err != nil {
+		itemID = 0
+	}
+
+
+	from := "quitefact@gmail.com"
+	password := "bknh xsgm csda kcub"
+	to := "zacharyh777@gmail.com"
+	smtpHost := "smtp.gmail.com"
+	smtpPort := "587"
+
+	approveURL := fmt.Sprintf("http://localhost:9081/approve/%d", itemID)
+	subject := "New Listing Approval"
+	body := fmt.Sprintf("Subject: %s\n\nA new listing was created.\n Click below to approve:\n\n%s", subject, approveURL)
+
+	go func() {
+		auth := smtp.PlainAuth("", from, password, smtpHost)
+		err := smtp.SendMail(
+			smtpHost+":"+smtpPort,
+			auth,
+			from,
+			[]string{to},
+			[]byte(body),
+		)
+		if err != nil {
+			log.Printf("Error sending approval email: %v", err)
+		} else {
+			log.Printf("Approval email sent for item ID %d", insertedID)
+		}
+	}()
+
+	// Clear cookies
 	c.SetCookie("listing_title", "", -1, "/", "", false, true)
 	c.SetCookie("listing_description", "", -1, "/", "", false, true)
 	c.SetCookie("listing_kind", "", -1, "/", "", false, true)

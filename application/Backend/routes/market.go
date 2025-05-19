@@ -20,7 +20,7 @@ func RegisterMarketRoutes(router *gin.Engine) {
 }
 
 func fetchRandomMarketProducts(limit int) ([]map[string]interface{}, error) {
-	query := fmt.Sprintf("SELECT image_url, title, price FROM items ORDER BY RAND() LIMIT %d", limit)
+	query := fmt.Sprintf("SELECT image_url, title, price FROM items WHERE approve = 1 ORDER BY RAND() LIMIT %d", limit)
 	rows, err := database.DB.Query(query)
 	if err != nil {
 		return nil, err
