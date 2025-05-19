@@ -99,6 +99,9 @@ func RegisterViewListingsRoutes(router *gin.Engine) {
 func RegisterCreateListingRoutes(router *gin.Engine) {
 	router.GET("/createlisting", createListingHandler)
 	router.POST("/createlisting", submitListingHandler)
+
+	// New route for selectlocation
+	router.GET("/selectlocation", selectLocationHandler)
 }
 
 func createListingHandler(c *gin.Context) {
@@ -186,4 +189,37 @@ func submitListingHandler(c *gin.Context) {
 	}
 
 	c.String(http.StatusOK, "Listing submitted successfully!")
+}
+
+// Handler for selectlocation page
+func selectLocationHandler(c *gin.Context) {
+	selectLocationTemplate, err := core.LoadFrontendFile("src/views/selectlocation.hbs")
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Error loading select location template: %v", err)
+		return
+	}
+
+	content, err := raymond.Render(selectLocationTemplate, nil)
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Error rendering select location template: %v", err)
+		return
+	}
+
+	layoutTemplate, err := core.LoadFrontendFile("src/views/layouts/layout.hbs")
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Error loading layout template: %v", err)
+		return
+	}
+
+	output, err := raymond.Render(layoutTemplate, map[string]interface{}{
+		"title":   "Select Location",
+		"content": raymond.SafeString(content),
+	})
+	if err != nil {
+		c.String(http.StatusInternalServerError, "Error rendering layout: %v", err)
+		return
+	}
+
+	c.Header("Content-Type", "text/html")
+	c.String(http.StatusOK, output)
 }

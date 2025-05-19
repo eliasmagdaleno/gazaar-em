@@ -1,52 +1,62 @@
-<div class="listing-page-container  h-screen">
-  <div class="listing-content grid grid-cols-12 pt-6 ml-10 mr-4">
-    {{!-- <!-- Left Section: Image Gallery -->
+<div class="listing-page-container w-full">
+  <div class="listing-content grid grid-cols-12 gap-10 pt-6 mx-4">
+    {{!--
+    <!-- Left Section: Image Gallery -->
     <div class="img-gallery-section col-span-2 h-full mr-4 self-center">
       <div class="img-gallery flex flex-col self-center items-center m-3 gap-4">
-        <button class="col-item cursor-pointer " onclick="setMainImage('{{this}}')">
+        <button
+          class="col-item cursor-pointer"
+          onclick="setMainImage('{{this}}')"
+        >
           <img
             class="gallery-thumbnail w-30 h-24 object-cover rounded-md shadow-md"
             src="{{thumbnail}}"
             alt="Picture 1 of 5"
           />
-
         </button>
-        <button class="col-item cursor-pointer" onclick="setMainImage('{{this}}')">
+        <button
+          class="col-item cursor-pointer"
+          onclick="setMainImage('{{this}}')"
+        >
           <img
-              class="gallery-thumbnail w-30 h-24 object-cover rounded-md shadow-md"
-              src="{{thumbnail}}"
+            class="gallery-thumbnail w-30 h-24 object-cover rounded-md shadow-md"
+            src="{{thumbnail}}"
             alt="Picture 2 of 5"
           />
-
         </button>
-        <button class="col-item cursor-pointer" onclick="setMainImage('{{this}}')">
+        <button
+          class="col-item cursor-pointer"
+          onclick="setMainImage('{{this}}')"
+        >
           <img
             class="gallery-thumbnail w-30 h-24 object-cover rounded-md shadow-md"
             src="{{thumbnail}}"
             alt="Picture 3 of 5"
           />
-
         </button>
-        <button class="col-item cursor-pointer" onclick="setMainImage('{{this}}')">
+        <button
+          class="col-item cursor-pointer"
+          onclick="setMainImage('{{this}}')"
+        >
           <img
             class="gallery-thumbnail w-30 h-24 object-cover rounded-md shadow-md"
             src="{{thumbnail}}"
             alt="Picture 4 of 5"
           />
-
         </button>
-        <button class="col-item cursor-pointer" onclick="setMainImage('{{this}}')">
+        <button
+          class="col-item cursor-pointer"
+          onclick="setMainImage('{{this}}')"
+        >
           <img
             class="gallery-thumbnail w-30 h-24 object-cover rounded-md shadow-md"
             src="{{thumbnail}}"
             alt="Picture 5 of 5"
           />
-
         </button>
-
       </div>
-
-    </div> --}}
+    </div>
+    --}}
 
     <!-- Center Section: Main Image -->
     <div class="main-img col-span-7 relative mr-4 ml-4">
@@ -56,7 +66,8 @@
         alt="Main Image"
         id="mainImage"
       />
-      {{!-- <button
+      {{!--
+      <button
         class="bookmark-button absolute top-4 right-4 bg-blood-orange-500 rounded-full p-2 cursor-pointer"
       >
         <img
@@ -64,7 +75,8 @@
           src="/frontend/Assets/icons/feather-dark-gray/bookmark.svg"
           alt="Bookmark"
         />
-      </button> --}}
+      </button>
+      --}}
       <!-- Message Form -->
       <div class="message-form mt-4">
         <h2 class="text-lg font-semibold mb-2 text-light-black-500">Send a
@@ -81,7 +93,9 @@
           <button
             type="submit"
             class="send-button bg-light-orange-500 text-light-gray-500 rounded-md px-4 py-2 cursor-pointer shadow-md"
-          >Send Message</button>
+          >
+            Send Message
+          </button>
         </form>
       </div>
     </div>
@@ -90,7 +104,7 @@
     <div class="item-details col-span-5 ml-6 gap-6 text-light-black-500">
       <h1 class="item-name text-2xl font-bold mb-2">{{title}}</h1>
       <p class="item-price text-lg font-semibold my-2">${{price}}</p>
-      <p class="item-posted text-sm ">Posted on: {{postDate}}</p>
+      <p class="item-posted text-sm">Posted on: {{postDate}}</p>
       <p class="item-condition text-sm">Category: {{category}}</p>
       <div class="product-description mt-4">
         <h2 class="text-lg font-semibold my-4">Description:</h2>
@@ -115,13 +129,48 @@
                 src="../frontend/Assets/icons/feather-blood-orange/star.svg"
                 alt="Star"
               />
-              <p class="seller-rating text-base">
-                4.4/5
-              </p>
+              <p class="seller-rating text-base">4.4/5</p>
             </div>
-
           </div>
-
+        </div>
+        <!-- Product Location Map -->
+        <div class="product-location-map mt-6 flex flex-col items-start">
+          <h3 class="text-base font-semibold mb-2">
+            Meetup Location:
+            <span id="meetupLocationName" class="font-normal"></span>
+          </h3>
+          <div class="relative w-120 h-80 flex items-start justify-start pr-45">
+            <img
+              src="/frontend/Assets/originalImage/SFStateMainCampusMap.png"
+              alt="Campus Map"
+              class="w-full h-full object-contain m-0"
+            />
+            <svg
+              id="viewListingMapPin"
+              class="absolute"
+              style="
+                width: 24px;
+                height: 24px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -100%);
+                z-index: 10;
+                display: none;
+              "
+              viewBox="0 0 24 24"
+              fill="#FF0000"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-label="Pin"
+            >
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+              />
+            </svg>
+          </div>
+          <p class="mt-2 text-sm text-light-black-500">
+            Address:
+            <span id="meetupLocationAddress"></span>
+          </p>
         </div>
         <a href="/messages?room={{sellerID}}" 
            class="inline-block mt-4 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg px-6 py-2 shadow transition">
@@ -129,12 +178,50 @@
         </a>
       </div>
     </div>
-
   </div>
-
 </div>
 
 <script>
-  function setMainImage(imageSrc) { const mainImage =
-  document.getElementById('mainImage'); mainImage.src = imageSrc; }
+  function setMainImage(imageSrc) {
+    const mainImage = document.getElementById('mainImage');
+    mainImage.src = imageSrc;
+  }
+  // Map pin positions for each location value
+  const viewListingPinPositions = [
+    { top: '48%', left: '28%' }, // Parking Lot (0)
+    { top: '70%', left: '60%' }, // Student Center (1)
+    { top: '80%', left: '62%' }, // Library (2)
+    { top: '60%', left: '30%' }, // Gym (3) (example, adjust as needed)
+    { top: '80%', left: '50%' }, // Creative Arts (4)
+  ];
+  const viewListingLocationNames = [
+    'Parking Lot',
+    'Student Center',
+    'Library',
+    'Gym',
+    'Creative Arts',
+  ];
+  // Get the location value from the template variable (assume it's available as {{location}})
+  document.addEventListener('DOMContentLoaded', function () {
+    const mapPin = document.getElementById('viewListingMapPin');
+    // location value should be available as a template variable
+    const locationValue = Number('{{location}}');
+    if (!isNaN(locationValue) && viewListingPinPositions[locationValue]) {
+      const pos = viewListingPinPositions[locationValue];
+      mapPin.style.top = pos.top;
+      mapPin.style.left = pos.left;
+      mapPin.style.display = 'block';
+      // Set location name
+      const locationNameSpan = document.getElementById('meetupLocationName');
+      if (locationNameSpan) {
+        locationNameSpan.textContent = viewListingLocationNames[locationValue];
+      }
+      // Set address name
+      const addressNameSpan = document.getElementById('meetupLocationAddress');
+      if (addressNameSpan) {
+        addressNameSpan.textContent =
+          viewListingLocationNames[locationValue] + ' (' + locationValue + ')';
+      }
+    }
+  });
 </script>

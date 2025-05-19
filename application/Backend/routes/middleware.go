@@ -52,25 +52,12 @@ func RandomEventMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		query := "SELECT image_url, title, post_date FROM items WHERE LOWER(category) = 'events' ORDER BY RAND() LIMIT 20"
 		rows, err := database.DB.Query(query)
-		if err != nil {
+		if (err != nil) {
 			log.Printf("RandomEventMiddleware: Error executing query: %v", err)
 			c.Next()
 			return
 		}
 		defer rows.Close()
-
-		var imageURL2, title2 string
-		var postDate2 string 
-
-		for rows.Next() {
-			err := rows.Scan(&imageURL2, &title2, &postDate2)
-			if err != nil {
-				log.Println("Row scan error:", err)
-				continue
-			}
-			log.Printf("Image: %s\nTitle: %s\nPost Date: %s\n\n", imageURL2, title2, postDate2)
-		}
-
 
 		var events []map[string]interface{}
 		for rows.Next() {
@@ -133,16 +120,16 @@ func ProductDetailsMiddleware() gin.HandlerFunc {
 		productID := c.Param("id")
 		log.Printf("ProductDetailsMiddleware: Received productID: %s", productID) // Debugging log
 
-		query := `SELECT title, item_id, description, price, category, seller_id, image_url, post_date 
-				FROM items WHERE item_id = ?`
+		query := `SELECT title, item_id, description, price, category, seller_id, image_url, post_date, address 
+			FROM items WHERE item_id = ?`
 		log.Printf("ProductDetailsMiddleware: Executing query: %s with productID: %s", query, productID) // Debugging log
 
 		row := database.DB.QueryRow(query, productID)
 
 		var product map[string]interface{}
-		var title, itemID, description, category, sellerID, imageURL, postDate string
+		var title, itemID, description, category, sellerID, imageURL, postDate, address string
 		var price float64
-		if err := row.Scan(&title, &itemID, &description, &price, &category, &sellerID, &imageURL, &postDate); err != nil {
+		if err := row.Scan(&title, &itemID, &description, &price, &category, &sellerID, &imageURL, &postDate, &address); err != nil {
 			log.Printf("ProductDetailsMiddleware: Error fetching product details: %v", err)
 			renderErrorPage(c, http.StatusNotFound, "Product not found")
 			c.Abort()
@@ -158,6 +145,7 @@ func ProductDetailsMiddleware() gin.HandlerFunc {
 			"sellerID":    sellerID,
 			"imageURL":    "frontend/assets/thumbnails/" + imageURL,
 			"postDate":    postDate,
+			"address":     address,
 		}
 
 		c.Set("productDetails", product)
