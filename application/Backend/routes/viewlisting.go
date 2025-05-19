@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"application/Backend/core"
 	"application/Backend/database"
@@ -14,6 +14,7 @@ import (
 
 	"github.com/aymerick/raymond"
 	"github.com/gin-gonic/gin"
+
 )
 
 func RegisterViewListingsRoutes(router *gin.Engine) {
@@ -113,8 +114,8 @@ func RegisterCreateListingRoutes(router *gin.Engine) {
 	router.GET("/createlisting", createListingHandler)
 	router.POST("/createlisting", submitListingHandler)
 
-	// New route for selectlocation
 	router.GET("/selectlocation", selectLocationHandler)
+	router.POST("/createlisting/submit", finalizeListingHandler)
 }
 
 func createListingHandler(c *gin.Context) {
@@ -153,56 +154,49 @@ func submitListingHandler(c *gin.Context) {
 	title := c.PostForm("title")
 	desc := c.PostForm("description")
 	kind := c.PostForm("kind")
-
-	var imageName string
+	priceStr := c.PostForm("price")
+	category := c.PostForm("category")
+	imageName := ""
+	new_base := ""
 	if fh, err := c.FormFile("images"); err == nil {
-		os.MkdirAll("assets", os.ModePerm)
 		imageName = filepath.Base(fh.Filename)
-		dst := filepath.Join("assets", imageName)
+		ext := strings.ToLower(filepath.Ext(imageName))
+		dst := filepath.Join("frontend/assets/originalImage", imageName) 
+		
 		if err := c.SaveUploadedFile(fh, dst); err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("Image save error: %v", err))
 			return
 		}
-		thumbDir := filepath.Join("assets", "thumbnails")
-		os.MkdirAll(thumbDir, os.ModePerm)
-		_ = utils.GenerateThumbnail(dst, filepath.Join(thumbDir, imageName), 150, 150)
+
+		if kind == "product" && category == "" {
+			category = "events"
+		}
+
+
+		if kind == "event" {
+			category = "events"
+		}
+		
+		thumbDir := filepath.Join("frontend", "assets", "thumbnails")
+		thumbPath := filepath.Join(thumbDir, title + ext)
+
+		if err := utils.GenerateThumbnail(dst, thumbPath, 150, 150); err != nil {
+			c.String(http.StatusInternalServerError, fmt.Sprintf("Thumbnail generation error: %v", err))
+			return
+		}
+		new_base = title + ext
 	}
 
-	priceStr := c.PostForm("price")
-	price, err := strconv.ParseFloat(priceStr, 64)
-	if err != nil {
-		price = 0.0;
-	}
+	c.SetCookie("listing_title", title, 3600, "/", "", false, true)
+	c.SetCookie("listing_description", desc, 3600, "/", "", false, true)
+	c.SetCookie("listing_kind", kind, 3600, "/", "", false, true)
+	c.SetCookie("listing_image", new_base, 3600, "/", "", false, true)
+	c.SetCookie("listing_price", priceStr, 3600, "/", "", false, true)
+	c.SetCookie("listing_category", category, 3600, "/", "", false, true)
 
-	sellerID := c.GetInt("user_id")
-	category := c.PostForm("category")
-	if kind == "product" && category == "" {
-		category = "events"
-	}
-
-	_, err = database.DB.Exec(`
-        INSERT INTO items 
-          (title, description, price, category, seller_id, image_url, post_date)
-        VALUES (?, ?, ?, ?, ?, ?, NOW())
-    `, title, desc, price,
-		func() string {
-			if kind == "product" {
-				return category
-			}
-			return "event"
-		}(),
-		sellerID,
-		imageName,
-	)
-	if err != nil {
-		c.String(http.StatusInternalServerError, fmt.Sprintf("DB insert error: %v", err))
-		return
-	}
-
-	c.String(http.StatusOK, "Listing submitted successfully!")
+	c.Redirect(http.StatusSeeOther, "/selectlocation")
 }
 
-// Handler for selectlocation page
 func selectLocationHandler(c *gin.Context) {
 	selectLocationTemplate, err := core.LoadFrontendFile("src/views/selectlocation.hbs")
 	if err != nil {
@@ -233,4 +227,43 @@ func selectLocationHandler(c *gin.Context) {
 
 	c.Header("Content-Type", "text/html")
 	c.String(http.StatusOK, output)
+}
+
+func finalizeListingHandler(c *gin.Context) {
+	sellerID := c.GetInt("user_id")
+	location := c.PostForm("location") // From hidden field or button click
+
+	// Read data from cookies
+	title, _ := c.Cookie("listing_title")
+	desc, _ := c.Cookie("listing_description")
+	imageName, _ := c.Cookie("listing_image")
+	priceStr, _ := c.Cookie("listing_price")
+	category, _ := c.Cookie("listing_category")
+
+	price, err := strconv.ParseFloat(priceStr, 64)
+	if err != nil {
+		price = 0.0
+	}
+
+	_, err = database.DB.Exec(`
+        INSERT INTO items 
+          (title, description, price, category, seller_id, image_url, post_date, address)
+        VALUES (?, ?, ?, ?, ?, ?, NOW(), ?)
+    `, title, desc, price, category, sellerID, imageName, location)
+
+	if err != nil {
+		c.String(http.StatusInternalServerError, fmt.Sprintf("DB insert error: %v", err))
+		return
+	}
+
+	// Clear cookies (optional cleanup)
+	c.SetCookie("listing_title", "", -1, "/", "", false, true)
+	c.SetCookie("listing_description", "", -1, "/", "", false, true)
+	c.SetCookie("listing_kind", "", -1, "/", "", false, true)
+	c.SetCookie("listing_image", "", -1, "/", "", false, true)
+	c.SetCookie("listing_price", "", -1, "/", "", false, true)
+	c.SetCookie("listing_category", "", -1, "/", "", false, true)
+
+	c.String(http.StatusOK, "Listing created successfully!")
+	c.Redirect(http.StatusSeeOther, "/")
 }
