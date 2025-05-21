@@ -16,7 +16,7 @@ import (
 
 func RegisterMarketRoutes(router *gin.Engine) {
 	// Apply the ProductCardMiddleware to the /market route
-	router.GET("/market", RandomProductMiddleware(), marketHandler)
+	router.GET("/market", RandomProductMiddleware(), UserIDMiddleware(),SignedInMiddleware(), marketHandler)
 }
 
 func fetchRandomMarketProducts(limit int) ([]map[string]interface{}, error) {
@@ -60,6 +60,7 @@ func fetchRandomMarketProducts(limit int) ([]map[string]interface{}, error) {
 
 func marketHandler(c *gin.Context) {
 	// Retrieve the product cards set by the RandomProductMiddleware
+	is_signed_in,_ := c.Get("is_signed_in")
 	productCards, exists := c.Get("productCards")
 	if !exists {
 		c.String(http.StatusInternalServerError, "Error: Product cards not found in context")
@@ -90,6 +91,7 @@ func marketHandler(c *gin.Context) {
 	output, err := raymond.Render(layoutTemplate, map[string]interface{}{
 		"title":   "Market",
 		"content": raymond.SafeString(content),
+		"is_signed_in": is_signed_in,
 	})
 	if err != nil {
 		c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))

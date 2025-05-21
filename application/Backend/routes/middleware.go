@@ -28,6 +28,7 @@ func UserIDMiddleware() gin.HandlerFunc {
 // Middleware to set is_signed_in in context
 func SignedInMiddleware() gin.HandlerFunc {
     return func(c *gin.Context) {
+        // Ensure is_signed_in key exists in context
         session, err := c.Cookie("session")
         if err == nil && session == "authenticated" {
             c.Set("is_signed_in", true)
@@ -76,7 +77,7 @@ func RandomProductMiddleware() gin.HandlerFunc {
 // Middleware to fetch random event cards
 func RandomEventMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		query := "SELECT image_url, title, post_date FROM items WHERE LOWER(category) = 'events' AND approve = 1 ORDER BY RAND() LIMIT 20"
+		query := "SELECT item_id, image_url, title, post_date FROM items WHERE LOWER(category) = 'events' AND approve = 1 ORDER BY RAND() LIMIT 20"
 		rows, err := database.DB.Query(query)
 		if (err != nil) {
 			log.Printf("RandomEventMiddleware: Error executing query: %v", err)
@@ -87,8 +88,8 @@ func RandomEventMiddleware() gin.HandlerFunc {
 
 		var events []map[string]interface{}
 		for rows.Next() {
-			var imageURL, title, postDate string
-			if err := rows.Scan(&imageURL, &title, &postDate); err != nil {
+			var itemID, imageURL, title, postDate string
+			if err := rows.Scan(&itemID, &imageURL, &title, &postDate); err != nil {
 				log.Printf("RandomEventMiddleware: Row scan error: %v", err)
 				continue
 			}
@@ -96,6 +97,7 @@ func RandomEventMiddleware() gin.HandlerFunc {
 				imageURL = "Thumbnail Unavailable"
 			}
 			events = append(events, map[string]interface{}{
+				"item_id":        itemID,
 				"thumbnail": "frontend/assets/thumbnails/" + imageURL,
 				"title":     title,
 				"postDate":  postDate,
@@ -110,7 +112,7 @@ func RandomEventMiddleware() gin.HandlerFunc {
 // Middleware to fetch non-random product cards
 func ProductMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		query := "SELECT image_url, title, price FROM items WHERE LOWER(category) != 'events' AND approve = 1 LIMIT 20"
+		query := "SELECT item_id, image_url, title, price FROM items WHERE LOWER(category) != 'events' AND approve = 1 LIMIT 20"
 		rows, err := database.DB.Query(query)
 		if err != nil {
 			log.Printf("ProductMiddleware: Error executing query: %v", err)
@@ -122,13 +124,14 @@ func ProductMiddleware() gin.HandlerFunc {
 
 		var products []map[string]interface{}
 		for rows.Next() {
-			var imageURL, title string
+			var itemID, imageURL, title string
 			var price float64
 			if err := rows.Scan(&imageURL, &title, &price); err != nil {
 				log.Printf("ProductMiddleware: Row scan error: %v", err)
 				continue
 			}
 			products = append(products, map[string]interface{}{
+				"item_id":   itemID,
 				"thumbnail": "frontend/assets/thumbnails/" + imageURL,
 				"title":     title,
 				"price":     price,

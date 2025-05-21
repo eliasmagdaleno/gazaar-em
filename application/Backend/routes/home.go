@@ -11,9 +11,11 @@ import (
 
 // Update RegisterHomeRoutes to use ProductCardMiddleware and EventCardMiddleware
 func RegisterHomeRoutes(router *gin.Engine) {
-	router.GET("/", RandomEventMiddleware(), RandomProductMiddleware(), func(c *gin.Context) {
+	router.GET("/", RandomEventMiddleware(), RandomProductMiddleware(), SignedInMiddleware(), func(c *gin.Context) {
 		products, _ := c.Get("productCards")
 		events, _ := c.Get("eventCards")
+		is_signed_in, _ := c.Get("is_signed_in")
+
 
 		indexTemplate, err := core.LoadFrontendFile("src/views/index.hbs")
 		if err != nil {
@@ -40,6 +42,7 @@ func RegisterHomeRoutes(router *gin.Engine) {
 		output, err := raymond.Render(layoutTemplate, map[string]interface{}{
 			"title":   "Home",
 			"content": raymond.SafeString(content),
+			"is_signed_in": is_signed_in,
 		})
 		if err != nil {
 			renderErrorPage(c, http.StatusInternalServerError, "Failed to render layout template")

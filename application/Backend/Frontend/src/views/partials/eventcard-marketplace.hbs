@@ -1,17 +1,21 @@
 <div
   class="event-card-marketplace bg-#f6f6f6 rounded-lg shadow-md overflow-hidden flex flex-col h-full p-4"
 >
-  <img
-    class="event-image w-full rounded-lg h-48 object-cover cursor-pointer"
-    src="{{thumbnail}}"
-    alt="{{title}}"
-  />
+  <button class="event-link w-full h-48 cursor-pointer"
+      id="event-link"
+      onclick="window.location.href='/viewlisting/{{item_id}}'">
+    <img
+      class="event-image w-full rounded-lg h-48 object-cover cursor-pointer"
+      src="{{thumbnail}}"
+      alt="{{title}}"
+    />
+  </button>
   <div class="event-info p-2 text-left">
     <p class="event-date font-semibold text-base">{{date}}</p>
     <button
       class="event-link"
       id="event-link"
-      onclick="window.location.href='/events'"
+      onclick="window.location.href='/viewlisting/{{item_id}}'"
     >
       <h3 class="event-title text-lg font-bold cursor-pointer">{{title}}</h3>
     </button>

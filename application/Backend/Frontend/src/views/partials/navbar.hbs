@@ -49,21 +49,34 @@
     <li>
       <a class="events-link  hover:text-light-gray-500" href="/events">Events</a>
     </li>
+    {{#if is_signed_in}}
     <li class="relative">
       <button id="profile-button" class="flex items-center gap-2 cursor-pointer group rounded-full p-2 bg-light-orange-500">
         <img class="size-8 shrink-0 group-hover:hidden" src="/frontend/assets/icons/feather-light-black/user.svg" alt="Profile" />
         <img class="size-8 shrink-0 hidden group-hover:block" src="/frontend/assets/icons/feather-light-gray/user.svg" alt="Profile Hover" />
       </button>
-      <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-light-orange-500 rounded-md shadow-md z-50">
-        <a href="/profile" class="block px-4 py-2 hover:bg-light-gray-500">Profile</a>
-        <a href="/messages" class="block px-4 py-2 hover:bg-light-gray-500">Messages</a>
-        <form action="/logout" method="POST" >
-          <input type="hidden" value="{{csrf}}" />
-          <button type="submit" class="w-full  hover:bg-light-gray-500">Logout</button>
+      <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-light-orange-500 rounded-md shadow-md z-50 text-left">
+        <a href="/messages" class="px-2 py-2 hover:bg-light-gray-500 flex items-center gap-2">
+          <img class="size-6 shrink-0" src="/frontend/assets/icons/feather-light-black/message-square.svg" alt="Messages Icon" />
+          Messages
+        </a>
+        <form action="/logout" method="POST">
+          <input type="hidden" name="csrf_token" value="{{csrf}}" />
+          <button type="submit" class="w-full text-left px-2 py-2 hover:bg-light-gray-500 flex items-center gap-2">
+            <img class="size-6 shrink-0" src="/frontend/assets/icons/feather-light-black/log-out.svg" alt="Log Out Icon" />
+            Logout
+          </button>
         </form>
       </div>
     </li>
-
+    {{else}}
+    <li>
+      <a href="/login" class="login-button group flex items-center gap-2 text-light-black-500 font-semibold py-2 px-4 rounded-md">
+        <img class="size-6 shrink-0 group-hover:hidden" src="/frontend/assets/icons/feather-light-black/log-in.svg" alt="Log In Icon" />
+        <img class="size-6 shrink-0 hidden group-hover:block" src="/frontend/assets/icons/feather-light-gray/log-in.svg" alt="Log In Hover Icon" />
+        <span class="hidden md:inline">Log In</span>
+      </a>
+    </li>
+    {{/if}}
   </ul>
 </nav>
-

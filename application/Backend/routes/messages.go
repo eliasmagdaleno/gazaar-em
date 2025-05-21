@@ -19,6 +19,7 @@ func RegisterMessagesRoutes(router *gin.Engine) {
 	router.GET("/messages", func(c *gin.Context) {
 		currentRoomIdQuery := c.Query("room")
 		userID := c.GetInt("user_id")
+		is_signed_in, _ := c.Get("is_signed_in")
 		log.Println("messages: User ID from context:", userID)
 		if userID == 0 {
 			c.String(http.StatusUnauthorized, "User not logged in")
@@ -181,6 +182,7 @@ func RegisterMessagesRoutes(router *gin.Engine) {
 		output, err := raymond.Render(layoutTemplate, map[string]interface{}{
 			"title":   "View Messages",
 			"content": raymond.SafeString(content),
+			"is_signed_in": is_signed_in,
 		})
 		if err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))

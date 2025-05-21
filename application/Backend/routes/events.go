@@ -16,11 +16,12 @@ import (
 
 func RegisterEventsRoutes(router *gin.Engine) {
 	// Apply the EventCardMiddleware to the /events route
-	router.GET("/events", RandomEventMiddleware(), eventsHandler)
+	router.GET("/events", RandomEventMiddleware(), UserIDMiddleware(),SignedInMiddleware(), eventsHandler)
 	router.POST("/events/delete", deleteEventHandler)
 }
 
 func eventsHandler(c *gin.Context) {
+	is_signed_in, _ := c.Get("is_signed_in")
 
 	rows, err := database.DB.Query(
 	`SELECT items.item_id, items.image_url, items.title, Account.user_name AS host,
@@ -41,13 +42,13 @@ func eventsHandler(c *gin.Context) {
 	// Build a slice of event maps
 	var evs []map[string]interface{}
 	for rows.Next() {
-		var id int
+		var itemID int
 		var img, title, host, date, desc string
-		if err := rows.Scan(&id, &img, &title, &host, &date, &desc); err != nil {
+		if err := rows.Scan(&itemID, &img, &title, &host, &date, &desc); err != nil {
 			continue
 		}
 		evs = append(evs, map[string]interface{}{
-			"id":        id,
+			"item_id":        itemID,
 			"thumbnail": "../../frontend/assets/thumbnails/" + img,
 			"title":     title,
 			"host":      host,
@@ -95,6 +96,7 @@ func eventsHandler(c *gin.Context) {
 	output, err := raymond.Render(layoutTemplate, map[string]interface{}{
 		"title":   "Events",
 		"content": raymond.SafeString(content),
+		"is_signed_in": is_signed_in,
 	})
 	if err != nil {
 		log.Printf("[ERROR] Error rendering layout.hbs: %v", err)

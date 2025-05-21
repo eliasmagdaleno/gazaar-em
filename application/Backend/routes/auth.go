@@ -186,6 +186,7 @@ func RegisterAuthRoutes(router *gin.Engine) {
  */
 func showLoginPage(c *gin.Context, errorMessage string) {
 	loginTpl, err := core.LoadFrontendFile("src/views/login.hbs")
+	is_signed_in := c.GetBool("is_logged_in")
 	
 	if err != nil {
 		c.String(http.StatusInternalServerError, fmt.Sprintf("Error loading login template: %v", err))
@@ -210,6 +211,7 @@ func showLoginPage(c *gin.Context, errorMessage string) {
 	page, err := raymond.Render(layoutTpl, map[string]interface{}{
 		"title":   "Login",
 		"content": raymond.SafeString(content),
+		"is_signed_in": is_signed_in,
 	})
 	if err != nil {
 		c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))

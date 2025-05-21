@@ -43,6 +43,7 @@ func StartServer() {
 	router.SetTrustedProxies([]string{"192.168.0.0/24"})
 	
 	router.Use(routes.UserIDMiddleware())
+	router.Use(routes.SignedInMiddleware())
 	
 
 

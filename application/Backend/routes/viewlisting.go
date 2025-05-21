@@ -22,6 +22,7 @@ func RegisterViewListingsRoutes(router *gin.Engine) {
 	router.Use(SignedInMiddleware())
 	router.GET("/viewlisting/:id", ProductDetailsMiddleware(), func(c *gin.Context) {
 		// log.Println("viewlisting: Entering viewlisting route")
+		is_signed_in, _ := c.Get("is_signed_in")
 
 		productDetails, exists := c.Get("productDetails")
 		if !exists {
@@ -64,6 +65,7 @@ func RegisterViewListingsRoutes(router *gin.Engine) {
 		output, err := raymond.Render(layoutTemplate, map[string]interface{}{
 			"title":   "View Listing",
 			"content": raymond.SafeString(content),
+			"is_signed_in": is_signed_in,
 		})
 		if err != nil {
 			c.String(http.StatusInternalServerError, fmt.Sprintf("Error rendering layout: %v", err))
