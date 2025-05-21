@@ -18,7 +18,7 @@
 | Weiping Wu     |      wwu@sfsu.edu         |       wei12f8158           | Team Lead |
 | Hemsari Bavisetty     | hbavisetty@sfsu.edu              |    hemasribavisetty             | Database Lead |
 | Elias Magdaleno      |   emagdaleno@sfsu.edu            |     eliasmagdaleno            | Frontend Lead |
-| Zachary Howe     |      zhowe1@sfsu.edu         |     Zhowe1            | Github Lead |
+| Zachary Howe     |      zhowe1@sfsu.edu         |     Zhowe1, zhowe1, zacharyh777         | Github Lead |
 | Jiarong Chen     |      jchen98@sfsu.edu         |    JiarongC1             | Backend Lead |
 
 ## NO code needs to be stored in the root of your repository. You may rename the application folder if you like to your team's application name. But all source code related to your team's application should be stored inside the application folder.
