@@ -1,172 +1,179 @@
-<div class="listing-page-container w-full">
-  <div class="listing-content grid grid-cols-12 gap-10 pt-6 mx-4">
+<div
+    class="listing-content grid grid-cols-12 gap-10 px-8 py-10 overflow-y-auto"
+>
     <!-- Center Section: Main Image -->
-    <div class="main-img col-span-7 h-1/2 relative mr-4 ml-4">
-      <img
-        class="w-full h-full object-contain rounded-md"
-        src="{{imageURL}}"
-        alt="Main Image"
-        id="mainImage"
-      />
+    <div class="image-section col-span-7 flex flex-col relative mr-4 ml-4 p-10">
+        <div class="image-container w-full h-80 border border-light-gray-500 object-contain ">
+            <img
+                class="w-full h-full object-contain rounded-md"
+                src="{{imageURL}}"
+                alt="Main Image"
+                id="mainImage"
+            />
+        </div>
 
-      <!-- Seller Information and Message Form -->
-      <div
-        class="seller-and-message ml-32 gap-6 mt-6 bg-light-orange-500 rounded-lg p-4 shadow-lg"
-      >
-        <!-- Seller Information -->
+        <!-- Seller Information and Message Form -->
         <div
-          class="seller-info col-span-3 flex flex-row text-light-black-500 justify-between items-center"
+            class="seller-and-message flex flex-col gap-2 bg-light-orange-500 rounded-lg p-4 shadow-lg"
         >
-          <div class="flex flex-row items-center">
-            <img
-              class="seller-pfp w-16 h-16 rounded-full object-cover"
-              src="../frontend/assets/icons/feather-light-black/user.svg"
-              alt="Seller Profile"
-            />
-            <div class="seller-details flex flex-col ml-4">
-              <p class="seller-name text-lg font-bold">{{sellerName}}</p>
-              <div class="seller-rating-section flex flex-row gap-2">
-                <img
-                  class="star-icon w-6 h-6"
-                  src="../frontend/assets/icons/feather-blood-orange/star.svg"
-                  alt="Star"
-                />
-                <p class="seller-rating text-base">4.4/5</p>
-              </div>
-            </div>
-          </div>
-          <a
-            href="/messages?room={{sellerID}}"
-            class="group w-fit bg-light-black-500 hover:bg-dark-gray-500 text-light-gray-500 hover:text-light-black-500 font-semibold rounded-lg px-6 py-2 shadow transition"
-          >
-            <img
-              class="chat-icon w-6 h-6 inline-block mr-2 group-hover:hidden"
-              src="../frontend/assets/icons/feather-light-gray/message-circle.svg"
-              alt="Chat Icon"
-            />
-            <img
-              class="chat-icon w-6 h-6 mr-2 hidden group-hover:inline-block"
-              src="../frontend/assets/icons/feather-light-black/message-circle.svg"
-              alt="Chat Icon Hover"
-            />
-            <span class="hidden md:inline">Chat</span>
-          </a>
-        </div>
-        <!-- Message Form -->
-        <div class="message-form mt-4 text-light-black-500">
-          <h2 class="text-lg font-semibold mb-2 text-light-black-500">
-            Send a Message to the Seller:
-          </h2>
-          <form
-            action="/send-message"
-            method="POST"
-            class="message-input flex items-center w-full bg-light-gray-500 border-1 border-light-black-500 rounded-md p-2 focus-within:border-blue-500 transition-colors"
-          >
-            {{!-- <input type="hidden" name="room" value="{{sellerID}}" /> --}}
-            <input
-              type="hidden"
-              name="id"
-              value="{{id}}"
-            />
-            <input
-              type="hidden"
-              name="sellerID"
-              value="{{sellerID}}"
-            />
-            <textarea
-              name="message"
-              class="message-input flex-grow p-1 text-light-black-500 border-none outline-none resize-none bg-transparent"
-              rows="1"
-              placeholder="Type your message here..."
-              required
-            ></textarea>
-            <button
-              type="submit"
-              class="send-button text-light-gray-500 bg-light-black-500 rounded-full object-contain cursor-pointer w-10 h-10 flex items-center justify-center overflow-hidden"
+            <!-- Seller Information -->
+            <div
+                class="seller-info flex flex-row flex-1 text-light-black-500 justify-between items-center"
             >
-              <img
-                class="send-icon max-w-[70%] max-h-[70%] object-contain mx-auto my-auto"
-                src="/frontend/assets/icons/feather-dark-gray/send.svg"
-                alt="Send"
-              />
-            </button>
-          </form>
+                <div class="flex flex-row items-center">
+                    <img
+                        class="seller-pfp w-16 h-16 rounded-full object-cover"
+                        src="../frontend/assets/icons/feather-light-black/user.svg"
+                        alt="Seller Profile"
+                    />
+                    <div class="seller-details flex flex-col ml-4">
+                        <p class="seller-name text-lg font-bold">
+                            {{sellerName}}
+                        </p>
+                        <div class="seller-rating-section flex flex-row gap-2">
+                            <img
+                                class="star-icon w-6 h-6"
+                                src="../frontend/assets/icons/feather-blood-orange/star.svg"
+                                alt="Star"
+                            />
+                            <p class="seller-rating text-base">4.4/5</p>
+                        </div>
+                    </div>
+                </div>
+                {{!--
+                <a
+                    href="/messages?room={{sellerID}}"
+                    class="group w-fit bg-light-black-500 hover:bg-dark-gray-500 text-light-gray-500 hover:text-light-black-500 font-semibold rounded-lg px-6 py-2 shadow transition"
+                >
+                    <img
+                        class="chat-icon w-6 h-6 inline-block mr-2 group-hover:hidden"
+                        src="../frontend/assets/icons/feather-light-gray/message-circle.svg"
+                        alt="Chat Icon"
+                    />
+                    <img
+                        class="chat-icon w-6 h-6 mr-2 hidden group-hover:inline-block"
+                        src="../frontend/assets/icons/feather-light-black/message-circle.svg"
+                        alt="Chat Icon Hover"
+                    />
+                    <span class="hidden md:inline">Chat</span>
+                </a>
+                --}}
+            </div>
+            <!-- Message Form -->
+            <div class="message-form text-light-black-500">
+                <h2 class="text-lg font-semibold mb-2 text-light-black-500">
+                    Send a Message to the Poster:
+                </h2>
+                <form
+                    action="/send-message"
+                    method="POST"
+                    class="message-input flex items-center w-full bg-light-gray-500 border-1 border-light-black-500 rounded-md p-2 focus-within:border-blue-500 transition-colors"
+                >
+                    {{!--
+                    <input type="hidden" name="room" value="{{sellerID}}" />
+                    --}}
+                    <input type="hidden" name="id" value="{{id}}" />
+                    <input type="hidden" name="sellerID" value="{{sellerID}}" />
+                    <textarea
+                        name="message"
+                        class="message-input flex-grow p-1 text-light-black-500 border-none outline-none resize-none bg-transparent"
+                        rows="1"
+                        placeholder="Type your message here..."
+                        required
+                    ></textarea>
+                    <button
+                        type="submit"
+                        class="send-button text-light-gray-500 bg-light-black-500 rounded-full object-contain cursor-pointer w-10 h-10 flex items-center justify-center overflow-hidden"
+                    >
+                        <img
+                            class="send-icon max-w-[70%] max-h-[70%] object-contain mx-auto my-auto"
+                            src="/frontend/assets/icons/feather-dark-gray/send.svg"
+                            alt="Send"
+                        />
+                    </button>
+                </form>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- Right Section: Item Details -->
-    <div class="item-details col-span-5 ml-18 gap-6 text-light-black-500">
-      <h1 class="item-name text-2xl font-bold mb-2">{{title}}</h1>
-      <p class="item-price text-lg font-semibold my-2">${{price}}</p>
-      <p class="item-posted text-sm">Posted on: {{postDate}}</p>
-      <p class="item-condition text-sm">Category: {{category}}</p>
-      <div class="product-description mt-4">
-        <h2 class="text-lg font-semibold my-4">Description:</h2>
-        <p class="text-sm text-light-black-500">{{description}}</p>
-      </div>
-      <!-- Product Location Map -->
-      <div class="product-location-map mt-6 flex flex-col items-start">
-        <h3 class="text-base font-semibold mb-2">
-          Meetup Location:
-          <span id="meetupLocationName" class="font-normal">
-            {{locationName}}
-          </span>
-        </h3>
-        <div class="relative w-120 h-80 flex items-start justify-start pr-45">
-          <img
-            src="/frontend/assets/originalImage/SFStateMainCampusMap.png"
-            alt="Campus Map"
-            class="w-full h-full object-contain m-0"
-          />
-          <svg
-            id="viewListingMapPin"
-            class="absolute"
-            style="
-              width: 24px;
-              height: 24px;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -100%);
-              z-index: 10;
-              display: none;
-            "
-            viewBox="0 0 24 24"
-            fill="#FF0000"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-label="Pin"
-          >
-            <path
-              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
-            />
-          </svg>
+    <div
+        class="item-details col-span-5 flex flex-col flex-1 text-light-black-500 p-10"
+    >
+        <h1 class="item-name text-2xl font-bold">{{title}}</h1>
+        <p class="item-price text-lg font-semibold my-2">${{price}}</p>
+        <p class="item-posted text-sm">Posted on: {{postDate}}</p>
+        <p class="item-condition text-sm">Category: {{category}}</p>
+        <div class="product-description mt-4">
+            <h2 class="text-lg font-semibold">Description:</h2>
+            <p class="text-sm text-light-black-500">{{description}}</p>
         </div>
-      </div>
+        <!-- Product Location Map -->
+        <div
+            class="product-location-map mt-2 flex flex-col flex-1 items-start"
+        >
+            <h3 class="text-base font-semibold mb-2">
+                Meetup Location
+            </h3>
+            <span id="meetupLocationName" class="font-normal text-sm">
+                    {{locationName}}
+            </span>
+            
+            <div
+                class="relative w-120 h-80 flex items-start justify-start pr-45"
+            >
+                <img
+                    src="/frontend/assets/originalImage/SFStateMainCampusMap.png"
+                    alt="Campus Map"
+                    class="w-full h-full object-contain m-0"
+                />
+                <svg
+                    id="viewListingMapPin"
+                    class="absolute"
+                    style="
+                        width: 24px;
+                        height: 24px;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -100%);
+                        z-index: 10;
+                        display: none;
+                    "
+                    viewBox="0 0 24 24"
+                    fill="#FF0000"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-label="Pin"
+                >
+                    <path
+                        d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                    />
+                </svg>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <script>
-  function setMainImage(imageSrc) {
-    const mainImage = document.getElementById('mainImage');
-    mainImage.src = imageSrc;
-  }
-  // Map pin positions for each location value
-  const viewListingPinPositions = [
-    { top: '48%', left: '28%' }, // Parking Lot (0)
-    { top: '70%', left: '60%' }, // Student Center (1)
-    { top: '80%', left: '62%' }, // Library (2)
-    { top: '60%', left: '42%' }, // Gym (3) (example, adjust as needed)
-    { top: '80%', left: '50%' }, // Creative Arts (4)
-  ];
-  document.addEventListener('DOMContentLoaded', function () {
-    const mapPin = document.getElementById('viewListingMapPin');
-    const locationValue = Number('{{location}}');
-    if (!isNaN(locationValue) && viewListingPinPositions[locationValue]) {
-      const pos = viewListingPinPositions[locationValue];
-      mapPin.style.top = pos.top;
-      mapPin.style.left = pos.left;
-      mapPin.style.display = 'block';
+    function setMainImage(imageSrc) {
+        const mainImage = document.getElementById('mainImage');
+        mainImage.src = imageSrc;
     }
-  });
+    // Map pin positions for each location value
+    const viewListingPinPositions = [
+        { top: '48%', left: '28%' }, // Parking Lot (0)
+        { top: '70%', left: '60%' }, // Student Center (1)
+        { top: '80%', left: '62%' }, // Library (2)
+        { top: '60%', left: '42%' }, // Gym (3) (example, adjust as needed)
+        { top: '80%', left: '50%' }, // Creative Arts (4)
+    ];
+    document.addEventListener('DOMContentLoaded', function () {
+        const mapPin = document.getElementById('viewListingMapPin');
+        const locationValue = Number('{{location}}');
+        if (!isNaN(locationValue) && viewListingPinPositions[locationValue]) {
+            const pos = viewListingPinPositions[locationValue];
+            mapPin.style.top = pos.top;
+            mapPin.style.left = pos.left;
+            mapPin.style.display = 'block';
+        }
+    });
 </script>

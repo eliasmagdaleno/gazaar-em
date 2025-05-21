@@ -15,9 +15,13 @@ import (
 )
 
 func RegisterSearchRoutes(router *gin.Engine) {
-	router.GET("/search", func(c *gin.Context) {
+	router.GET("/search", UserIDMiddleware(), SignedInMiddleware(), func(c *gin.Context) {
 		q := c.Query("q")
 		category := c.Query("category")
+		is_signed_in, _ := c.Get("is_signed_in")
+		userID, _ := c.Get("user_id")
+		log.Println("User ID from context:", userID)
+
 
 		query := "SELECT item_id, category, title, description, price, image_url FROM items WHERE 1=1 AND LOWER(category) != 'events' AND approve = 1"
 		var args []interface{}
@@ -41,9 +45,9 @@ func RegisterSearchRoutes(router *gin.Engine) {
 
 		var products []map[string]interface{}
 		for rows.Next() {
-			var id, category, title, description, imageURL string
+			var itemID, category, title, description, imageURL string
 			var price float64
-			err := rows.Scan(&id, &category, &title, &description, &price, &imageURL)
+			err := rows.Scan(&itemID, &category, &title, &description, &price, &imageURL)
 			if err != nil {
 				log.Println("Row scan error:", err)
 				continue
@@ -62,7 +66,7 @@ func RegisterSearchRoutes(router *gin.Engine) {
 			}
 
 			products = append(products, map[string]interface{}{
-				"id":          id,
+				"item_id":          itemID,
 				"category":    category,
 				"title":       title,
 				"description": description,
@@ -111,7 +115,8 @@ func RegisterSearchRoutes(router *gin.Engine) {
 			"isAll":         category == "All" || category == "",
 			"isBooks":       category == "Books",
 			"isElectronics": category == "Electronics",
-			"isFurniture":   category == "Furniture",
+			"isFurniture":   category == "Furniture",	
+			"is_signed_in":  is_signed_in,
 		})
 		if err != nil {
 			log.Println("Layout render error:", err)
