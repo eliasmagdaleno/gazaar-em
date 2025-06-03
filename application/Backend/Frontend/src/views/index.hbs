@@ -1,7 +1,7 @@
 <div
-    class="homepage-container flex flex-col overflow-hidden gap-5 p-6 overflow-y-auto"
+    class="homepage-container flex flex-col overflow-hidden gap-5 pt-4 pb-8 px-12 overflow-y-auto"
 >
-    <div class="event-section px-6 pt-4">
+    <div class="event-section px-6 ">
         <button
             class="events-button hover:bg-light-gray-500 rounded cursor-pointer p-2 mb-2"
         >
@@ -12,14 +12,14 @@
             </a>
         </button>
 
-        <div class="event-list flex gap-6 overflow-x-auto whitespace-nowrap">
+        <div class="event-list flex gap-6 overflow-x-auto whitespace-nowrap pt-10 border-r border-dark-gray-500">
             {{#each events}}
             <div class="flex-shrink-0 w-64">{{> eventcard}}</div>
             {{/each}}
         </div>
     </div>
 
-    <div class="product-section px-6 pt-6 pb-28">
+    <div class="product-section px-6">
         <button
             class="marketplace-button hover:bg-light-gray-500 rounded cursor-pointer p-2 mb-2"
         >
@@ -31,7 +31,7 @@
         </button>
 
         <div
-            class="product-list flex gap-6 overflow-x-auto mb-6 whitespace-nowrap"
+            class="product-list flex gap-6 overflow-x-auto whitespace-nowrap pt-10 border-r border-dark-gray-500"
         >
             {{#each products}}
             <div class="flex-shrink-0 w-64">{{> productcard-marketplace}}</div>
